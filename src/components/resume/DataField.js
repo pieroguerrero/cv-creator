@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 
 /**
  *
@@ -11,25 +12,38 @@ import React, { useEffect, useRef } from "react";
  * strHelpText:string}} param0
  * @returns
  */
-const DataField = function ({
+const DataField = ({
   strFieldName,
   booIsRequired = false,
   onValueChange,
   strInitialValue = "",
   strInputType = "text",
   strHelpText = "",
-}) {
+}) => {
+  DataField.propTypes = {
+    strFieldName: PropTypes.string.isRequired,
+    booIsRequired: PropTypes.bool.isRequired,
+    onValueChange: PropTypes.func.isRequired,
+    strInitialValue: PropTypes.string.isRequired,
+    strInputType: PropTypes.string.isRequired,
+    strHelpText: PropTypes.string.isRequired,
+  };
+
+  console.log("DataField: Loaded!!!!!!!!!!!!!!!");
+  const objTest = { first: "", second: "" };
   const inputField = useRef(null);
   useEffect(() => {
     inputField.current.required = booIsRequired;
   });
 
-  //const objPrev = { prevValue: null };
+  const onFocusLost = (e) => {
+    objTest.first += e.currentTarget.value;
+    console.log("myObj.first:", objTest.first, e.currentTarget.value);
 
-  const onFocusLost = function (e) {
     onValueChange(
       e.currentTarget.checkValidity() ? e.currentTarget.value : null
     );
+    //onValueChange(e.currentTarget.value);
   };
 
   const getControlType = () => {
@@ -54,8 +68,6 @@ const DataField = function ({
           ref={inputField}
           className="peer rounded-md border-[1px] border-solid shadow-inner text-[100%] p-1 pl-2 w-full invalid:border-red-500 invalid:placeholder-shown:border-[#e5e7eb]"
           type={strInputType}
-          id="input-field"
-          name="input-field"
           autoComplete="none"
           placeholder=" "
           onBlur={onFocusLost}

@@ -1,21 +1,36 @@
 //import logo from "./logo.svg";
 import React, { useState } from "react";
+import { MD_PersonalInfo } from "./back/MD_PersonalInfo";
 import { Credits } from "./components/Credits";
 import { Resume } from "./components/Resume";
 import { ResumeViwer } from "./components/ResumeViwer";
 import { TabHeader } from "./components/TabHeader";
+import uniqid from "uniqid";
+import { MD_Resume } from "./back/MD_Resume";
 
 function App() {
   const [viewEditor, setViewEditor] = useState(true);
-  const [resumeState, setResume] = useState({
-    strFirstName: null,
-    strLastName: null,
-    strEmail: null,
-    strPhone: null,
-    strAbout: "",
-    experienceList: [],
-    educationList: [],
-  });
+
+  const [resumeState, setResume] = useState(
+    MD_Resume.shapeResume(
+      MD_PersonalInfo.shapePersonalInfo(uniqid(), null, null, null, null, ""),
+      [],
+      []
+    )
+  );
+
+  // const [resumeState, setResume] = useState({
+  //   objPersonalInfo: MD_PersonalInfo.shapePersonalInfo(
+  //     uniqid(),
+  //     null,
+  //     null,
+  //     null,
+  //     null,
+  //     ""
+  //   ),
+  //   experienceList: [],
+  //   educationList: [],
+  // });
   /**
    *
    * @param {string} strTabId
@@ -29,9 +44,10 @@ function App() {
     }
   };
 
-  const savePersonalInfoValue = (strPropertyName, strValue) => {
-    console.log("App." + strPropertyName + ":", strValue);
-    setResume((prevState) => ({ ...prevState, strPropertyName: strValue }));
+  const generateCV = (objResume) => {
+    console.log("App.getEmail:", objResume.getPersonalInfo().getEmail());
+    setResume(objResume);
+    //setResume({ ...resumeState, [strPropertyName]: strValue });
   };
 
   return (
@@ -43,20 +59,14 @@ function App() {
         <div>
           <div id="tab-1" style={{ display: viewEditor ? "block" : "none" }}>
             <Resume
-              onFirstNameChange={savePersonalInfoValue.bind(
-                null,
-                "strFirstName"
-              )}
-              onLastNameChange={savePersonalInfoValue.bind(null, "strLastName")}
-              onPhoneChange={savePersonalInfoValue.bind(null, "strPhone")}
-              onAboutChange={savePersonalInfoValue.bind(null, "strAbout")}
-              onEmailChange={savePersonalInfoValue.bind(null, "strEmail")}
-              onSaveEducation={null}
-              onSaveExperience={null}
+              arrExperienceValues={resumeState.getExperienceList()}
+              arrEducationValues={resumeState.getEducationList()}
+              objPersonalInfoValues={resumeState.getPersonalInfo()}
+              onGenerateCV={generateCV}
             />
           </div>
           <div id="tab-2" style={{ display: viewEditor ? "none" : "block" }}>
-            <ResumeViwer />
+            <ResumeViwer objResume={resumeState} />
           </div>
         </div>
       </main>

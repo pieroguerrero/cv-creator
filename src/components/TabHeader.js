@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 /**
  *
  * @param {{onTabChange: (strTabId:string)=>void}} props
@@ -5,6 +7,9 @@
  */
 
 const TabHeader = ({ onTabChange }) => {
+  TabHeader.propTypes = {
+    onTabChange: PropTypes.func.isRequired,
+  };
   const onSelectRadio = (e) => {
     console.log("e.target.id: ", e.target.id);
     const strId = e.target.id.split("-")[1];

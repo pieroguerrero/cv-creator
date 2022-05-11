@@ -1,6 +1,8 @@
 import { DataField } from "./DataField";
-import uniqid from "uniqid";
-import { useRef } from "react";
+// import uniqid from "uniqid";
+import React, { useRef } from "react";
+import { SampleComponent } from "./SampleComponent";
+import PropTypes from "prop-types";
 
 /**
  *
@@ -9,7 +11,12 @@ import { useRef } from "react";
  * onLastNameChange:(newValue: string)=>void,
  * onEmailChange:(newValue: string)=>void,
  * onAboutChange:(newValue: string)=>void,
- * onPhoneChange:(newValue: string)=>void}} param0
+ * onPhoneChange:(newValue: string)=>void,
+ * strFirstNameValue:string,
+ * strLastNameValue:string,
+ * strEmailValue:string,
+ * strPhoneValue:string,
+ * strAboutValue:string}} param0
  * @returns
  */
 const PersonalInfo = ({
@@ -18,10 +25,31 @@ const PersonalInfo = ({
   onEmailChange,
   onPhoneChange,
   onAboutChange,
+  strFirstNameValue,
+  strLastNameValue,
+  strEmailValue,
+  strPhoneValue,
+  strAboutValue,
 }) => {
+  PersonalInfo.propTypes = {
+    onFirstNameChange: PropTypes.func.isRequired,
+    onLastNameChange: PropTypes.func.isRequired,
+    onEmailChange: PropTypes.func.isRequired,
+    onPhoneChange: PropTypes.func.isRequired,
+    onAboutChange: PropTypes.func.isRequired,
+    strFirstNameValue: PropTypes.string.isRequired,
+    strLastNameValue: PropTypes.string.isRequired,
+    strEmailValue: PropTypes.string.isRequired,
+    strPhoneValue: PropTypes.string.isRequired,
+    strAboutValue: PropTypes.string.isRequired,
+  };
   const frmForm = useRef(null);
 
+  //const objTest = { first: "", second: "" };
+
   const onBlurField = function (fnOnChangeValue, strValue) {
+    // objTest.first = "+" + objTest.first;
+    // console.log("objTest.first:", objTest.first);
     fnOnChangeValue(strValue);
   };
 
@@ -45,7 +73,7 @@ const PersonalInfo = ({
                 strFieldName={"First Name"}
                 booIsRequired={true}
                 onValueChange={onBlurField.bind(null, onFirstNameChange)}
-                strInitialValue={""}
+                strInitialValue={strFirstNameValue}
                 strInputType={"text"}
                 strHelpText={""}
               />
@@ -53,7 +81,7 @@ const PersonalInfo = ({
                 strFieldName={"Last Name"}
                 booIsRequired={true}
                 onValueChange={onBlurField.bind(null, onLastNameChange)}
-                strInitialValue={""}
+                strInitialValue={strLastNameValue}
                 strInputType={"text"}
                 strHelpText={""}
               />
@@ -61,7 +89,7 @@ const PersonalInfo = ({
                 strFieldName={"Email"}
                 booIsRequired={true}
                 onValueChange={onBlurField.bind(null, onEmailChange)}
-                strInitialValue={""}
+                strInitialValue={strEmailValue}
                 strInputType={"email"}
                 strHelpText={""}
               />
@@ -69,7 +97,7 @@ const PersonalInfo = ({
                 strFieldName={"Phone"}
                 booIsRequired={true}
                 onValueChange={onBlurField.bind(null, onPhoneChange)}
-                strInitialValue={""}
+                strInitialValue={strPhoneValue}
                 strInputType={"tel"}
                 strHelpText={""}
               />
@@ -79,7 +107,7 @@ const PersonalInfo = ({
               strFieldName={"About"}
               booIsRequired={false}
               onValueChange={onBlurField.bind(null, onAboutChange)}
-              strInitialValue={""}
+              strInitialValue={strAboutValue}
               strInputType={"textarea"}
               strHelpText={"Brief description of your profile."}
             />
@@ -88,6 +116,7 @@ const PersonalInfo = ({
             <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               Save
             </button>
+            <SampleComponent />
           </div>
         </div>
       </div>
