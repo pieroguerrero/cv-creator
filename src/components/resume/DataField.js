@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 /**
  *
@@ -7,44 +7,108 @@ import { useEffect, useRef } from "react";
  * booIsRequired:boolean,
  * onValueChange:(strNewValue:string)=>void,
  * strInitialValue:string,
- * strInputType:string}} param0
+ * strInputType:string,
+ * strHelpText:string}} param0
  * @returns
  */
-const DataField = ({
+const DataField = function ({
   strFieldName,
-  booIsRequired,
+  booIsRequired = false,
   onValueChange,
-  strInitialValue,
-  strInputType,
-}) => {
+  strInitialValue = "",
+  strInputType = "text",
+  strHelpText = "",
+}) {
   const inputField = useRef(null);
-
   useEffect(() => {
     inputField.current.required = booIsRequired;
   });
 
-  return (
-    <div className="flex flex-col gap-2">
-      <label className="font-bold" htmlFor="input-field">
-        {strFieldName}
-      </label>
-      <div>
-        {/*TODO:agregar un if aqui para que se distinga entre TextArea e Input? */}
+  const objPrev = { prevValue: "hola" };
+
+  const onFocusLost = function (e) {
+    if (e.currentTarget.checkValidity()) {
+      if (!(objPrev.prevValue === e.currentTarget.value)) {
+        console.log(
+          "prevValue:",
+          objPrev.prevValue,
+          " | ",
+          "currentTarget:",
+          e.currentTarget.value
+        );
+        onValueChange(e.currentTarget.value);
+        objPrev.prevValue = e.currentTarget.value;
+        console.log(
+          "AFTER: prevValue:",
+          objPrev.prevValue,
+          " | ",
+          "currentTarget:",
+          e.currentTarget.value
+        );
+      }
+    } else {
+      onValueChange(null);
+      objPrev.prevValue = null;
+    }
+  };
+
+  const getControlType = () => {
+    if (strInputType === "textarea") {
+      return (
+        <textarea
+          ref={inputField}
+          className="peer rounded-md border-[1px] border-solid shadow-inner text-[100%] p-1 pl-2 w-full invalid:border-red-500 invalid:placeholder-shown:border-[#e5e7eb]"
+          name="input-field"
+          id="input-field"
+          cols={20}
+          rows={3}
+          placeholder=" "
+          autoComplete="off"
+          onBlur={onFocusLost}
+          defaultValue={strInitialValue}
+        ></textarea>
+      );
+    } else {
+      return (
         <input
           ref={inputField}
-          className="peer rounded-md border-[1px] border-solid shadow-inner text-[100%] p-1 pl-2 w-full"
+          className="peer rounded-md border-[1px] border-solid shadow-inner text-[100%] p-1 pl-2 w-full invalid:border-red-500 invalid:placeholder-shown:border-[#e5e7eb]"
           type={strInputType}
           id="input-field"
           name="input-field"
-          autoComplete="off"
+          autoComplete="none"
           placeholder=" "
-          onBlur={(e) => onValueChange(e.currentTarget.value)}
+          onBlur={onFocusLost}
           defaultValue={strInitialValue}
         />
-        <span
-          className="relative peer-required:after:absolute peer-required:after:text-white peer-required:after:bg-black peer-required:after:content-['required'] peer-required:after:text-[10px] peer-required:after:top-[-31px] peer-required:after:left-[-55px] peer-required:after:py-[2px] peer-required:after:px-2
-        peer-required:after:rounded-md hidden peer-required:peer-placeholder-shown:inline"
-        ></span>
+      );
+    }
+  };
+
+  const getHelperText = () => {
+    if (strHelpText && strHelpText.length) {
+      return (
+        <label htmlFor="input-field" className="mt-2 text-sm text-gray-500">
+          {strHelpText}
+        </label>
+      );
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-1">
+      <label
+        className="block text-sm font-medium text-gray-700"
+        htmlFor="input-field"
+      >
+        {strFieldName}
+      </label>
+      <div>
+        <div className="flex">
+          {getControlType()}
+          <span className=" self-start relative peer-invalid:after:absolute peer-invalid:after:whitespace-nowrap peer-invalid:after:text-white   peer-invalid:after:text-[10px] peer-invalid:after:top-[-23px] peer-invalid:after:py-[2px] peer-invalid:after:px-2 peer-invalid:after:rounded-md peer-invalid:after:align-top hidden peer-invalid:inline peer-invalid:after:bg-red-500  peer-invalid:peer-placeholder-shown:after:bg-gray-600 peer-invalid:after:content-['invalid_format'] peer-invalid:peer-placeholder-shown:after:content-['required'] peer-invalid:after:left-[-79px] peer-invalid:peer-placeholder-shown:after:left-[-55px]"></span>
+        </div>
+        {getHelperText()}
       </div>
     </div>
   );

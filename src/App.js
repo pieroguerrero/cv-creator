@@ -7,6 +7,15 @@ import { TabHeader } from "./components/TabHeader";
 
 function App() {
   const [viewEditor, setViewEditor] = useState(true);
+  const [resumeState, setResume] = useState({
+    strFirstName: null,
+    strLastName: null,
+    strEmail: null,
+    strPhone: null,
+    strAbout: "",
+    experienceList: [],
+    educationList: [],
+  });
   /**
    *
    * @param {string} strTabId
@@ -20,6 +29,11 @@ function App() {
     }
   };
 
+  const savePersonalInfoValue = (strPropertyName, strValue) => {
+    console.log("App." + strPropertyName + ":", strValue);
+    setResume((prevState) => ({ ...prevState, strPropertyName: strValue }));
+  };
+
   return (
     <div className="App">
       <header></header>
@@ -28,7 +42,18 @@ function App() {
         <TabHeader onTabChange={onTabChange} />
         <div>
           <div id="tab-1" style={{ display: viewEditor ? "block" : "none" }}>
-            <Resume />
+            <Resume
+              onFirstNameChange={savePersonalInfoValue.bind(
+                null,
+                "strFirstName"
+              )}
+              onLastNameChange={savePersonalInfoValue.bind(null, "strLastName")}
+              onPhoneChange={savePersonalInfoValue.bind(null, "strPhone")}
+              onAboutChange={savePersonalInfoValue.bind(null, "strAbout")}
+              onEmailChange={savePersonalInfoValue.bind(null, "strEmail")}
+              onSaveEducation={null}
+              onSaveExperience={null}
+            />
           </div>
           <div id="tab-2" style={{ display: viewEditor ? "none" : "block" }}>
             <ResumeViwer />

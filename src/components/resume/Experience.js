@@ -1,5 +1,11 @@
+import { ExperienceItem } from "./ExperienceItem";
+
 const Experience = () => {
-  return <div></div>;
+  return (
+    <div>
+      <ExperienceItem />
+    </div>
+  );
 };
 
 export { Experience };
