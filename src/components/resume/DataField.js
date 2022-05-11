@@ -24,32 +24,12 @@ const DataField = function ({
     inputField.current.required = booIsRequired;
   });
 
-  const objPrev = { prevValue: "hola" };
+  //const objPrev = { prevValue: null };
 
   const onFocusLost = function (e) {
-    if (e.currentTarget.checkValidity()) {
-      if (!(objPrev.prevValue === e.currentTarget.value)) {
-        console.log(
-          "prevValue:",
-          objPrev.prevValue,
-          " | ",
-          "currentTarget:",
-          e.currentTarget.value
-        );
-        onValueChange(e.currentTarget.value);
-        objPrev.prevValue = e.currentTarget.value;
-        console.log(
-          "AFTER: prevValue:",
-          objPrev.prevValue,
-          " | ",
-          "currentTarget:",
-          e.currentTarget.value
-        );
-      }
-    } else {
-      onValueChange(null);
-      objPrev.prevValue = null;
-    }
+    onValueChange(
+      e.currentTarget.checkValidity() ? e.currentTarget.value : null
+    );
   };
 
   const getControlType = () => {

@@ -21,7 +21,7 @@ const PersonalInfo = ({
 }) => {
   const frmForm = useRef(null);
 
-  const onBlurField = (fnOnChangeValue, strValue) => {
+  const onBlurField = function (fnOnChangeValue, strValue) {
     fnOnChangeValue(strValue);
   };
 
