@@ -55,8 +55,8 @@ const PersonalInfo = ({
 
   return (
     <form ref={frmForm} autoComplete="none" className="bg-gray-100">
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-[30%_70%] md:gap-8  max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 sm:px-0">
+      <div className="flex flex-col gap-6 md:gap-0 md:grid md:grid-cols-[30%_70%] max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className="px-4 sm:pr-8 sm:px-0">
           <h2 className="text-lg font-medium leading-6 text-gray-900">
             Personal Info
           </h2>
@@ -66,7 +66,7 @@ const PersonalInfo = ({
             cum sociis natoque penatibus.
           </p>
         </div>
-        <div className="flex-1 shrink-0 shadow sm:rounded-md sm:overflow-hidden">
+        <div className="shadow sm:rounded-md sm:overflow-hidden">
           <div className="flex flex-col gap-5 px-4 py-5 bg-white sm:p-6">
             <div className="flex flex-col gap-4 gap-y-5 md:grid md:grid-cols-2 md:grid-rows-2">
               <DataField
@@ -111,12 +111,6 @@ const PersonalInfo = ({
               strInputType={"textarea"}
               strHelpText={"Brief description of your profile."}
             />
-          </div>
-          <div className="flex justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
-            <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Save
-            </button>
-            <SampleComponent />
           </div>
         </div>
       </div>

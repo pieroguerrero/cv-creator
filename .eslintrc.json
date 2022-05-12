@@ -17,6 +17,7 @@
     "no-console": "off",
     "prefer-template": "off",
     "no-unused-vars": "warn",
-    "quotes": ["error", "double"]
+    "quotes": ["error", "double"],
+    "react/prop-types": "off"
   }
 }

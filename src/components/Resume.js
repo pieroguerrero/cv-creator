@@ -87,6 +87,9 @@ const Resume = ({
     strPhone: objPersonalInfoValues.getPhone(),
   };
 
+  const experienceList = [...arrExperienceValues];
+  const educationList = [...arrEducationValues];
+
   const onPersonalInfoChange = (strPropertyName, strValue) => {
     objPersonalInfoPlain[strPropertyName] = strValue;
 
@@ -105,7 +108,8 @@ const Resume = ({
         objPersonalInfoPlain.strAbout
       ),
       [],
-      []
+      [],
+      false
     );
     onGenerateCV(objResume);
   };
@@ -125,8 +129,8 @@ const Resume = ({
           strAboutValue={objPersonalInfoValues.getAbout()}
           strPhoneValue={objPersonalInfoValues.getPhone()}
         />
-        <Experience />
-        <Education />
+        <Experience experienceList={arrExperienceValues} />
+        <Education educationList={arrEducationValues} />
       </div>
       <div className="flex justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
         <button

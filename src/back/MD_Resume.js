@@ -49,15 +49,26 @@ const MD_Resume = (function () {
    * setCountryName: function(string):void,
    * setCityName: function(string):void
    * }[]} arrEducation
+   * @param {boolean} booIsEdit
    */
-  const shapeResume = function (objPersonalInfo, arrExperience, arrEducation) {
+  const shapeResume = function (
+    objPersonalInfo,
+    arrExperience,
+    arrEducation,
+    booIsEdit
+  ) {
     const objResume = {
       objPersonalInfo: objPersonalInfo,
       arrExperience: arrExperience,
       arrEducation: arrEducation,
+      booIsEdit: booIsEdit,
     };
 
     return {
+      isEdit() {
+        return objResume.booIsEdit;
+      },
+
       getPersonalInfo() {
         return objResume.objPersonalInfo;
       },

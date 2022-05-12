@@ -4,7 +4,6 @@ import { MD_PersonalInfo } from "./back/MD_PersonalInfo";
 import { Credits } from "./components/Credits";
 import { Resume } from "./components/Resume";
 import { ResumeViwer } from "./components/ResumeViwer";
-import { TabHeader } from "./components/TabHeader";
 import uniqid from "uniqid";
 import { MD_Resume } from "./back/MD_Resume";
 
@@ -13,9 +12,10 @@ function App() {
 
   const [resumeState, setResume] = useState(
     MD_Resume.shapeResume(
-      MD_PersonalInfo.shapePersonalInfo(uniqid(), null, null, null, null, ""),
+      MD_PersonalInfo.shapePersonalInfo(uniqid(), "", "", "", "", ""),
       [],
-      []
+      [],
+      true
     )
   );
 
@@ -35,14 +35,14 @@ function App() {
    *
    * @param {string} strTabId
    */
-  const onTabChange = function (strTabId) {
-    console.log("strTabId: ", strTabId);
-    if (strTabId === "1") {
-      setViewEditor(true);
-    } else {
-      setViewEditor(false);
-    }
-  };
+  // const onTabChange = function (strTabId) {
+  //   console.log("strTabId: ", strTabId);
+  //   if (strTabId === "1") {
+  //     setViewEditor(true);
+  //   } else {
+  //     setViewEditor(false);
+  //   }
+  // };
 
   const generateCV = (objResume) => {
     console.log("App.getEmail:", objResume.getPersonalInfo().getEmail());
@@ -51,23 +51,26 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App relative">
       <header></header>
 
       <main>
-        <TabHeader onTabChange={onTabChange} />
+        {/* <TabHeader onTabChange={onTabChange} /> */}
         <div>
-          <div id="tab-1" style={{ display: viewEditor ? "block" : "none" }}>
-            <Resume
-              arrExperienceValues={resumeState.getExperienceList()}
-              arrEducationValues={resumeState.getEducationList()}
-              objPersonalInfoValues={resumeState.getPersonalInfo()}
-              onGenerateCV={generateCV}
-            />
-          </div>
-          <div id="tab-2" style={{ display: viewEditor ? "none" : "block" }}>
-            <ResumeViwer objResume={resumeState} />
-          </div>
+          {(() => {
+            if (resumeState.isEdit()) {
+              return (
+                <Resume
+                  arrExperienceValues={resumeState.getExperienceList()}
+                  arrEducationValues={resumeState.getEducationList()}
+                  objPersonalInfoValues={resumeState.getPersonalInfo()}
+                  onGenerateCV={generateCV}
+                />
+              );
+            } else {
+              return <ResumeViwer objResume={resumeState} />;
+            }
+          })()}
         </div>
       </main>
 
