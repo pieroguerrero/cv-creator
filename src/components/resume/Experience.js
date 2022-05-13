@@ -12,7 +12,7 @@ import uniqid from "uniqid";
  * getCompanyName: function(): string,
  * getStartDate: function(): Date,
  * getEndDate: function(): Date,
- * getCurrentJob: function(): string,
+ * getCurrentJob: function(): boolean,
  * getCountryName: function(): string,
  * getCityName: function(): string,
  * getDescription: function(): string,
@@ -20,7 +20,7 @@ import uniqid from "uniqid";
  * setCompanyName: function(string):void,
  * setStartDate: function(Date):void,
  * setEndDate: function(Date):void,
- * setCurrentJob: function(string):void,
+ * setCurrentJob: function(boolean):void,
  * setCountryName: function(string):void,
  * setCityName: function(string):void,
  * setDescription: function(string):void}[],
@@ -149,7 +149,7 @@ const Experience = ({
    * getCompanyName: function(): string,
    * getStartDate: function(): Date,
    * getEndDate: function(): Date,
-   * getCurrentJob: function(): string,
+   * getCurrentJob: function(): boolean,
    * getCountryName: function(): string,
    * getCityName: function(): string,
    * getDescription: function(): string,
@@ -157,7 +157,7 @@ const Experience = ({
    * setCompanyName: function(string):void,
    * setStartDate: function(Date):void,
    * setEndDate: function(Date):void,
-   * setCurrentJob: function(string):void,
+   * setCurrentJob: function(boolean):void,
    * setCountryName: function(string):void,
    * setCityName: function(string):void,
    * setDescription: function(string):void}} objExperience
@@ -283,7 +283,7 @@ const Experience = ({
               onDataSave={onCreateExperience}
             />
           </div>
-          <div className="flex flex-col gap-5 px-4 py-5 bg-white sm:p-6">
+          <div className="flex flex-col gap-6 px-4 py-5 bg-gray-100 sm:p-6">
             {arrExperienceItems}
           </div>
         </div>
