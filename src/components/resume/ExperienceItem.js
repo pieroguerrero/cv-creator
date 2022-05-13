@@ -1,5 +1,6 @@
 import { DataField } from "./DataField";
 import React from "react";
+import { Popup } from "./Popup";
 
 /**
  *
@@ -37,6 +38,120 @@ const ExperienceItem = ({
   sendEditedExperience,
   sendDeletedExperienceId,
 }) => {
+  const arrPopupInputFields = [
+    {
+      strPropertyName: "strPosition",
+      strFieldTitle: "Position",
+      strHelpText: "",
+      readOnly: false,
+      intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "text",
+        objData: {
+          strPlaceHolder: "",
+          booIsRequired: true,
+          strInitialValue: "",
+        },
+      },
+    },
+    {
+      strPropertyName: "strCompanyName",
+      strFieldTitle: "Company Name",
+      strHelpText: "",
+      readOnly: false,
+      intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "text",
+        objData: {
+          strPlaceHolder: "",
+          booIsRequired: true,
+          strInitialValue: "",
+        },
+      },
+    },
+    {
+      strPropertyName: "strCountryName",
+      strFieldTitle: "Location",
+      strHelpText: "",
+      readOnly: false,
+      intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "text",
+        objData: {
+          strPlaceHolder: "City, Country",
+          booIsRequired: true,
+          strInitialValue: "",
+        },
+      },
+    },
+    {
+      strPropertyName: "booCurrentJob",
+      strFieldTitle: "Current Job",
+      strHelpText: "",
+      readOnly: false,
+      intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "checkbox",
+        objData: { booChecked: false },
+      },
+    },
+    {
+      strPropertyName: "dtStartDate",
+      strFieldTitle: "Start date",
+      strHelpText: "",
+      readOnly: false,
+      intColSpan: 1,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "date",
+        objData: {
+          booIsRequired: true,
+          dtInitialValue: null,
+          dtMinDate: null,
+          dtMaxDate: null,
+        },
+      },
+    },
+    {
+      strPropertyName: "dtEndDate",
+      strFieldTitle: "End date",
+      strHelpText: "",
+      readOnly: false,
+      intColSpan: 1,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "date",
+        objData: {
+          booIsRequired: false,
+          dtInitialValue: null,
+          dtMinDate: null,
+          dtMaxDate: null,
+        },
+      },
+    },
+    {
+      strPropertyName: "strDescription",
+      strFieldTitle: "Description",
+      strHelpText: "",
+      readOnly: false,
+      intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "textarea",
+        objData: {
+          strPlaceHolder: "",
+          booIsRequired: true,
+          intCols: null,
+          intRows: 3,
+        },
+      },
+    },
+  ];
+
   /**
    *
    * @param {Date} dtStartDate
@@ -50,8 +165,13 @@ const ExperienceItem = ({
       (booCurrentJob ? "Present" : dtEndDate.toDateString())
     );
   };
+
+  const editeExperience = (objExperience) => {
+    console.log(objExperience);
+  };
+
   return (
-    <div className="flex justify-between px-4 py-5 bg-white sm:p-6 shadow-xl transform transition-all sm:rounded-md">
+    <div className="flex justify-between px-4 py-5 bg-white sm:p-6 shadow-xl sm:rounded-md">
       <div className=" flex flex-col">
         <p className="text-base leading-6 font-medium text-gray-900">
           {experienceInfo.getPosition()}
@@ -74,7 +194,13 @@ const ExperienceItem = ({
         </p>
       </div>
       <div>
-        <button>Edit</button>
+        <Popup
+          strMode="edit"
+          strOpeningButtonTitle="Edit"
+          strPopupTitle="Edit Experience"
+          arrFields={arrPopupInputFields}
+          onDataSave={editeExperience}
+        />
       </div>
     </div>
   );

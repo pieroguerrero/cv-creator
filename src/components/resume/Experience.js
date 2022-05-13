@@ -59,73 +59,113 @@ const Experience = ({
     {
       strPropertyName: "strPosition",
       strFieldTitle: "Position",
-      strPlaceHolder: "",
-      booIsRequired: true,
-      strInputType: "text",
       strHelpText: "",
       readOnly: false,
       intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "text",
+        objData: {
+          strPlaceHolder: "",
+          booIsRequired: true,
+          strInitialValue: "",
+        },
+      },
     },
     {
       strPropertyName: "strCompanyName",
       strFieldTitle: "Company Name",
-      strPlaceHolder: "",
-      booIsRequired: true,
-      strInputType: "text",
       strHelpText: "",
       readOnly: false,
       intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "text",
+        objData: {
+          strPlaceHolder: "",
+          booIsRequired: true,
+          strInitialValue: "",
+        },
+      },
     },
     {
       strPropertyName: "strCountryName",
       strFieldTitle: "Location",
-      strPlaceHolder: "City, Conuntry",
-      booIsRequired: true,
-      strInputType: "text",
       strHelpText: "",
       readOnly: false,
       intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "text",
+        objData: {
+          strPlaceHolder: "City, Country",
+          booIsRequired: true,
+          strInitialValue: "",
+        },
+      },
     },
     {
       strPropertyName: "booCurrentJob",
       strFieldTitle: "Current Job",
-      strPlaceHolder: "",
-      booIsRequired: true,
-      strInputType: "text",
       strHelpText: "",
       readOnly: false,
       intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "checkbox",
+        objData: { booChecked: false },
+      },
     },
     {
       strPropertyName: "dtStartDate",
       strFieldTitle: "Start date",
-      strPlaceHolder: "",
-      booIsRequired: true,
-      strInputType: "date",
       strHelpText: "",
       readOnly: false,
       intColSpan: 1,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "date",
+        objData: {
+          booIsRequired: true,
+          dtInitialValue: null,
+          dtMinDate: null,
+          dtMaxDate: null,
+        },
+      },
     },
     {
       strPropertyName: "dtEndDate",
       strFieldTitle: "End date",
-      strPlaceHolder: "",
-      booIsRequired: false,
-      strInputType: "date",
       strHelpText: "",
       readOnly: false,
       intColSpan: 1,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "date",
+        objData: {
+          booIsRequired: false,
+          dtInitialValue: null,
+          dtMinDate: null,
+          dtMaxDate: null,
+        },
+      },
     },
     {
       strPropertyName: "strDescription",
       strFieldTitle: "Description",
-      strPlaceHolder:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      booIsRequired: true,
-      strInputType: "textarea",
       strHelpText: "",
       readOnly: false,
       intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "textarea",
+        objData: {
+          strPlaceHolder: "",
+          booIsRequired: true,
+          intCols: null,
+          intRows: 3,
+        },
+      },
     },
   ];
 
@@ -279,8 +319,8 @@ const Experience = ({
               strMode={"create"}
               strOpeningButtonTitle={"Add Experience"}
               strPopupTitle={"New Experience"}
-              arrFields={arrPopupInputFields}
               onDataSave={onCreateExperience}
+              arrFields={arrPopupInputFields}
             />
           </div>
           <div className="flex flex-col gap-6 px-4 py-5 bg-gray-100 sm:p-6">

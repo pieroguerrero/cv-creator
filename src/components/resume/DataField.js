@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 
 /**
  *
@@ -20,25 +19,16 @@ const DataField = ({
   strInputType = "text",
   strHelpText = "",
 }) => {
-  DataField.propTypes = {
-    strFieldName: PropTypes.string.isRequired,
-    booIsRequired: PropTypes.bool.isRequired,
-    onValueChange: PropTypes.func.isRequired,
-    strInitialValue: PropTypes.string.isRequired,
-    strInputType: PropTypes.string.isRequired,
-    strHelpText: PropTypes.string.isRequired,
-  };
-
   console.log("DataField: Loaded!!!!!!!!!!!!!!!");
-  const objTest = { first: "", second: "" };
+  //const objTest = { first: "", second: "" };
   const inputField = useRef(null);
   useEffect(() => {
     inputField.current.required = booIsRequired;
   });
 
   const onFocusLost = (e) => {
-    objTest.first += e.currentTarget.value;
-    console.log("myObj.first:", objTest.first, e.currentTarget.value);
+    //objTest.first += e.currentTarget.value;
+    //console.log("myObj.first:", objTest.first, e.currentTarget.value);
 
     onValueChange(
       e.currentTarget.checkValidity() ? e.currentTarget.value : null

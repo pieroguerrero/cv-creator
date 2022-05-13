@@ -88,6 +88,9 @@ const Resume = ({
 
     console.log(objPersonalInfoPlain.strFirsName);
     console.log(objPersonalInfoPlain.strPhone);
+    console.log(objPersonalInfoPlain.strEmail);
+    console.log(objPersonalInfoPlain.strLastName);
+    console.log(objPersonalInfoPlain.strAbout);
   };
 
   const generateCV = () => {

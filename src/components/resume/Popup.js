@@ -1,19 +1,63 @@
 import React, { useRef } from "react";
+import { CheckBoxField } from "./CheckBoxField";
 import { DataField } from "./DataField";
+
+//Options: 'create' or 'edit'
+
+/*
+Definitions
+
+objFieldType: {
+  strType: "text",
+  objData: {
+    strPlaceHolder: "",
+    booIsRequired: true,
+    strInitialValue: "",
+  },
+}
+
+objFieldType: {
+  strType: "checkbox",
+  objData: { booChecked: false },
+}
+
+objFieldType: {
+  strType: "date",
+  objData: {
+    booIsRequired: true,
+    dtInitialValue: null,
+    dtMinDate: null,
+    dtMaxDate: null,
+  },
+}
+
+objFieldType: {
+  strType: "textarea",
+  objData: {
+    strPlaceHolder: "",
+    booIsRequired: true,
+    intCols: null,
+    intRows: 3,
+  },
+}
+*/
 
 /**
  *
- * @param {{strMode:string,
+ * @param {{
+ * strMode:string,
  * strOpeningButtonTitle:string,
  * strPopupTitle:string,
- * arrFields:{strPropertyName: string,
+ * arrFields:{
+ * strPropertyName: string,
  * strFieldTitle: string,
- * strPlaceHolder: string,
- * booIsRequired: boolean,
- * strInputType: string,
  * strHelpText: string,
  * readOnly: boolean,
- * intColSpan: number,}[],
+ * intColSpan: number,
+ * strValidationMessage: string,
+ * objFieldType:{
+ * strType:string,
+ * objData:Object}}[],
  * onDataSave:(objData: object)=>void}} param0
  * @returns
  */
@@ -25,6 +69,11 @@ const Popup = ({
   onDataSave,
 }) => {
   const frmForm = useRef(null);
+
+  const MODE = {
+    EDIT: "edit",
+    CREATE: "create",
+  };
 
   const onButtonClick = (strPopUpMode) => {
     frmForm.current.classList.remove("hidden");
@@ -40,27 +89,58 @@ const Popup = ({
 
   /**
    *
-   * @param {{strPropertyName: string,
+   * @param {string} strPropertyName
+   * @param {boolean} booValue
+   */
+  const onCheckChange = function (strPropertyName, booValue) {
+    objPopUpValues[strPropertyName] = booValue;
+
+    console.log("PopUp.onBlurField:", objPopUpValues);
+  };
+
+  /**
+   *
+   * @param {{
+   * strPropertyName: string,
    * strFieldTitle: string,
-   * strPlaceHolder: string,
-   * booIsRequired: boolean,
-   * strInputType: string,
    * strHelpText: string,
    * readOnly: boolean,
-   * intColSpan: number,}[]} arrElements
+   * intColSpan: number,
+   * strValidationMessage: string,
+   * objFieldType:{
+   * strType:string,
+   * objData:Object}}[]} arrElements
    * @returns
    */
   const getHtmlElements = (arrElements) => {
     const arrHtmlElements = arrElements.map((objField, index) => (
       <div key={index}>
-        <DataField
-          strFieldName={objField.strFieldTitle}
-          strHelpText={objField.strHelpText}
-          strInitialValue={""}
-          strInputType={objField.strInputType}
-          booIsRequired={objField.booIsRequired}
-          onValueChange={onBlurField.bind(null, objField.strPropertyName)}
-        />
+        {(() => {
+          if (objField.objFieldType.strType === "checkbox") {
+            return (
+              <CheckBoxField
+                strFieldName={objField.strFieldTitle}
+                booChecked={objField.objFieldType.objData.booChecked}
+                strHelpText={objField.strHelpText}
+                sendCheckChange={onCheckChange.bind(
+                  null,
+                  objField.strPropertyName
+                )}
+              />
+            );
+          } else {
+            return (
+              <DataField
+                strFieldName={objField.strFieldTitle}
+                strHelpText={objField.strHelpText}
+                strInitialValue={objField.objFieldType.objData.strInitialValue}
+                strInputType={objField.objFieldType.strType}
+                booIsRequired={objField.objFieldType.objData.booIsRequired}
+                onValueChange={onBlurField.bind(null, objField.strPropertyName)}
+              />
+            );
+          }
+        })()}
       </div>
     ));
 
@@ -69,19 +149,27 @@ const Popup = ({
 
   /**
    *
-   * @param {{strPropertyName: string,
+   * @param {{
+   * strPropertyName: string,
    * strFieldTitle: string,
-   * strPlaceHolder: string,
-   * booIsRequired: boolean,
-   * strInputType: string,
    * strHelpText: string,
    * readOnly: boolean,
-   * intColSpan: number,}[]} arrFields
+   * intColSpan: number,
+   * strValidationMessage: string,
+   * objFieldType:{
+   * strType:string,
+   * objData:Object}}[]} arrFields
    * @returns
    */
   const allRequiredExist = (arrFields) => {
     return arrFields.reduce((result, objField) => {
-      if (objField.booIsRequired) {
+      if (
+        Object.prototype.hasOwnProperty.call(
+          objField.objFieldType.objData,
+          "booIsRequired"
+        ) &&
+        objField.objFieldType.objData.booIsRequired
+      ) {
         return Object.prototype.hasOwnProperty.call(
           objPopUpValues,
           objField.strPropertyName
@@ -104,15 +192,31 @@ const Popup = ({
     e.preventDefault();
   };
 
+  const getOpenerButton = (strMode) => {
+    if (strMode === MODE.CREATE) {
+      return (
+        <button
+          onClick={onButtonClick.bind(null, MODE.CREATE)}
+          type="button"
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          {strOpeningButtonTitle}
+        </button>
+      );
+    } else {
+      return (
+        <button onClick={onButtonClick.bind(null, MODE.EDIT)} type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
+            <path d="M4.625 19.4H6.475L15.95 9.975L15 9.025L14.05 8.075L4.625 17.55ZM1.975 22.05V16.425L15.95 2.5Q16.725 1.725 17.812 1.725Q18.9 1.725 19.675 2.5L21.525 4.375Q22.3 5.15 22.3 6.225Q22.3 7.3 21.525 8.075L7.6 22.05ZM19.7 6.225 17.8 4.325ZM15.95 9.975 15 9.025 14.05 8.075 15.95 9.975Z" />
+          </svg>
+        </button>
+      );
+    }
+  };
+
   return (
     <>
-      <button
-        onClick={onButtonClick.bind(null, strMode)}
-        type="button"
-        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        {strOpeningButtonTitle}
-      </button>
+      {getOpenerButton(strMode)}
       <form
         autoComplete="none"
         ref={frmForm}
