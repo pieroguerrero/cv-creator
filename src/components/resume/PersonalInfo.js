@@ -1,8 +1,6 @@
 import { DataField } from "./DataField";
 // import uniqid from "uniqid";
 import React, { useRef } from "react";
-import { SampleComponent } from "./SampleComponent";
-import PropTypes from "prop-types";
 
 /**
  *
@@ -31,18 +29,6 @@ const PersonalInfo = ({
   strPhoneValue,
   strAboutValue,
 }) => {
-  PersonalInfo.propTypes = {
-    onFirstNameChange: PropTypes.func.isRequired,
-    onLastNameChange: PropTypes.func.isRequired,
-    onEmailChange: PropTypes.func.isRequired,
-    onPhoneChange: PropTypes.func.isRequired,
-    onAboutChange: PropTypes.func.isRequired,
-    strFirstNameValue: PropTypes.string.isRequired,
-    strLastNameValue: PropTypes.string.isRequired,
-    strEmailValue: PropTypes.string.isRequired,
-    strPhoneValue: PropTypes.string.isRequired,
-    strAboutValue: PropTypes.string.isRequired,
-  };
   const frmForm = useRef(null);
 
   //const objTest = { first: "", second: "" };

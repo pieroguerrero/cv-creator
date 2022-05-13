@@ -52,8 +52,6 @@ const DataField = ({
         <textarea
           ref={inputField}
           className="peer rounded-md border-[1px] border-solid shadow-inner text-[100%] p-1 pl-2 w-full invalid:border-red-500 invalid:placeholder-shown:border-[#e5e7eb]"
-          name="input-field"
-          id="input-field"
           cols={20}
           rows={3}
           placeholder=" "

@@ -1,18 +1,20 @@
 import React, { useRef } from "react";
+import { DataField } from "./DataField";
 
 /**
  *
  * @param {{strMode:string,
  * strOpeningButtonTitle:string,
  * strPopupTitle:string,
- * arrFields:{strFieldName: string,
+ * arrFields:{strPropertyName: string,
  * strFieldTitle: string,
  * strPlaceHolder: string,
  * booIsRequired: boolean,
  * strInputType: string,
  * strHelpText: string,
- * intPosition: number,
- * intColSpan: number,}[]}} param0
+ * readOnly: boolean,
+ * intColSpan: number,}[],
+ * onDataSave:(objData: object)=>void}} param0
  * @returns
  */
 const Popup = ({
@@ -20,11 +22,86 @@ const Popup = ({
   strOpeningButtonTitle,
   strPopupTitle,
   arrFields,
+  onDataSave,
 }) => {
-  const divPopUp = useRef(null);
+  const frmForm = useRef(null);
 
   const onButtonClick = (strPopUpMode) => {
-    divPopUp.current.classList.remove("hidden");
+    frmForm.current.classList.remove("hidden");
+  };
+
+  const objPopUpValues = {};
+
+  const onBlurField = function (strPropertyName, strValue) {
+    objPopUpValues[strPropertyName] = strValue;
+
+    console.log("PopUp.onBlurField:", objPopUpValues);
+  };
+
+  /**
+   *
+   * @param {{strPropertyName: string,
+   * strFieldTitle: string,
+   * strPlaceHolder: string,
+   * booIsRequired: boolean,
+   * strInputType: string,
+   * strHelpText: string,
+   * readOnly: boolean,
+   * intColSpan: number,}[]} arrElements
+   * @returns
+   */
+  const getHtmlElements = (arrElements) => {
+    const arrHtmlElements = arrElements.map((objField, index) => (
+      <div key={index}>
+        <DataField
+          strFieldName={objField.strFieldTitle}
+          strHelpText={objField.strHelpText}
+          strInitialValue={""}
+          strInputType={objField.strInputType}
+          booIsRequired={objField.booIsRequired}
+          onValueChange={onBlurField.bind(null, objField.strPropertyName)}
+        />
+      </div>
+    ));
+
+    return <>{arrHtmlElements}</>;
+  };
+
+  /**
+   *
+   * @param {{strPropertyName: string,
+   * strFieldTitle: string,
+   * strPlaceHolder: string,
+   * booIsRequired: boolean,
+   * strInputType: string,
+   * strHelpText: string,
+   * readOnly: boolean,
+   * intColSpan: number,}[]} arrFields
+   * @returns
+   */
+  const allRequiredExist = (arrFields) => {
+    return arrFields.reduce((result, objField) => {
+      if (objField.booIsRequired) {
+        return Object.prototype.hasOwnProperty.call(
+          objPopUpValues,
+          objField.strPropertyName
+        );
+      } else {
+        return true;
+      }
+    }, false);
+  };
+
+  const onSave = (e) => {
+    //console.log(e.currentTarget);
+    if (frmForm.current.checkValidity()) {
+      if (allRequiredExist(arrFields)) {
+        onDataSave(objPopUpValues);
+        frmForm.current.classList.add("hidden");
+      }
+    }
+
+    e.preventDefault();
   };
 
   return (
@@ -36,8 +113,9 @@ const Popup = ({
       >
         {strOpeningButtonTitle}
       </button>
-      <div
-        ref={divPopUp}
+      <form
+        autoComplete="none"
+        ref={frmForm}
         className="absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 hidden"
       >
         <div className="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -56,21 +134,27 @@ const Popup = ({
                 </div>
               </div>
             </div>
-            <div>{"Content"}</div>
+            <div className="flex flex-col gap-2">
+              {getHtmlElements(arrFields)}
+            </div>
           </div>
           <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <button className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+            <button
+              onClick={onSave}
+              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+            >
               Save
             </button>
             <button
-              onClick={() => divPopUp.current.classList.add("hidden")}
+              type="button"
+              onClick={() => frmForm.current.classList.add("hidden")}
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Cancel
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </>
   );
 };

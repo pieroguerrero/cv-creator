@@ -1,7 +1,8 @@
 import { ExperienceItem } from "./ExperienceItem";
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState } from "react";
 import { Popup } from "./Popup";
+import { MD_Experience } from "../../back/MD_Experience";
+import uniqid from "uniqid";
 
 /**
  *
@@ -9,112 +10,256 @@ import { Popup } from "./Popup";
  * getId: function(): string,
  * getPosition: function(): string,
  * getCompanyName: function(): string,
- * getStartDate: function(): string,
- * getEndDate: function(): string,
+ * getStartDate: function(): Date,
+ * getEndDate: function(): Date,
  * getCurrentJob: function(): string,
  * getCountryName: function(): string,
  * getCityName: function(): string,
  * getDescription: function(): string,
  * setPosition: function(string):void,
  * setCompanyName: function(string):void,
- * setStartDate: function(string):void,
- * setEndDate: function(string):void,
+ * setStartDate: function(Date):void,
+ * setEndDate: function(Date):void,
  * setCurrentJob: function(string):void,
  * setCountryName: function(string):void,
  * setCityName: function(string):void,
- * setDescription: function(string):void}[]}} param0
+ * setDescription: function(string):void}[],
+ * sendNewExperienceToResume: function(Object):void,
+ * sendEditedExperienceToResume: function(Object):void,
+ * sendDeletedExperienceIdToResume: function(string):void
+ * }} param0
  * @returns
  */
-const Experience = ({ experienceList }) => {
-  Experience.propTypes = {
-    experienceList: PropTypes.array,
+const Experience = ({
+  experienceList,
+  sendNewExperienceToResume,
+  sendEditedExperienceToResume,
+  sendDeletedExperienceIdToResume,
+}) => {
+  const getExperienceJSXItem = (expItem) => {
+    return (
+      <div key={expItem.getId()}>
+        <ExperienceItem
+          experienceInfo={expItem}
+          sendEditedExperience={onEditExperience.bind(null, expItem.getId())}
+          sendDeletedExperienceId={onDeleteExperience.bind(
+            null,
+            expItem.getId()
+          )}
+        />
+      </div>
+    );
   };
 
-  const arrExperienceItems = experienceList.map((expItem) => (
-    <ExperienceItem key={expItem.getId()} experienceInfo={expItem} />
-  ));
+  const [arrExperienceItems, setArrExperienceItems] = useState(
+    experienceList.map((expItem) => getExperienceJSXItem(expItem))
+  );
 
   const arrPopupInputFields = [
     {
-      strFieldName: "strPosition",
+      strPropertyName: "strPosition",
       strFieldTitle: "Position",
       strPlaceHolder: "",
       booIsRequired: true,
       strInputType: "text",
       strHelpText: "",
-      intPosition: 1,
+      readOnly: false,
       intColSpan: 2,
     },
     {
-      strFieldName: "strCompanyName",
+      strPropertyName: "strCompanyName",
       strFieldTitle: "Company Name",
       strPlaceHolder: "",
       booIsRequired: true,
       strInputType: "text",
       strHelpText: "",
-      intPosition: 2,
+      readOnly: false,
       intColSpan: 2,
     },
     {
-      strFieldName: "strCountryName",
+      strPropertyName: "strCountryName",
       strFieldTitle: "Location",
       strPlaceHolder: "City, Conuntry",
       booIsRequired: true,
       strInputType: "text",
       strHelpText: "",
-      intPosition: 3,
+      readOnly: false,
       intColSpan: 2,
     },
     {
-      strFieldName: "booCurrentJob",
+      strPropertyName: "booCurrentJob",
       strFieldTitle: "Current Job",
       strPlaceHolder: "",
       booIsRequired: true,
       strInputType: "text",
       strHelpText: "",
-      intPosition: 4,
+      readOnly: false,
       intColSpan: 2,
     },
     {
-      strFieldName: "dtStartDate",
+      strPropertyName: "dtStartDate",
       strFieldTitle: "Start date",
       strPlaceHolder: "",
       booIsRequired: true,
-      strInputType: "text",
+      strInputType: "date",
       strHelpText: "",
-      intPosition: 5,
+      readOnly: false,
       intColSpan: 1,
     },
     {
-      strFieldName: "dtEndDate",
+      strPropertyName: "dtEndDate",
       strFieldTitle: "End date",
       strPlaceHolder: "",
       booIsRequired: false,
-      strInputType: "text",
+      strInputType: "date",
       strHelpText: "",
-      intPosition: 6,
+      readOnly: false,
       intColSpan: 1,
     },
     {
-      strFieldName: "strDescription",
+      strPropertyName: "strDescription",
       strFieldTitle: "Description",
       strPlaceHolder:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       booIsRequired: true,
       strInputType: "textarea",
       strHelpText: "",
-      intPosition: 7,
+      readOnly: false,
       intColSpan: 2,
     },
   ];
 
-  const saveNewExperience = () => {
-    //Pass the experience to Resume
-    //recalculate de arrExperienceItems variable with push()
+  //TODO:Sort the array
+  const sortExperienceArray = (arrExpItems) => {
+    return arrExpItems;
   };
 
-  /*TODO: 1: Coppiar el prop a una variable local, 2: cuando se agrege un un nuevo ExperienceItem, 
-  //2.1: Enviar ese item al Resumen, 2.2: recalcular la lista de ExpItems para que rederice*/
+  const addNewExperienceToState = (objExperience) => {
+    const arrTempExperienceItems = [...arrExperienceItems];
+    arrTempExperienceItems.push(getExperienceJSXItem(objExperience));
+
+    setArrExperienceItems(sortExperienceArray(arrTempExperienceItems));
+  };
+
+  /**
+   *
+   * @param {{
+   * getId: function(): string,
+   * getPosition: function(): string,
+   * getCompanyName: function(): string,
+   * getStartDate: function(): Date,
+   * getEndDate: function(): Date,
+   * getCurrentJob: function(): string,
+   * getCountryName: function(): string,
+   * getCityName: function(): string,
+   * getDescription: function(): string,
+   * setPosition: function(string):void,
+   * setCompanyName: function(string):void,
+   * setStartDate: function(Date):void,
+   * setEndDate: function(Date):void,
+   * setCurrentJob: function(string):void,
+   * setCountryName: function(string):void,
+   * setCityName: function(string):void,
+   * setDescription: function(string):void}} objExperience
+   */
+  const editExperienceOnState = (objExperience) => {
+    const arrTempExperienceItems = [...arrExperienceItems];
+
+    const intIndex = arrTempExperienceItems.findIndex(
+      (itemJSX) => itemJSX.key === objExperience.getId()
+    );
+
+    if (intIndex >= 0) {
+      arrTempExperienceItems[intIndex] = getExperienceJSXItem(objExperience);
+      setArrExperienceItems(sortExperienceArray(arrTempExperienceItems));
+    }
+  };
+
+  /**
+   *
+   * @param {{
+   * strPosition:string,
+   * strCompanyName:string,
+   * strCountryName:string,
+   * booCurrentJob:string,
+   * dtStartDate:string,
+   * strDescription:string }} objExperienceItem
+   */
+  const onEditExperience = (strExperienceId, objExperienceItem) => {
+    const dtEndDate = Object.prototype.hasOwnProperty.call(
+      objExperienceItem,
+      "dtEndDate"
+    )
+      ? new Date(objExperienceItem.dtEndDate)
+      : null;
+
+    const objExperience = MD_Experience.shapeExperience(
+      strExperienceId,
+      objExperienceItem.strPosition,
+      objExperienceItem.strCompanyName,
+      new Date(objExperienceItem.dtStartDate),
+      dtEndDate,
+      objExperienceItem.booCurrentJob ? true : false, //TODO: to change when a new Checkbox field is created
+      objExperienceItem.strCountryName,
+      "",
+      objExperienceItem.strDescription
+    );
+
+    editExperienceOnState(objExperience);
+
+    sendEditedExperienceToResume(objExperience);
+  };
+
+  /**
+   *
+   * @param {{
+   * strPosition:string,
+   * strCompanyName:string,
+   * strCountryName:string,
+   * booCurrentJob:string,
+   * dtStartDate:string,
+   * strDescription:string }} objPopUpExperience
+   */
+  const onCreateExperience = (objPopUpExperience) => {
+    console.log("Esperience.onCreateExperience", objPopUpExperience);
+
+    const dtEndDate = Object.prototype.hasOwnProperty.call(
+      objPopUpExperience,
+      "dtEndDate"
+    )
+      ? new Date(objPopUpExperience.dtEndDate)
+      : null;
+
+    const objExperience = MD_Experience.shapeExperience(
+      uniqid(),
+      objPopUpExperience.strPosition,
+      objPopUpExperience.strCompanyName,
+      new Date(objPopUpExperience.dtStartDate),
+      dtEndDate,
+      objPopUpExperience.booCurrentJob ? true : false, //TODO: to change when a new Checkbox field is created
+      objPopUpExperience.strCountryName,
+      "",
+      objPopUpExperience.strDescription
+    );
+
+    addNewExperienceToState(objExperience);
+
+    sendNewExperienceToResume(objExperience);
+  };
+
+  /**
+   *
+   * @param {string} strExperienceId
+   */
+  const onDeleteExperience = (strExperienceId) => {
+    const arrTempExperienceItems = [...arrExperienceItems];
+
+    setArrExperienceItems(
+      arrTempExperienceItems.filter((ele) => ele.key === strExperienceId)
+    );
+
+    sendDeletedExperienceIdToResume(strExperienceId);
+  };
 
   return (
     <div className="bg-gray-100">
@@ -135,6 +280,7 @@ const Experience = ({ experienceList }) => {
               strOpeningButtonTitle={"Add Experience"}
               strPopupTitle={"New Experience"}
               arrFields={arrPopupInputFields}
+              onDataSave={onCreateExperience}
             />
           </div>
           <div className="flex flex-col gap-5 px-4 py-5 bg-white sm:p-6">

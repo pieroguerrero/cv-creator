@@ -2,7 +2,6 @@ import { PersonalInfo } from "./resume/PersonalInfo";
 import { Experience } from "./resume/Experience";
 import { Education } from "./resume/Education";
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { MD_Resume } from "../back/MD_Resume";
 import { MD_PersonalInfo } from "../back/MD_PersonalInfo";
 import uniqid from "uniqid";
@@ -14,16 +13,16 @@ import uniqid from "uniqid";
  * getId: function(): string,
  * getPosition: function(): string,
  * getCompanyName: function(): string,
- * getStartDate: function(): string,
- * getEndDate: function(): string,
+ * getStartDate: function(): Date,
+ * getEndDate: function(): Date,
  * getCurrentJob: function(): string,
  * getCountryName: function(): string,
  * getCityName: function(): string,
  * getDescription: function(): string,
  * setPosition: function(string):void,
  * setCompanyName: function(string):void,
- * setStartDate: function(string):void,
- * setEndDate: function(string):void,
+ * setStartDate: function(Date):void,
+ * setEndDate: function(Date):void,
  * setCurrentJob: function(string):void,
  * setCountryName: function(string):void,
  * setCityName: function(string):void,
@@ -32,15 +31,15 @@ import uniqid from "uniqid";
  * getId: function(): string,
  * getDegree: function(): string,
  * getInstitutionName: function(): string,
- * getStartDate: function(): string,
- * getEndDate: function(): string,
+ * getStartDate: function(): Date,
+ * getEndDate: function(): Date,
  * getCurrent: function(): string,
  * getCountryName: function(): string,
  * getCityName: function(): string,
  * setDegree: function(string):void,
  * setInstitutionName: function(string):void,
- * setStartDate: function(string):void,
- * setEndDate: function(string):void,
+ * setStartDate: function(Date):void,
+ * setEndDate: function(Date):void,
  * setCurrent: function(string):void,
  * setCountryName: function(string):void,
  * setCityName: function(string):void}[],
@@ -65,12 +64,6 @@ const Resume = ({
   objPersonalInfoValues,
   onGenerateCV,
 }) => {
-  Resume.propTypes = {
-    arrExperienceValues: PropTypes.array,
-    arrEducationValues: PropTypes.array,
-    objPersonalInfoValues: PropTypes.object.isRequired,
-    onGenerateCV: PropTypes.func.isRequired,
-  };
   //TODO: to create the ResumeObject and send it to the App so it can be printed
   //TODO: include de ABOUT in the Personal infor, change it to MainInfo
   const [resumeState, setResume] = useState({
@@ -114,6 +107,10 @@ const Resume = ({
     onGenerateCV(objResume);
   };
 
+  const getNewExperience = (objExperience) => {};
+  const getEditedExperience = (objExperience) => {};
+  const getDeletedExperienceId = (strExperienceId) => {};
+
   return (
     <div className="flex flex-col gap-4">
       <div>
@@ -129,7 +126,12 @@ const Resume = ({
           strAboutValue={objPersonalInfoValues.getAbout()}
           strPhoneValue={objPersonalInfoValues.getPhone()}
         />
-        <Experience experienceList={arrExperienceValues} />
+        <Experience
+          experienceList={arrExperienceValues}
+          sendNewExperienceToResume={getNewExperience}
+          sendEditedExperienceToResume={getEditedExperience}
+          sendDeletedExperienceIdToResume={getDeletedExperienceId}
+        />
         <Education educationList={arrEducationValues} />
       </div>
       <div className="flex justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
