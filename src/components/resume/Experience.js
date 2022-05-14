@@ -323,6 +323,7 @@ const Experience = ({
               strPopupTitle={"New Experience"}
               onDataSave={onCreateExperience}
               arrFields={arrPopupInputFields}
+              strSaveButtonTitle={"Add"}
             />
           </div>
           <div className="flex flex-col gap-6 px-4 py-5 bg-gray-100 sm:p-6">

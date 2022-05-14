@@ -201,6 +201,7 @@ const ExperienceItem = ({
           strPopupTitle="Edit Experience"
           arrFields={arrPopupInputFields}
           onDataSave={editeExperience}
+          strSaveButtonTitle={"Accept"}
         />
       </div>
     </div>
