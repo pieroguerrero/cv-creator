@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import uniqid from "uniqid";
 
 /**
  *
@@ -19,12 +20,11 @@ const DataField = ({
   strInputType = "text",
   strHelpText = "",
 }) => {
-  console.log("DataField: Loaded!!!!!!!!!!!!!!!");
-  //const objTest = { first: "", second: "" };
   const inputField = useRef(null);
   useEffect(() => {
     inputField.current.required = booIsRequired;
   });
+  const strFieldId = uniqid("input-text-");
 
   const onFocusLost = (e) => {
     //objTest.first += e.currentTarget.value;
@@ -40,6 +40,7 @@ const DataField = ({
     if (strInputType === "textarea") {
       return (
         <textarea
+          id={strFieldId}
           ref={inputField}
           className="peer rounded-md border-[1px] border-solid shadow-inner text-[100%] p-1 pl-2 w-full invalid:border-red-500 invalid:placeholder-shown:border-[#e5e7eb]"
           cols={20}
@@ -53,6 +54,7 @@ const DataField = ({
     } else {
       return (
         <input
+          id={strFieldId}
           ref={inputField}
           className="peer rounded-md border-[1px] border-solid shadow-inner text-[100%] p-1 pl-2 w-full invalid:border-red-500 invalid:placeholder-shown:border-[#e5e7eb]"
           type={strInputType}
@@ -68,7 +70,7 @@ const DataField = ({
   const getHelperText = () => {
     if (strHelpText && strHelpText.length) {
       return (
-        <label htmlFor="input-field" className="mt-2 text-sm text-gray-500">
+        <label htmlFor={strFieldId} className="mt-2 text-sm text-gray-500">
           {strHelpText}
         </label>
       );
@@ -79,7 +81,7 @@ const DataField = ({
     <div className="flex flex-col gap-1">
       <label
         className="block text-sm font-medium text-gray-700"
-        htmlFor="input-field"
+        htmlFor={strFieldId}
       >
         {strFieldName}
       </label>

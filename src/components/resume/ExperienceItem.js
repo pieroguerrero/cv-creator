@@ -1,4 +1,3 @@
-import { DataField } from "./DataField";
 import React from "react";
 import { Popup } from "./Popup";
 
@@ -113,6 +112,7 @@ const ExperienceItem = ({
           dtInitialValue: null,
           dtMinDate: null,
           dtMaxDate: null,
+          strFieldType: "date",
         },
       },
     },
@@ -130,6 +130,7 @@ const ExperienceItem = ({
           dtInitialValue: null,
           dtMinDate: null,
           dtMaxDate: null,
+          strFieldType: "date",
         },
       },
     },

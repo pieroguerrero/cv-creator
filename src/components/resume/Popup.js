@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { CheckBoxField } from "./CheckBoxField";
 import { DataField } from "./DataField";
+import { DateTimeField } from "./DateTimeField";
 
 //Options: 'create' or 'edit'
 
@@ -69,6 +70,9 @@ const Popup = ({
   onDataSave,
 }) => {
   const frmForm = useRef(null);
+  useEffect(() => {
+    frmForm.current.reset();
+  });
 
   const MODE = {
     EDIT: "edit",
@@ -87,6 +91,12 @@ const Popup = ({
     console.log("PopUp.onBlurField:", objPopUpValues);
   };
 
+  const onDateChange = function (strPropertyName, dtValue) {
+    objPopUpValues[strPropertyName] = dtValue;
+
+    console.log("PopUp.onDateChange:", objPopUpValues);
+  };
+
   /**
    *
    * @param {string} strPropertyName
@@ -95,7 +105,7 @@ const Popup = ({
   const onCheckChange = function (strPropertyName, booValue) {
     objPopUpValues[strPropertyName] = booValue;
 
-    console.log("PopUp.onBlurField:", objPopUpValues);
+    console.log("PopUp.onCheckChange:", objPopUpValues);
   };
 
   /**
@@ -123,6 +133,22 @@ const Popup = ({
                 booChecked={objField.objFieldType.objData.booChecked}
                 strHelpText={objField.strHelpText}
                 sendCheckChange={onCheckChange.bind(
+                  null,
+                  objField.strPropertyName
+                )}
+              />
+            );
+          } else if (objField.objFieldType.strType === "date") {
+            return (
+              <DateTimeField
+                strFieldName={objField.strFieldTitle}
+                booIsRequired={objField.objFieldType.objData.booIsRequired}
+                strInitialValue={objField.objFieldType.objData.strInitialValue}
+                strHelpText={objField.strHelpText}
+                strMinDate={objField.objFieldType.objData.dtMinDate}
+                strMaxDate={objField.objFieldType.objData.dtMaxDate}
+                strFieldType={objField.objFieldType.objData.strFieldType}
+                onValueChange={onDateChange.bind(
                   null,
                   objField.strPropertyName
                 )}
