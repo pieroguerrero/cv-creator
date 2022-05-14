@@ -29,130 +29,16 @@ import { Popup } from "./Popup";
  * booCurrentJob:string,
  * dtStartDate:string,
  * strDescription:string })=>void,
- * sendDeletedExperienceId:(strId:string)=>void}} param0
+ * sendDeletedExperienceId:(strId:string)=>void,
+ * arrPopupInputFields:object}} param0
  * @returns
  */
 const ExperienceItem = ({
   experienceInfo,
   sendEditedExperience,
   sendDeletedExperienceId,
+  arrPopupInputFields,
 }) => {
-  const arrPopupInputFields = [
-    {
-      strPropertyName: "strPosition",
-      strFieldTitle: "Position",
-      strHelpText: "",
-      readOnly: false,
-      intColSpan: 2,
-      strValidationMessage: "",
-      objFieldType: {
-        strType: "text",
-        objData: {
-          strPlaceHolder: "",
-          booIsRequired: true,
-          strInitialValue: "",
-        },
-      },
-    },
-    {
-      strPropertyName: "strCompanyName",
-      strFieldTitle: "Company Name",
-      strHelpText: "",
-      readOnly: false,
-      intColSpan: 2,
-      strValidationMessage: "",
-      objFieldType: {
-        strType: "text",
-        objData: {
-          strPlaceHolder: "",
-          booIsRequired: true,
-          strInitialValue: "",
-        },
-      },
-    },
-    {
-      strPropertyName: "strCountryName",
-      strFieldTitle: "Location",
-      strHelpText: "",
-      readOnly: false,
-      intColSpan: 2,
-      strValidationMessage: "",
-      objFieldType: {
-        strType: "text",
-        objData: {
-          strPlaceHolder: "City, Country",
-          booIsRequired: true,
-          strInitialValue: "",
-        },
-      },
-    },
-    {
-      strPropertyName: "booCurrentJob",
-      strFieldTitle: "Current Job",
-      strHelpText: "",
-      readOnly: false,
-      intColSpan: 2,
-      strValidationMessage: "",
-      objFieldType: {
-        strType: "checkbox",
-        objData: { booChecked: false },
-      },
-    },
-    {
-      strPropertyName: "dtStartDate",
-      strFieldTitle: "Start date",
-      strHelpText: "",
-      readOnly: false,
-      intColSpan: 1,
-      strValidationMessage: "",
-      objFieldType: {
-        strType: "date",
-        objData: {
-          booIsRequired: true,
-          dtInitialValue: null,
-          dtMinDate: null,
-          dtMaxDate: null,
-          strFieldType: "date",
-        },
-      },
-    },
-    {
-      strPropertyName: "dtEndDate",
-      strFieldTitle: "End date",
-      strHelpText: "",
-      readOnly: false,
-      intColSpan: 1,
-      strValidationMessage: "",
-      objFieldType: {
-        strType: "date",
-        objData: {
-          booIsRequired: false,
-          dtInitialValue: null,
-          dtMinDate: null,
-          dtMaxDate: null,
-          strFieldType: "date",
-        },
-      },
-    },
-    {
-      strPropertyName: "strDescription",
-      strFieldTitle: "Description",
-      strHelpText: "",
-      readOnly: false,
-      intColSpan: 2,
-      strValidationMessage: "",
-      objFieldType: {
-        strType: "textarea",
-        objData: {
-          strPlaceHolder: "",
-          booIsRequired: true,
-          intCols: null,
-          intRows: 3,
-        },
-      },
-    },
-  ];
-
   /**
    *
    * @param {Date} dtStartDate

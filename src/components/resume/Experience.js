@@ -46,6 +46,7 @@ const Experience = ({
             null,
             expItem.getId()
           )}
+          arrPopupInputFields={arrPopupInputFields}
         />
       </div>
     );
@@ -113,7 +114,12 @@ const Experience = ({
       strValidationMessage: "",
       objFieldType: {
         strType: "checkbox",
-        objData: { booChecked: false },
+        objData: {
+          booChecked: false,
+          strMasterOf: "dtEndDate",
+          strValidationMessage:
+            "Please, indicate if this is a current Job or its End date.",
+        },
       },
     },
     {

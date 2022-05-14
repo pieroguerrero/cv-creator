@@ -90,7 +90,7 @@ const DateTimeField = ({
           <input
             id={strFieldId}
             ref={inputField}
-            className="peer rounded-md border-[1px] border-solid shadow-inner text-[100%] p-1 pl-2 w-full "
+            className="peer rounded-md border-[1px] border-solid shadow-inner text-[100%] p-1 pl-2 w-full"
             type={strFieldType}
             autoComplete="none"
             onBlur={onFocusLost.bind(null, strFieldType)}

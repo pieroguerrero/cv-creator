@@ -5,6 +5,8 @@ import { DateTimeField } from "./DateTimeField";
 
 //Options: 'create' or 'edit'
 
+//className={"pointer-events-none text-[#AAA] bg-[#F5F5F5]"}
+
 /*
 Definitions
 
@@ -60,7 +62,8 @@ objFieldType: {
  * strType:string,
  * objData:Object}}[],
  * onDataSave:(objData: object)=>void,
- * strSaveButtonTitle:string}} param0
+ * strSaveButtonTitle:string,
+ * }} param0
  * @returns
  */
 const Popup = ({
@@ -72,6 +75,7 @@ const Popup = ({
   strSaveButtonTitle,
 }) => {
   const frmForm = useRef(null);
+  const pErrorMessage = useRef(null);
   useEffect(() => {
     frmForm.current.reset();
   });
@@ -125,6 +129,7 @@ const Popup = ({
    * @returns
    */
   const getHtmlElements = (arrElements) => {
+    let strSlaveField = "";
     const arrHtmlElements = arrElements.map((objField, index) => (
       <div key={index}>
         {(() => {
@@ -208,12 +213,75 @@ const Popup = ({
     }, false);
   };
 
+  /**
+   *
+   * @param {{
+   * strPropertyName: string,
+   * strFieldTitle: string,
+   * strHelpText: string,
+   * readOnly: boolean,
+   * intColSpan: number,
+   * strValidationMessage: string,
+   * objFieldType:{
+   * strType:string,
+   * objData:Object}}[]} arrFields
+   * @returns
+   */
+  const getValidationMessage = (arrFields) => {
+    const arrMasterCBFields = arrFields.filter(
+      (objField) =>
+        objField.objFieldType.strType === "checkbox" &&
+        Object.prototype.hasOwnProperty.call(
+          objField.objFieldType.objData,
+          "strMasterOf"
+        ) &&
+        objField.objFieldType.objData.strMasterOf.length > 0
+    );
+
+    for (let i = 0; i < arrMasterCBFields.length; i++) {
+      const booCheck = Object.prototype.hasOwnProperty.call(
+        objPopUpValues,
+        arrMasterCBFields[i].strPropertyName
+      )
+        ? objPopUpValues[arrMasterCBFields[i].strPropertyName]
+        : null;
+
+      const dtEndDate = Object.prototype.hasOwnProperty.call(
+        objPopUpValues,
+        arrMasterCBFields[i].objFieldType.objData.strMasterOf
+      )
+        ? objPopUpValues[arrMasterCBFields[i].objFieldType.objData.strMasterOf]
+        : null;
+
+      console.log("booCheck:", booCheck, " - - ", "dtEndDate:", dtEndDate);
+
+      if (booCheck === null) {
+        if (isNaN(Date.parse(dtEndDate))) {
+          return arrMasterCBFields[i].objFieldType.objData.strValidationMessage;
+        }
+      } else {
+        if (!booCheck && isNaN(Date.parse(dtEndDate))) {
+          return arrMasterCBFields[i].objFieldType.objData.strValidationMessage;
+        }
+      }
+    }
+
+    return "";
+  };
+
   const onSave = (e) => {
     //console.log(e.currentTarget);
     if (frmForm.current.checkValidity()) {
       if (allRequiredExist(arrFields)) {
-        onDataSave(objPopUpValues);
-        frmForm.current.classList.add("hidden");
+        const strChainedValidationMsg = getValidationMessage(arrFields);
+
+        if (strChainedValidationMsg.length === 0) {
+          onDataSave(objPopUpValues);
+          pErrorMessage.current.textContent = "";
+          frmForm.current.classList.add("hidden");
+        } else {
+          pErrorMessage.current.textContent = strChainedValidationMsg;
+        }
       }
     }
 
@@ -270,7 +338,13 @@ const Popup = ({
               {getHtmlElements(arrFields)}
             </div>
           </div>
-          <div className="bg-gray-50 px-4 py-3 sm:px-6  ">
+          <div className="bg-gray-50 px-4 py-3 sm:px-6 flex flex-col gap-4 sm:gap-1 sm:flex-row sm:justify-between sm:items-center">
+            <div>
+              <p
+                ref={pErrorMessage}
+                className={"text-sm text-red-500 sm:ml-4"}
+              ></p>
+            </div>
             <div className="sm:mr-4 sm:flex sm:flex-row-reverse">
               <button
                 onClick={onSave}
