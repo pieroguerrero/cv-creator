@@ -90,6 +90,29 @@ const Popup = ({
   };
 
   const objPopUpValues = {};
+  if (strMode === MODE.EDIT) {
+    arrFields.forEach((objField) => {
+      if (
+        objField.objFieldType.strType === "text" ||
+        objField.objFieldType.strType === "textarea"
+      ) {
+        if (objField.objFieldType.objData.strInitialValue.length > 0) {
+          objPopUpValues[objField.strPropertyName] =
+            objField.objFieldType.objData.strInitialValue;
+        }
+      } else if (objField.objFieldType.strType === "checkbox") {
+        if (objField.objFieldType.objData.booChecked !== null) {
+          objPopUpValues[objField.strPropertyName] =
+            objField.objFieldType.objData.booChecked;
+        }
+      } else if (objField.objFieldType.strType === "date") {
+        if (objField.objFieldType.objData.strInitialDate.length > 0) {
+          objPopUpValues[objField.strPropertyName] =
+            objField.objFieldType.objData.strInitialDate;
+        }
+      }
+    });
+  }
 
   const onBlurField = function (strPropertyName, strValue) {
     objPopUpValues[strPropertyName] = strValue;
@@ -129,7 +152,6 @@ const Popup = ({
    * @returns
    */
   const getHtmlElements = (arrElements) => {
-    let strSlaveField = "";
     const arrHtmlElements = arrElements.map((objField, index) => (
       <div key={index}>
         {(() => {
@@ -138,7 +160,7 @@ const Popup = ({
               <CheckBoxField
                 strFieldName={objField.strFieldTitle}
                 booChecked={objField.objFieldType.objData.booChecked}
-                strHelpText={objField.strHelpText}
+                strHelpText={objField.strHelpText} //{objField.objFieldType.objData.booChecked.toString()}
                 sendCheckChange={onCheckChange.bind(
                   null,
                   objField.strPropertyName
@@ -150,7 +172,7 @@ const Popup = ({
               <DateTimeField
                 strFieldName={objField.strFieldTitle}
                 booIsRequired={objField.objFieldType.objData.booIsRequired}
-                strInitialValue={objField.objFieldType.objData.strInitialValue}
+                strInitialValue={objField.objFieldType.objData.strInitialDate}
                 strHelpText={objField.strHelpText}
                 strMinDate={objField.objFieldType.objData.dtMinDate}
                 strMaxDate={objField.objFieldType.objData.dtMaxDate}
@@ -272,6 +294,7 @@ const Popup = ({
   const onSave = (e) => {
     //console.log(e.currentTarget);
     if (frmForm.current.checkValidity()) {
+      console.log("frmForm.current.checkValidity()", "TRUE");
       if (allRequiredExist(arrFields)) {
         const strChainedValidationMsg = getValidationMessage(arrFields);
 

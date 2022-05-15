@@ -53,6 +53,89 @@ const ExperienceItem = ({
     );
   };
 
+  const getField = (arrPopupInputFields, strPropName) => {
+    const intIndex = arrPopupInputFields.findIndex(
+      (objField) => objField.strPropertyName === strPropName
+    );
+
+    return arrPopupInputFields[intIndex];
+  };
+
+  /**
+   *
+   * @param {[]} arrPopupInputFields
+   * @param {{
+   *   getId: () => string;
+   *  getPosition: () => string;
+   *   getCompanyName: () => string;
+   *   getStartDate: () => Date;
+   *   getEndDate: () => Date;
+   *   getCurrentJob: () => boolean;
+   *   getCountryName: () => string;
+   *   getCityName: () => string;
+   *   getDescription: () => string;
+   *   setPosition: (arg0: string) => void;
+   *   setCompanyName: (arg0: string) => void;
+   *   setStartDate: (arg0: Date) => void;
+   *   setEndDate: (arg0: Date) => void;
+   *   setCurrentJob: (arg0: boolean) => void;
+   *   setCountryName: (arg0: string) => void;
+   *   setCityName: (arg0: string) => void;
+   *   setDescription: (arg0: string) => void;
+   *  }} experienceInfo
+   */
+  const getFieldsWithValues = (arrPopupInputFields, experienceInfo) => {
+    const newArray = [];
+
+    const objFieldPosition = getField(arrPopupInputFields, "strPosition");
+    objFieldPosition.objFieldType.objData.strInitialValue =
+      experienceInfo.getPosition();
+    newArray.push(objFieldPosition);
+
+    const objFieldCompanyName = getField(arrPopupInputFields, "strCompanyName");
+    objFieldCompanyName.objFieldType.objData.strInitialValue =
+      experienceInfo.getCompanyName();
+    newArray.push(objFieldCompanyName);
+
+    const objFieldCountryName = getField(arrPopupInputFields, "strCountryName");
+    objFieldCountryName.objFieldType.objData.strInitialValue =
+      experienceInfo.getCountryName();
+    newArray.push(objFieldCountryName);
+
+    const objFieldCurrentJob = getField(arrPopupInputFields, "booCurrentJob");
+    objFieldCurrentJob.objFieldType.objData.booChecked =
+      experienceInfo.getCurrentJob();
+    newArray.push(objFieldCurrentJob);
+
+    const objFieldStartDate = getField(arrPopupInputFields, "dtStartDate");
+    objFieldStartDate.objFieldType.objData.strInitialDate =
+      experienceInfo.getStartDate().getFullYear() +
+      "-" +
+      experienceInfo.getStartDate().getMonth().toString().padStart(2, "0") +
+      "-" +
+      experienceInfo.getStartDate().getDate().toString().padStart(2, "0");
+    newArray.push(objFieldStartDate);
+
+    const objFieldEndDate = getField(arrPopupInputFields, "dtEndDate");
+    if (experienceInfo.getEndDate() !== null) {
+      objFieldEndDate.objFieldType.objData.strInitialDate =
+        experienceInfo.getEndDate().getFullYear() +
+        "-" +
+        experienceInfo.getEndDate().getMonth().toString().padStart(2, "0") +
+        "-" +
+        experienceInfo.getEndDate().getDate().toString().padStart(2, "0");
+    }
+
+    newArray.push(objFieldEndDate);
+
+    const objFieldDescription = getField(arrPopupInputFields, "strDescription");
+    objFieldDescription.objFieldType.objData.strInitialValue =
+      experienceInfo.getDescription();
+    newArray.push(objFieldDescription);
+
+    return newArray;
+  };
+
   const editeExperience = (objExperience) => {
     console.log(objExperience);
   };
@@ -85,7 +168,7 @@ const ExperienceItem = ({
           strMode="edit"
           strOpeningButtonTitle="Edit"
           strPopupTitle="Edit Experience"
-          arrFields={arrPopupInputFields}
+          arrFields={getFieldsWithValues(arrPopupInputFields, experienceInfo)}
           onDataSave={editeExperience}
           strSaveButtonTitle={"Accept"}
         />

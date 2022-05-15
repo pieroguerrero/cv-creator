@@ -110,7 +110,9 @@ const Resume = ({
     onGenerateCV(objResume);
   };
 
-  const getNewExperience = (objExperience) => {};
+  const getNewExperience = (objExperience) => {
+    console.log("Resume.getCurrentJob=", objExperience.getCurrentJob());
+  };
   const getEditedExperience = (objExperience) => {};
   const getDeletedExperienceId = (strExperienceId) => {};
 

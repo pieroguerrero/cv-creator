@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import uniqid from "uniqid";
 
 /**
@@ -18,7 +18,16 @@ const CheckBoxField = ({
 }) => {
   const inputField = useRef(null);
   const strFieldId = uniqid("checkbox-");
-  //inputField.current.checked = booChecked;
+
+  console.log(
+    "CheckBoxField.booChecked",
+    booChecked,
+    "strHelpText=",
+    strHelpText
+  );
+  // useEffect(() => {
+  //   inputField.current.checked = booChecked;
+  // });
 
   const getHelperText = () => {
     if (strHelpText && strHelpText.length) {
@@ -39,7 +48,8 @@ const CheckBoxField = ({
           id={strFieldId}
           name={strFieldId}
           type="checkbox"
-          onChange={onValueChange}
+          onClick={onValueChange}
+          defaultChecked={booChecked ?? false}
           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
         />
       </div>

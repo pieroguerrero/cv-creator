@@ -133,7 +133,7 @@ const Experience = ({
         strType: "date",
         objData: {
           booIsRequired: true,
-          dtInitialValue: "",
+          strInitialDate: "",
           dtMinDate: null,
           dtMaxDate: null,
           strFieldType: "date",
@@ -151,7 +151,7 @@ const Experience = ({
         strType: "date",
         objData: {
           booIsRequired: false,
-          dtInitialValue: "",
+          strInitialDate: "",
           dtMinDate: null,
           dtMaxDate: null,
           strFieldType: "date",
@@ -172,6 +172,7 @@ const Experience = ({
           booIsRequired: true,
           intCols: null,
           intRows: 3,
+          strInitialValue: "",
         },
       },
     },
