@@ -31,18 +31,19 @@ import uniqid from "uniqid";
  * getId: function(): string,
  * getDegree: function(): string,
  * getInstitutionName: function(): string,
- * getStartDate: function(): Date,
- * getEndDate: function(): Date,
+ * getStartDate: function(): string,
+ * getEndDate: function(): string,
  * getCurrent: function(): string,
  * getCountryName: function(): string,
  * getCityName: function(): string,
  * setDegree: function(string):void,
  * setInstitutionName: function(string):void,
- * setStartDate: function(Date):void,
- * setEndDate: function(Date):void,
+ * setStartDate: function(string):void,
+ * setEndDate: function(string):void,
  * setCurrent: function(string):void,
  * setCountryName: function(string):void,
- * setCityName: function(string):void}[],
+ * setCityName: function(string):void
+ * }[],
  * objPersonalInfoValues:{
  * getId: function(): string,
  * getFirstName: function(): string,
@@ -66,11 +67,11 @@ const Resume = ({
 }) => {
   //TODO: to create the ResumeObject and send it to the App so it can be printed
   //TODO: include de ABOUT in the Personal infor, change it to MainInfo
-  const [resumeState, setResume] = useState({
-    personalInfo: null,
-    experienceList: [],
-    educationList: [],
-  });
+  // const [resumeState, setResume] = useState({
+  //   personalInfo: null,
+  //   experienceList: [],
+  //   educationList: [],
+  // });
 
   const objPersonalInfoPlain = {
     strFirsName: objPersonalInfoValues.getFirstName(),
@@ -79,9 +80,8 @@ const Resume = ({
     strAbout: objPersonalInfoValues.getAbout(),
     strPhone: objPersonalInfoValues.getPhone(),
   };
-
-  const experienceList = [...arrExperienceValues];
-  const educationList = [...arrEducationValues];
+  const arrExperience = [...arrExperienceValues];
+  const arrEducation = [...arrEducationValues];
 
   const onPersonalInfoChange = (strPropertyName, strValue) => {
     objPersonalInfoPlain[strPropertyName] = strValue;
@@ -111,10 +111,28 @@ const Resume = ({
   };
 
   const getNewExperience = (objExperience) => {
-    console.log("Resume.getCurrentJob=", objExperience.getCurrentJob());
+    console.log(
+      "Resume.getNewExperience.getCurrentJob=",
+      objExperience.getCurrentJob()
+    );
+    arrExperience.push(objExperience);
   };
-  const getEditedExperience = (objExperience) => {};
-  const getDeletedExperienceId = (strExperienceId) => {};
+  const getEditedExperience = (objExperience) => {
+    const intIndex = arrExperience.findIndex(
+      (objTempExperience) => objTempExperience.getId() === objExperience.getId()
+    );
+
+    if (intIndex >= 0) {
+      arrExperience[intIndex] = objExperience;
+    }
+  };
+  const getDeletedExperienceId = (strExperienceId) => {
+    const intIndex = arrExperience.findIndex(
+      (objTempExperience) => objTempExperience.getId() === strExperienceId
+    );
+
+    arrExperience.splice(intIndex, 1);
+  };
 
   return (
     <div className="flex flex-col gap-4">

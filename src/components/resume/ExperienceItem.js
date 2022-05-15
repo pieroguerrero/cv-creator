@@ -1,5 +1,6 @@
 import React from "react";
 import { Popup } from "./Popup";
+import { format } from "date-fns";
 
 /**
  *
@@ -47,9 +48,9 @@ const ExperienceItem = ({
    */
   const getDatesText = (dtStartDate, dtEndDate, booCurrentJob) => {
     return (
-      dtStartDate.toDateString() +
+      format(dtStartDate, "MMM yyy") +
       " - " +
-      (booCurrentJob ? "Present" : dtEndDate.toDateString())
+      (booCurrentJob ? "Present" : format(dtEndDate, "MMM yyy"))
     );
   };
 
@@ -111,7 +112,9 @@ const ExperienceItem = ({
     objFieldStartDate.objFieldType.objData.strInitialDate =
       experienceInfo.getStartDate().getFullYear() +
       "-" +
-      experienceInfo.getStartDate().getMonth().toString().padStart(2, "0") +
+      (experienceInfo.getStartDate().getMonth() + 1)
+        .toString()
+        .padStart(2, "0") +
       "-" +
       experienceInfo.getStartDate().getDate().toString().padStart(2, "0");
     newArray.push(objFieldStartDate);
@@ -121,7 +124,9 @@ const ExperienceItem = ({
       objFieldEndDate.objFieldType.objData.strInitialDate =
         experienceInfo.getEndDate().getFullYear() +
         "-" +
-        experienceInfo.getEndDate().getMonth().toString().padStart(2, "0") +
+        (experienceInfo.getEndDate().getMonth() + 1)
+          .toString()
+          .padStart(2, "0") +
         "-" +
         experienceInfo.getEndDate().getDate().toString().padStart(2, "0");
     }
@@ -137,7 +142,11 @@ const ExperienceItem = ({
   };
 
   const editeExperience = (objExperience) => {
-    console.log(objExperience);
+    sendEditedExperience(objExperience);
+  };
+
+  const deleteExperience = (strExperienceId) => {
+    sendDeletedExperienceId(strExperienceId);
   };
 
   return (
@@ -163,7 +172,21 @@ const ExperienceItem = ({
           {experienceInfo.getDescription()}
         </p>
       </div>
-      <div>
+      <div className=" flex gap-3 items-start">
+        <button
+          onClick={() => {
+            if (confirm("Are you sure you want to remove this Experience?")) {
+              deleteExperience(experienceInfo.getId());
+            }
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+            <path
+              fill="#cc0000"
+              d="M6.75 15.75H13.25Q13.25 15.75 13.25 15.75Q13.25 15.75 13.25 15.75V7.708H6.75V15.75Q6.75 15.75 6.75 15.75Q6.75 15.75 6.75 15.75ZM4.125 5.083V3.333H7.062L7.896 2.5H12.104L12.938 3.333H15.875V5.083ZM6.75 17.5Q6.021 17.5 5.51 16.99Q5 16.479 5 15.75V5.958H15V15.75Q15 16.479 14.49 16.99Q13.979 17.5 13.25 17.5ZM6.75 15.75H13.25Q13.25 15.75 13.25 15.75Q13.25 15.75 13.25 15.75H6.75Q6.75 15.75 6.75 15.75Q6.75 15.75 6.75 15.75Z"
+            />
+          </svg>
+        </button>
         <Popup
           strMode="edit"
           strOpeningButtonTitle="Edit"

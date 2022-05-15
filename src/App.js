@@ -19,35 +19,8 @@ function App() {
     )
   );
 
-  // const [resumeState, setResume] = useState({
-  //   objPersonalInfo: MD_PersonalInfo.shapePersonalInfo(
-  //     uniqid(),
-  //     null,
-  //     null,
-  //     null,
-  //     null,
-  //     ""
-  //   ),
-  //   experienceList: [],
-  //   educationList: [],
-  // });
-  /**
-   *
-   * @param {string} strTabId
-   */
-  // const onTabChange = function (strTabId) {
-  //   console.log("strTabId: ", strTabId);
-  //   if (strTabId === "1") {
-  //     setViewEditor(true);
-  //   } else {
-  //     setViewEditor(false);
-  //   }
-  // };
-
   const generateCV = (objResume) => {
-    console.log("App.getEmail:", objResume.getPersonalInfo().getEmail());
     setResume(objResume);
-    //setResume({ ...resumeState, [strPropertyName]: strValue });
   };
 
   return (

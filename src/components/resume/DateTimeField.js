@@ -35,22 +35,17 @@ const DateTimeField = ({
     if (strFieldType === "date") {
       if (e.currentTarget.checkValidity()) {
         const arrPlittedValue = e.currentTarget.value.split("-");
+        console.log("DateField YYYY-MM-DD:", arrPlittedValue);
 
-        console.log("DateTime.value", arrPlittedValue);
-        console.log(
-          "DateTime.strValue[x]",
-          arrPlittedValue[0],
-          arrPlittedValue[1],
-          arrPlittedValue[2]
-        );
-
-        const dtDateValue = new Date(
-          Number(arrPlittedValue[0]),
-          Number(arrPlittedValue[1]),
-          Number(arrPlittedValue[2])
-        );
-
-        onValueChange(dtDateValue);
+        if (arrPlittedValue.length === 3) {
+          const dtDateValue = new Date(
+            Number(arrPlittedValue[0]),
+            Number(arrPlittedValue[1]) - 1,
+            Number(arrPlittedValue[2])
+          );
+          console.log("DateField Date obj:", dtDateValue);
+          onValueChange(dtDateValue);
+        } else onValueChange(null);
       } else {
         if (!spanMessage.current.classList.contains("peer-invalid:inline")) {
           spanMessage.current.classList.add(
@@ -61,7 +56,6 @@ const DateTimeField = ({
           );
 
           inputField.current.classList.add("invalid:border-red-500");
-          //spanMessage.current.setCustomValidity("");
         }
       }
     }
@@ -115,33 +109,6 @@ const DateTimeField = ({
           after:left-[-55px]           
           peer-required:peer-invalid:inline"
           ></span>
-
-          {/* 
-                    <span className=" self-start relative 
-          peer-invalid:after:absolute 
-          peer-invalid:after:whitespace-nowrap 
-          peer-invalid:after:text-white 
-          peer-invalid:after:text-[10px] 
-          peer-invalid:after:top-[-23px] 
-          peer-invalid:after:py-[2px] 
-          peer-invalid:after:px-2 
-          peer-invalid:after:rounded-md 
-          peer-invalid:after:align-top 
-          
-
-          peer-invalid:peer-placeholder-shown:after:bg-gray-600 
-          peer-invalid:peer-placeholder-shown:after:content-['required'] 
-          peer-invalid:peer-placeholder-shown:after:left-[-55px]
-          hidden 
-          peer-invalid:inline 
-          
-          peer-invalid:after:content-['invalid_format']           
-          peer-invalid:after:left-[-79px]           
-          peer-invalid:after:bg-red-500
-
-          "></span>
-
-          */}
         </div>
         {getHelperText()}
       </div>

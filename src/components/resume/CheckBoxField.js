@@ -18,13 +18,6 @@ const CheckBoxField = ({
 }) => {
   const inputField = useRef(null);
   const strFieldId = uniqid("checkbox-");
-
-  console.log(
-    "CheckBoxField.booChecked",
-    booChecked,
-    "strHelpText=",
-    strHelpText
-  );
   // useEffect(() => {
   //   inputField.current.checked = booChecked;
   // });
@@ -36,7 +29,6 @@ const CheckBoxField = ({
   };
 
   const onValueChange = (e) => {
-    console.log("CheckBox.checked:", e.currentTarget.checked);
     sendCheckChange(e.currentTarget.checked);
   };
 

@@ -36,6 +36,9 @@ const Experience = ({
   sendEditedExperienceToResume,
   sendDeletedExperienceIdToResume,
 }) => {
+  const [stateArrExperienceObjs, setStateArrExperienceObjs] =
+    useState(experienceList);
+
   const getExperienceJSXItem = (expItem) => {
     return (
       <div key={expItem.getId()}>
@@ -52,9 +55,9 @@ const Experience = ({
     );
   };
 
-  const [arrExperienceItems, setArrExperienceItems] = useState(
-    experienceList.map((expItem) => getExperienceJSXItem(expItem))
-  );
+  const getExperienceList = (arrExperienceObjs) => {
+    return arrExperienceObjs.map((expItem) => getExperienceJSXItem(expItem));
+  };
 
   const arrPopupInputFields = [
     {
@@ -184,10 +187,9 @@ const Experience = ({
   };
 
   const addNewExperienceToState = (objExperience) => {
-    const arrTempExperienceItems = [...arrExperienceItems];
-    arrTempExperienceItems.push(getExperienceJSXItem(objExperience));
-
-    setArrExperienceItems(sortExperienceArray(arrTempExperienceItems));
+    const arrTempExperienceObjs = [...stateArrExperienceObjs];
+    arrTempExperienceObjs.push(objExperience);
+    setStateArrExperienceObjs(sortExperienceArray(arrTempExperienceObjs));
   };
 
   /**
@@ -212,15 +214,15 @@ const Experience = ({
    * setDescription: function(string):void}} objExperience
    */
   const editExperienceOnState = (objExperience) => {
-    const arrTempExperienceItems = [...arrExperienceItems];
+    const arrTempExperienceObjs = [...stateArrExperienceObjs];
 
-    const intIndex = arrTempExperienceItems.findIndex(
-      (itemJSX) => itemJSX.key === objExperience.getId()
+    const intIndex = arrTempExperienceObjs.findIndex(
+      (objTempExperience) => objTempExperience.getId() === objExperience.getId()
     );
 
     if (intIndex >= 0) {
-      arrTempExperienceItems[intIndex] = getExperienceJSXItem(objExperience);
-      setArrExperienceItems(sortExperienceArray(arrTempExperienceItems));
+      arrTempExperienceObjs[intIndex] = objExperience;
+      setStateArrExperienceObjs(sortExperienceArray(arrTempExperienceObjs));
     }
   };
 
@@ -270,8 +272,6 @@ const Experience = ({
    * strDescription:string }} objPopUpExperience
    */
   const onCreateExperience = (objPopUpExperience) => {
-    console.log("Esperience.onCreateExperience", objPopUpExperience);
-
     const dtEndDate = Object.prototype.hasOwnProperty.call(
       objPopUpExperience,
       "dtEndDate"
@@ -301,12 +301,11 @@ const Experience = ({
    * @param {string} strExperienceId
    */
   const onDeleteExperience = (strExperienceId) => {
-    const arrTempExperienceItems = [...arrExperienceItems];
+    //const arrTempExperienceObjs = [...stateArrExperienceObjs];
 
-    setArrExperienceItems(
-      arrTempExperienceItems.filter((ele) => ele.key === strExperienceId)
+    setStateArrExperienceObjs((prevState) =>
+      prevState.filter((ele) => ele.getId() !== strExperienceId)
     );
-
     sendDeletedExperienceIdToResume(strExperienceId);
   };
 
@@ -334,7 +333,7 @@ const Experience = ({
             />
           </div>
           <div className="flex flex-col gap-6 px-4 py-5 bg-gray-100 sm:p-6">
-            {arrExperienceItems}
+            {getExperienceList(stateArrExperienceObjs)}
           </div>
         </div>
       </div>
