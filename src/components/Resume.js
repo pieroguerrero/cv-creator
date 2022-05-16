@@ -155,7 +155,13 @@ const Resume = ({
           sendEditedExperienceToResume={getEditedExperience}
           sendDeletedExperienceIdToResume={getDeletedExperienceId}
         />
-        <Education educationList={arrEducationValues} />
+        <Education
+          strTitle={"Education"}
+          educationList={arrEducationValues}
+          strHelpText={
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          }
+        />
       </div>
       <div className="flex justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
         <button
