@@ -30,19 +30,23 @@ import uniqid from "uniqid";
  * arrEducationValues:{
  * getId: function(): string,
  * getDegree: function(): string,
+ * getDescription: function(): string,
  * getInstitutionName: function(): string,
- * getStartDate: function(): string,
- * getEndDate: function(): string,
- * getCurrent: function(): string,
+ * getStartDate: function(): Date,
+ * getEndDate: function(): Date,
+ * getCurrent: function(): boolean,
  * getCountryName: function(): string,
  * getCityName: function(): string,
+ * getFieldOfStudy: function(): string,
  * setDegree: function(string):void,
+ * setDescription: function(string):void,
  * setInstitutionName: function(string):void,
- * setStartDate: function(string):void,
- * setEndDate: function(string):void,
- * setCurrent: function(string):void,
+ * setStartDate: function(Date):void,
+ * setEndDate: function(Date):void,
+ * setCurrent: function(boolean):void,
  * setCountryName: function(string):void,
- * setCityName: function(string):void
+ * setCityName: function(string):void,
+ * setFieldOfStudy: function(string):void
  * }[],
  * objPersonalInfoValues:{
  * getId: function(): string,
@@ -103,11 +107,13 @@ const Resume = ({
         objPersonalInfoPlain.strPhone,
         objPersonalInfoPlain.strAbout
       ),
-      [],
-      [],
+      arrExperience,
+      arrEducation,
       false
     );
-    onGenerateCV(objResume);
+
+    console.log(objResume.toString());
+    //onGenerateCV(objResume);
   };
 
   const getNewExperience = (objExperience) => {
@@ -131,7 +137,33 @@ const Resume = ({
       (objTempExperience) => objTempExperience.getId() === strExperienceId
     );
 
-    arrExperience.splice(intIndex, 1);
+    if (intIndex >= 0) {
+      arrExperience.splice(intIndex, 1);
+    }
+  };
+
+  const getDeletedEducationId = (strEducationId) => {
+    const intIndex = arrEducation.findIndex(
+      (objTempExperience) => objTempExperience.getId() === strEducationId
+    );
+
+    if (intIndex >= 0) {
+      arrEducation.splice(intIndex, 1);
+    }
+  };
+
+  const getEditedEducation = (objEducation) => {
+    const intIndex = arrEducation.findIndex(
+      (objTempEducation) => objTempEducation.getId() === objEducation.getId()
+    );
+
+    if (intIndex >= 0) {
+      arrExperience[intIndex] = objEducation;
+    }
+  };
+
+  const getNewEducation = (objEducation) => {
+    arrEducation.push(objEducation);
   };
 
   return (
@@ -161,6 +193,9 @@ const Resume = ({
           strHelpText={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           }
+          sendDeletedEducationIdToResume={getDeletedEducationId}
+          sendEditedEducationToResume={getEditedEducation}
+          sendNewEducationToResume={getNewEducation}
         />
       </div>
       <div className="flex justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">

@@ -1,6 +1,7 @@
 import React from "react";
 import { Popup } from "./Popup";
 import { format } from "date-fns";
+import { MD_Education } from "../../back/MD_Education";
 
 /**
  *
@@ -10,8 +11,8 @@ import { format } from "date-fns";
  * getDegree: function(): string,
  * getDescription: function(): string,
  * getInstitutionName: function(): string,
- * getStartDate: function(): string,
- * getEndDate: function(): string,
+ * getStartDate: function(): Date,
+ * getEndDate: function(): Date,
  * getCurrent: function(): boolean,
  * getCountryName: function(): string,
  * getCityName: function(): string,
@@ -19,8 +20,8 @@ import { format } from "date-fns";
  * setDegree: function(string):void,
  * setDescription: function(string):void,
  * setInstitutionName: function(string):void,
- * setStartDate: function(string):void,
- * setEndDate: function(string):void,
+ * setStartDate: function(Date):void,
+ * setEndDate: function(Date):void,
  * setCurrent: function(boolean):void,
  * setCountryName: function(string):void,
  * setCityName: function(string):void,
@@ -31,8 +32,8 @@ import { format } from "date-fns";
  * getDegree: function(): string,
  * getDescription: function(): string,
  * getInstitutionName: function(): string,
- * getStartDate: function(): string,
- * getEndDate: function(): string,
+ * getStartDate: function(): Date,
+ * getEndDate: function(): Date,
  * getCurrent: function(): boolean,
  * getCountryName: function(): string,
  * getCityName: function(): string,
@@ -40,8 +41,8 @@ import { format } from "date-fns";
  * setDegree: function(string):void,
  * setDescription: function(string):void,
  * setInstitutionName: function(string):void,
- * setStartDate: function(string):void,
- * setEndDate: function(string):void,
+ * setStartDate: function(Date):void,
+ * setEndDate: function(Date):void,
  * setCurrent: function(boolean):void,
  * setCountryName: function(string):void,
  * setCityName: function(string):void,
@@ -58,6 +59,7 @@ const EducationItem = ({
   sendDeletedEducationId,
   arrPopupInputFields,
 }) => {
+  console.log("EducationItem.MAIN.getEndDate():", educationInfo.getEndDate());
   const getDatesText = (dtStartDate, dtEndDate, booCurrentJob) => {
     return (
       format(dtStartDate, "MMM yyy") +
@@ -74,6 +76,164 @@ const EducationItem = ({
    */
   const getDegreeField = (strDegree, strFieldOfStudy) => {
     return strDegree + " • " + strFieldOfStudy;
+  };
+
+  const deleteEducation = (strEducationId) => {
+    sendDeletedEducationId(strEducationId);
+  };
+
+  /**
+   *
+   * @param {string} strEducationId
+   * @param {Object} objEducationPlain
+   * @param {string} objEducationPlain.strInstitutionName
+   * @param {string} objEducationPlain.strDegree
+   * @param {string} objEducationPlain.strFieldOfStudy
+   * @param {boolean} [objEducationPlain.booCurrent]
+   * @param {Date} objEducationPlain.dtStartDate
+   * @param {Date} [objEducationPlain.dtEndDate]
+   * @param {string} [objEducationPlain.strDescription]
+   */
+  const editEducation = (strEducationId, objEducationPlain) => {
+    console.log(
+      "EducationItem.editEducation.dtEndDate:",
+      objEducationPlain.dtEndDate
+    );
+    const dtEndDate = Object.prototype.hasOwnProperty.call(
+      objEducationPlain,
+      "dtEndDate"
+    )
+      ? new Date(objEducationPlain.dtEndDate)
+      : null;
+
+    const strDescription = Object.prototype.hasOwnProperty.call(
+      objEducationPlain,
+      "strDescription"
+    )
+      ? objEducationPlain.strDescription
+      : "";
+
+    const booCurrent = Object.prototype.hasOwnProperty.call(
+      objEducationPlain,
+      "booCurrent"
+    )
+      ? objEducationPlain.booCurrent
+      : null;
+
+    const objEducation = MD_Education.shapeEducation(
+      strEducationId,
+      objEducationPlain.strDegree,
+      objEducationPlain.strInstitutionName,
+      new Date(objEducationPlain.dtStartDate),
+      dtEndDate,
+      booCurrent,
+      "",
+      "",
+      strDescription,
+      objEducationPlain.strFieldOfStudy
+    );
+
+    sendEditedEducation(objEducation);
+  };
+
+  const getField = (arrPopupInputFields, strPropName) => {
+    const intIndex = arrPopupInputFields.findIndex(
+      (objField) => objField.strPropertyName === strPropName
+    );
+
+    return arrPopupInputFields[intIndex];
+  };
+
+  /**
+   *
+   * @param {[]} arrPopupInputFields
+   * @param {{
+   * getId: function(): string,
+   * getDegree: function(): string,
+   * getDescription: function(): string,
+   * getInstitutionName: function(): string,
+   * getStartDate: function(): Date,
+   * getEndDate: function(): Date,
+   * getCurrent: function(): boolean,
+   * getCountryName: function(): string,
+   * getCityName: function(): string,
+   * getFieldOfStudy: function(): string,
+   * setDegree: function(string):void,
+   * setDescription: function(string):void,
+   * setInstitutionName: function(string):void,
+   * setStartDate: function(Date):void,
+   * setEndDate: function(Date):void,
+   * setCurrent: function(boolean):void,
+   * setCountryName: function(string):void,
+   * setCityName: function(string):void,
+   * setFieldOfStudy: function(string):void
+   * }} educationInfo
+   * @returns
+   */
+  const getFieldsWithValues = (arrPopupInputFields, educationInfo) => {
+    const newArray = [];
+
+    const objFieldInstName = getField(
+      arrPopupInputFields,
+      "strInstitutionName"
+    );
+    objFieldInstName.objFieldType.objData.strInitialValue =
+      educationInfo.getInstitutionName();
+    newArray.push(objFieldInstName);
+
+    const objFieldDegree = getField(arrPopupInputFields, "strDegree");
+    objFieldDegree.objFieldType.objData.strInitialValue =
+      educationInfo.getDegree();
+    newArray.push(objFieldDegree);
+
+    const objFieldFieldOfStudy = getField(
+      arrPopupInputFields,
+      "strFieldOfStudy"
+    );
+    objFieldFieldOfStudy.objFieldType.objData.strInitialValue =
+      educationInfo.getFieldOfStudy();
+    newArray.push(objFieldFieldOfStudy);
+
+    const objFieldCurrent = getField(arrPopupInputFields, "booCurrent");
+    objFieldCurrent.objFieldType.objData.booChecked =
+      educationInfo.getCurrent();
+    newArray.push(objFieldCurrent);
+
+    const objFieldStartDate = getField(arrPopupInputFields, "dtStartDate");
+    objFieldStartDate.objFieldType.objData.strInitialDate =
+      educationInfo.getStartDate().getFullYear() +
+      "-" +
+      (educationInfo.getStartDate().getMonth() + 1)
+        .toString()
+        .padStart(2, "0") +
+      "-" +
+      educationInfo.getStartDate().getDate().toString().padStart(2, "0");
+    newArray.push(objFieldStartDate);
+
+    const objFieldEndDate = getField(arrPopupInputFields, "dtEndDate");
+    if (educationInfo.getEndDate() !== null) {
+      objFieldEndDate.objFieldType.objData.strInitialDate =
+        educationInfo.getEndDate().getFullYear() +
+        "-" +
+        (educationInfo.getEndDate().getMonth() + 1)
+          .toString()
+          .padStart(2, "0") +
+        "-" +
+        educationInfo.getEndDate().getDate().toString().padStart(2, "0");
+    } else objFieldEndDate.objFieldType.objData.strInitialDate = "";
+    newArray.push(objFieldEndDate);
+
+    const objFieldDescription = getField(arrPopupInputFields, "strDescription");
+    if (
+      educationInfo.getDescription() &&
+      educationInfo.getDescription().length > 0
+    ) {
+      objFieldDescription.objFieldType.objData.strInitialValue =
+        educationInfo.getDescription();
+    } else objFieldDescription.objFieldType.objData.strInitialValue = "";
+    newArray.push(objFieldDescription);
+
+    return newArray;
   };
 
   return (
@@ -101,11 +261,11 @@ const EducationItem = ({
       </div>
       <div className=" flex gap-3 items-start">
         <button
-        //   onClick={() => {
-        //     if (confirm("Are you sure you want to remove this Experience?")) {
-        //       deleteExperience(experienceInfo.getId());
-        //     }
-        //   }}
+          onClick={() => {
+            if (confirm("Are you sure you want to remove this item?")) {
+              deleteEducation(educationInfo.getId());
+            }
+          }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
             <path
@@ -114,14 +274,14 @@ const EducationItem = ({
             />
           </svg>
         </button>
-        {/* <Popup
+        <Popup
           strMode="edit"
           strOpeningButtonTitle="Edit"
           strPopupTitle="Edit Education"
-          arrFields={getFieldsWithValues(arrPopupInputFields, experienceInfo)}
-          onDataSave={editeExperience}
+          arrFields={getFieldsWithValues(arrPopupInputFields, educationInfo)}
+          onDataSave={editEducation.bind(null, educationInfo.getId())}
           strSaveButtonTitle={"Accept"}
-        /> */}
+        />
       </div>
     </div>
   );

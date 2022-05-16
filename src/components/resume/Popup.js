@@ -124,6 +124,7 @@ const Popup = ({
    * @param {Date} dtValue
    */
   const onDateChange = function (strPropertyName, dtValue) {
+    console.log("PopUp.onDateChange:", dtValue);
     objPopUpValues[strPropertyName] = dtValue;
   };
 

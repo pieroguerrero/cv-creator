@@ -141,7 +141,7 @@ const ExperienceItem = ({
     return newArray;
   };
 
-  const editeExperience = (objExperience) => {
+  const editExperience = (objExperience) => {
     sendEditedExperience(objExperience);
   };
 
@@ -175,7 +175,7 @@ const ExperienceItem = ({
       <div className=" flex gap-3 items-start">
         <button
           onClick={() => {
-            if (confirm("Are you sure you want to remove this Experience?")) {
+            if (confirm("Are you sure you want to remove this item?")) {
               deleteExperience(experienceInfo.getId());
             }
           }}
@@ -192,7 +192,7 @@ const ExperienceItem = ({
           strOpeningButtonTitle="Edit"
           strPopupTitle="Edit Experience"
           arrFields={getFieldsWithValues(arrPopupInputFields, experienceInfo)}
-          onDataSave={editeExperience}
+          onDataSave={editExperience}
           strSaveButtonTitle={"Accept"}
         />
       </div>

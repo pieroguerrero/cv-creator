@@ -9,26 +9,40 @@ import uniqid from "uniqid";
  * @param {{educationList:{
  * getId: function(): string,
  * getDegree: function(): string,
+ * getDescription: function(): string,
  * getInstitutionName: function(): string,
- * getStartDate: function(): string,
- * getEndDate: function(): string,
- * getCurrent: function(): string,
+ * getStartDate: function(): Date,
+ * getEndDate: function(): Date,
+ * getCurrent: function(): boolean,
  * getCountryName: function(): string,
  * getCityName: function(): string,
+ * getFieldOfStudy: function(): string,
  * setDegree: function(string):void,
+ * setDescription: function(string):void,
  * setInstitutionName: function(string):void,
- * setStartDate: function(string):void,
- * setEndDate: function(string):void,
- * setCurrent: function(string):void,
+ * setStartDate: function(Date):void,
+ * setEndDate: function(Date):void,
+ * setCurrent: function(boolean):void,
  * setCountryName: function(string):void,
- * setCityName: function(string):void
+ * setCityName: function(string):void,
+ * setFieldOfStudy: function(string):void
  * }[],
  * strHelpText: string,
- * strTitle: string
+ * strTitle: string,
+ * sendDeletedEducationIdToResume: function(string):void,
+ * sendEditedEducationToResume: function(Object):void,
+ * sendNewEducationToResume: function(Object):void
  * }} param0
  * @returns
  */
-const Education = ({ educationList, strHelpText, strTitle }) => {
+const Education = ({
+  educationList,
+  strHelpText,
+  strTitle,
+  sendDeletedEducationIdToResume,
+  sendEditedEducationToResume,
+  sendNewEducationToResume,
+}) => {
   const [stateArrEducationObjs, setStateArrEducationObjs] =
     useState(educationList);
 
@@ -160,14 +174,13 @@ const Education = ({ educationList, strHelpText, strTitle }) => {
 
   /**
    *
-   * @param {string} strId
    * @param {{
    * getId: function(): string,
    * getDegree: function(): string,
    * getDescription: function(): string,
    * getInstitutionName: function(): string,
-   * getStartDate: function(): string,
-   * getEndDate: function(): string,
+   * getStartDate: function(): Date,
+   * getEndDate: function(): Date,
    * getCurrent: function(): boolean,
    * getCountryName: function(): string,
    * getCityName: function(): string,
@@ -175,8 +188,46 @@ const Education = ({ educationList, strHelpText, strTitle }) => {
    * setDegree: function(string):void,
    * setDescription: function(string):void,
    * setInstitutionName: function(string):void,
-   * setStartDate: function(string):void,
-   * setEndDate: function(string):void,
+   * setStartDate: function(Date):void,
+   * setEndDate: function(Date):void,
+   * setCurrent: function(boolean):void,
+   * setCountryName: function(string):void,
+   * setCityName: function(string):void,
+   * setFieldOfStudy: function(string):void
+   * }} objEducation
+   */
+  const editEducationOnState = (objEducation) => {
+    const arrTempEducationObjs = [...stateArrEducationObjs];
+
+    const intIndex = arrTempEducationObjs.findIndex(
+      (objTempEducation) => objTempEducation.getId() === objEducation.getId()
+    );
+
+    if (intIndex >= 0) {
+      arrTempEducationObjs[intIndex] = objEducation;
+      setStateArrEducationObjs(sortEducationArray(arrTempEducationObjs));
+    }
+  };
+
+  /**
+   *
+   * @param {string} strId
+   * @param {{
+   * getId: function(): string,
+   * getDegree: function(): string,
+   * getDescription: function(): string,
+   * getInstitutionName: function(): string,
+   * getStartDate: function(): Date,
+   * getEndDate: function(): Date,
+   * getCurrent: function(): boolean,
+   * getCountryName: function(): string,
+   * getCityName: function(): string,
+   * getFieldOfStudy: function(): string,
+   * setDegree: function(string):void,
+   * setDescription: function(string):void,
+   * setInstitutionName: function(string):void,
+   * setStartDate: function(Date):void,
+   * setEndDate: function(Date):void,
    * setCurrent: function(boolean):void,
    * setCountryName: function(string):void,
    * setCityName: function(string):void,
@@ -185,17 +236,25 @@ const Education = ({ educationList, strHelpText, strTitle }) => {
    */
   const onEditEducation = (strId, objEducationEdited) => {
     console.log(
-      "Education.onEditEducation",
-      objEducationEdited.getInstitutionName()
+      "Education.onEditEducation.getEndDate():",
+      objEducationEdited.getEndDate()
     );
+
+    if (objEducationEdited.getId() === strId) {
+      editEducationOnState(objEducationEdited);
+      sendEditedEducationToResume(objEducationEdited);
+    } else alert("Error: Edited Education Id missmatch");
   };
 
   /**
    *
-   * @param {string} strId
+   * @param {string} strEducationId
    */
-  const onDeleteEducation = (strId) => {
-    console.log("Education.onDeleteEducation", strId);
+  const onDeleteEducation = (strEducationId) => {
+    setStateArrEducationObjs((prevState) =>
+      prevState.filter((ele) => ele.getId() !== strEducationId)
+    );
+    sendDeletedEducationIdToResume(strEducationId);
   };
 
   const getEducationJSXItem = (eduItem) => {
@@ -247,7 +306,7 @@ const Education = ({ educationList, strHelpText, strTitle }) => {
 
     addNewEducationToState(objEducation);
 
-    //sendNewExperienceToResume(objExperience);
+    sendNewEducationToResume(objEducation);
   };
 
   return (
