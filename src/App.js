@@ -6,21 +6,23 @@ import { Resume } from "./components/Resume";
 import { ResumeViwer } from "./components/ResumeViwer";
 import uniqid from "uniqid";
 import { MD_Resume } from "./back/MD_Resume";
+import { PopUpSelector } from "./components/resume/file-creation/PopUpSelector";
 
 function App() {
-  const [viewEditor, setViewEditor] = useState(true);
+  const [showPopUpSelector, setShowPopUpSelector] = useState(false);
 
   const [resumeState, setResume] = useState(
     MD_Resume.shapeResume(
       MD_PersonalInfo.shapePersonalInfo(uniqid(), "", "", "", "", ""),
       [],
-      [],
-      true
+      []
     )
   );
 
   const generateCV = (objResume) => {
     setResume(objResume);
+    //console.log(objResume.toString());
+    setShowPopUpSelector(true);
   };
 
   return (
@@ -30,18 +32,15 @@ function App() {
       <main>
         {/* <TabHeader onTabChange={onTabChange} /> */}
         <div>
+          <Resume
+            arrExperienceValues={resumeState.getExperienceList()}
+            arrEducationValues={resumeState.getEducationList()}
+            objPersonalInfoValues={resumeState.getPersonalInfo()}
+            onGenerateCV={generateCV}
+          />
           {(() => {
-            if (resumeState.isEdit()) {
-              return (
-                <Resume
-                  arrExperienceValues={resumeState.getExperienceList()}
-                  arrEducationValues={resumeState.getEducationList()}
-                  objPersonalInfoValues={resumeState.getPersonalInfo()}
-                  onGenerateCV={generateCV}
-                />
-              );
-            } else {
-              return <ResumeViwer objResume={resumeState} />;
+            if (showPopUpSelector) {
+              return <PopUpSelector objResume={resumeState} />;
             }
           })()}
         </div>

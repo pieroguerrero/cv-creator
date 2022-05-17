@@ -108,12 +108,10 @@ const Resume = ({
         objPersonalInfoPlain.strAbout
       ),
       arrExperience,
-      arrEducation,
-      false
+      arrEducation
     );
 
-    console.log(objResume.toString());
-    //onGenerateCV(objResume);
+    onGenerateCV(objResume);
   };
 
   const getNewExperience = (objExperience) => {

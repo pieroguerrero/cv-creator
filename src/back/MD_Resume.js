@@ -53,26 +53,15 @@ const MD_Resume = (function () {
    * setCityName: function(string):void,
    * setFieldOfStudy: function(string):void
    * }[]} arrEducation
-   * @param {boolean} booIsEdit
    */
-  const shapeResume = function (
-    objPersonalInfo,
-    arrExperience,
-    arrEducation,
-    booIsEdit
-  ) {
+  const shapeResume = function (objPersonalInfo, arrExperience, arrEducation) {
     const objResume = {
       objPersonalInfo: objPersonalInfo,
       arrExperience: arrExperience,
       arrEducation: arrEducation,
-      booIsEdit: booIsEdit,
     };
 
     return {
-      isEdit() {
-        return objResume.booIsEdit;
-      },
-
       getPersonalInfo() {
         return objResume.objPersonalInfo;
       },
