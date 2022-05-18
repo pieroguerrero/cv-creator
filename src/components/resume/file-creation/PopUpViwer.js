@@ -1,9 +1,20 @@
-import React from "react";
+import { PDFViewer } from "@react-pdf/renderer";
+import React, { useState } from "react";
 import imgFormat1 from "./templates/img/format1.png";
 
-const PopUpSelector = ({ objResume }) => {
-  return (
-    <div className="absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+import { MyDocument } from "./templates/MyDocument";
+
+const PopUpViwer = ({ objResume }) => {
+  const [stateShowResult, setStateShowResult] = useState(false);
+  const [stateStrFormatId, setStateStrFormatId] = useState("");
+
+  const generateFormat = (strFormatId) => {
+    setStateShowResult(true);
+    setStateStrFormatId(strFormatId);
+  };
+
+  const getSelector = () => {
+    return (
       <div className=" inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
         {/* Main */}
         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -27,7 +38,10 @@ const PopUpSelector = ({ objResume }) => {
               <p className="text-gray-500">Format 1</p>
               <div>
                 <img src={imgFormat1} alt="Format 1" className=" w-40 h-auto" />
-                <button className="bottom-0 left-0 mt-2 w-40 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  sm:text-sm">
+                <button
+                  onClick={generateFormat.bind(null, "1")}
+                  className="bottom-0 left-0 mt-2 w-40 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  sm:text-sm"
+                >
                   Select
                 </button>
               </div>
@@ -62,13 +76,31 @@ const PopUpSelector = ({ objResume }) => {
               type="button"
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             >
-              Cancel
+              Close
             </button>
           </div>
         </div>
       </div>
+    );
+  };
+
+  const getViwer = () => {
+    const jsxDocument = ((strFormatId) => {
+      if (strFormatId == "1") {
+        return <MyDocument />;
+      }
+    })(stateStrFormatId);
+
+    return <PDFViewer>{jsxDocument}</PDFViewer>;
+  };
+
+  return (
+    <div className="absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+      {(() => {
+        return stateShowResult ? getViwer() : getSelector();
+      })()}
     </div>
   );
 };
 
-export { PopUpSelector };
+export { PopUpViwer };

@@ -3,13 +3,12 @@ import React, { useState } from "react";
 import { MD_PersonalInfo } from "./back/MD_PersonalInfo";
 import { Credits } from "./components/Credits";
 import { Resume } from "./components/Resume";
-import { ResumeViwer } from "./components/ResumeViwer";
 import uniqid from "uniqid";
 import { MD_Resume } from "./back/MD_Resume";
-import { PopUpSelector } from "./components/resume/file-creation/PopUpSelector";
+import { PopUpViwer } from "./components/resume/file-creation/PopUpViwer";
 
 function App() {
-  const [showPopUpSelector, setShowPopUpSelector] = useState(false);
+  const [showPopUpViewer, setShowPopUpViewer] = useState(false);
 
   const [resumeState, setResume] = useState(
     MD_Resume.shapeResume(
@@ -21,8 +20,7 @@ function App() {
 
   const generateCV = (objResume) => {
     setResume(objResume);
-    //console.log(objResume.toString());
-    setShowPopUpSelector(true);
+    setShowPopUpViewer(true);
   };
 
   return (
@@ -39,8 +37,8 @@ function App() {
             onGenerateCV={generateCV}
           />
           {(() => {
-            if (showPopUpSelector) {
-              return <PopUpSelector objResume={resumeState} />;
+            if (showPopUpViewer) {
+              return <PopUpViwer objResume={resumeState} />;
             }
           })()}
         </div>
