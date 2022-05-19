@@ -2,7 +2,7 @@ import { PDFViewer } from "@react-pdf/renderer";
 import React, { useState } from "react";
 import imgFormat1 from "./templates/img/format1.png";
 
-import { MyDocument } from "./templates/MyDocument";
+import { Template1 } from "./templates/template1/Template1";
 
 const PopUpViwer = ({ objResume }) => {
   const [stateShowResult, setStateShowResult] = useState(false);
@@ -87,11 +87,17 @@ const PopUpViwer = ({ objResume }) => {
   const getViwer = () => {
     const jsxDocument = ((strFormatId) => {
       if (strFormatId == "1") {
-        return <MyDocument />;
+        return <Template1 objResumen={objResume} />;
       }
     })(stateStrFormatId);
 
-    return <PDFViewer>{jsxDocument}</PDFViewer>;
+    return (
+      <div className=" inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full h-full sm:max-h-[80%] ">
+        <PDFViewer width={"90%"} height={"90%"} showToolbar={false}>
+          {jsxDocument}
+        </PDFViewer>
+      </div>
+    );
   };
 
   return (
