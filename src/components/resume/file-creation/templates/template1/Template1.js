@@ -40,11 +40,88 @@ const styles = StyleSheet.create({
  * @returns
  */
 const Template1 = ({ objResumen }) => {
+  const documentStyles = StyleSheet.create({
+    page: {
+      paddingLeft: "1in",
+      paddingTop: "0.5in",
+      paddingRight: "2.25in",
+      paddingBottom: "0.5in",
+    },
+  });
+
+  const styleParameters = {
+    defaultColor: "black",
+    primaryColor: "green",
+    secondaryColor: "gray",
+  };
+
+  const textStyles = StyleSheet.create({
+    fullName: {
+      fontSize: 30,
+      color: styleParameters.defaultColor,
+      paddingTop: 6,
+    },
+    heading: {
+      fontSize: 18,
+      color: styleParameters.primaryColor,
+    },
+    sectionTitle: {
+      color: styleParameters.primaryColor,
+      textTransform: "uppercase",
+      fontSize: 14,
+      fontWeight: "bold",
+      paddingTop: 24,
+      paddingBottom: 10,
+    },
+    normal: {
+      fontSize: 11,
+      color: styleParameters.defaultColor,
+    },
+    personalData: {
+      fontSize: 11,
+      color: styleParameters.secondaryColor,
+    },
+    personalData_Link: {
+      fontSize: 11,
+      color: styleParameters.secondaryColor,
+      textDecoration: "none",
+    },
+    date: {
+      fontSize: 10,
+      color: styleParameters.secondaryColor,
+      textTransform: "uppercase",
+    },
+    companyName: {
+      color: styleParameters.defaultColor,
+      textTransform: "capitalize",
+      fontSize: 12,
+      fontWeight: "bold",
+    },
+    jobLocation: {
+      color: styleParameters.defaultColor,
+      textTransform: "capitalize",
+      fontSize: 12,
+      fontWeight: "bold",
+    },
+    jobPosition: {
+      color: styleParameters.secondaryColor,
+      textTransform: "capitalize",
+      fontSize: 12,
+      fontStyle: "italic",
+    },
+  });
+
   return (
     <Document author="Piero Guerrero" title={"Resume"}>
-      <Page>
-        <PersonalInfo objPersonalInfo={objResumen.getPersonalInfo()} />
-        <AboutMe />
+      <Page style={documentStyles.page}>
+        <PersonalInfo
+          objPersonalInfo={objResumen.getPersonalInfo()}
+          styles={textStyles}
+        />
+        <AboutMe
+          styles={textStyles}
+          strAboutMe="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id neque aliquam vestibulum morbi blandit cursus risus at ultrices. Dolor sit amet consectetur adipiscing elit ut. Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim."
+        />
         <Experience />
         <Education />
       </Page>

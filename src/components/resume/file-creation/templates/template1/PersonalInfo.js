@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Text, View, StyleSheet, Link } from "@react-pdf/renderer";
 
 /**
  *
@@ -14,32 +14,52 @@ import { Text, View, StyleSheet } from "@react-pdf/renderer";
  * setLastName: function(string):void,
  * setEmail: function(string):void,
  * setPhone: function(string):void,
- * setAbout: function(string):void,}}} param0
+ * setAbout: function(string):void,},
+ * styles:{
+ * fullName:object,
+ * heading:object,
+ * sectionTitle:object,
+ * normal:object,
+ * personalData:object,
+ * personalData_Link:object,
+ * date:object,
+ * companyName:object,
+ * jobLocation:object,
+ * jobPosition:object}}} param0
  * @returns
  */
-const PersonalInfo = ({ objPersonalInfo }) => {
-  const styles = StyleSheet.create({
-    name: {
-      textTransform: "uppercase",
-      fontSize: 20,
-      fontWeight: "bold",
-    },
-    heading: {
-      // color: "green",
-      fontSize: 18,
-    },
-    info: {
-      // color: "gray",
-    },
-  });
-
+const PersonalInfo = ({ objPersonalInfo, styles }) => {
   return (
     <View>
-      <Text style={styles.name}>Piero A. Guerrero</Text>
-      <Text style={styles.heading}>123 Your Street, Your City, ST 12345</Text>
-      <Text style={styles.info}>123 Your Street, Your City, ST 12345</Text>
-      <Text style={styles.info}>(123) 456-7890</Text>
-      <Text style={styles.info}>no_reply@example.com</Text>
+      <Text style={styles.fullName}>Piero A. Guerrero</Text>
+      <Text style={styles.heading}>Senior Software Engineer</Text>
+      <Text style={styles.personalData}>123 Your Street</Text>
+      <Text style={styles.personalData}>Your City, ST 12345</Text>
+      <Text style={styles.personalData}>(123) 456-7890</Text>
+      <Link
+        style={styles.personalData_Link}
+        src={"mailto:" + "piero.guerrero@gmail.com"}
+      >
+        piero.guerrero@gmail.com
+      </Link>
+      <Link
+        style={styles.personalData_Link}
+        src={"https://www." + "linkedin.com/in/pieroguerrero"}
+      >
+        linkedin.com/in/pieroguerrero
+      </Link>
+      <Link
+        style={styles.personalData_Link}
+        src={"https://www." + "github.com/pieroguerrero"}
+      >
+        github.com/pieroguerrero
+      </Link>
+      <Link
+        style={styles.personalData_Link}
+        src={"https://www." + "pieroguerrero.com"}
+      >
+        pieroguerrero.com
+      </Link>
     </View>
   );
 };
