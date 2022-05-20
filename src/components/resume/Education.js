@@ -301,7 +301,8 @@ const Education = ({
       "",
       "",
       objEducationPlain.strDescription ?? "",
-      objEducationPlain.strFieldOfStudy
+      objEducationPlain.strFieldOfStudy,
+      ""
     );
 
     addNewEducationToState(objEducation);

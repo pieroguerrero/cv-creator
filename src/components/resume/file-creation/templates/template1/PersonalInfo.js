@@ -14,7 +14,20 @@ import { Text, View, StyleSheet, Link } from "@react-pdf/renderer";
  * setLastName: function(string):void,
  * setEmail: function(string):void,
  * setPhone: function(string):void,
- * setAbout: function(string):void,},
+ * setAbout: function(string):void,
+ * getMiddelName: function(): string,
+ * setMiddelName: function(string):void,
+ * getPersonalWebPage: function(): string,
+ * setPersonalWebPage: function(string):void,
+ * getOtherProfileURL: function(): string,
+ * setOtherProfileURL: function(string):void,
+ * getLinkedURL: function(): string,
+ * setLinkedURL: function(string):void,
+ * getHeading: function(): string,
+ * setHeading: function(string):void,
+ * getPlaceOfResidence: function(): string,
+ * setPlaceOfResidence: function(string):void,
+ * },
  * styles:{
  * fullName:object,
  * heading:object,
@@ -29,37 +42,72 @@ import { Text, View, StyleSheet, Link } from "@react-pdf/renderer";
  * @returns
  */
 const PersonalInfo = ({ objPersonalInfo, styles }) => {
+  /**
+   *
+   * @param {string} strFirstName
+   * @param {string} strMiddelName
+   * @param {string} strLastName
+   * @returns
+   */
+  const getFullName = (strFirstName, strMiddelName, strLastName) => {
+    return (
+      strFirstName +
+      (strMiddelName.length > 0 ? " " + strMiddelName : "") +
+      " " +
+      strLastName
+    );
+  };
+
+  /**
+   *
+   * @param {string} strURL
+   * @returns
+   */
+  const getLink = (strURL) => {
+    if (strURL.length > 0) {
+      return (
+        <Link style={styles.personalData_Link} src={"https://www." + strURL}>
+          {strURL}
+        </Link>
+      );
+    }
+  };
+
+  const getLinksBlock = (strLink1, strLink2, strLink3) => {
+    return (
+      <>
+        {getLink(strLink1)}
+        {getLink(strLink2)}
+        {getLink(strLink3)}
+      </>
+    );
+  };
+
   return (
     <View>
-      <Text style={styles.fullName}>Piero A. Guerrero</Text>
-      <Text style={styles.heading}>Senior Software Engineer</Text>
-      <Text style={styles.personalData}>123 Your Street</Text>
-      <Text style={styles.personalData}>Your City, ST 12345</Text>
-      <Text style={styles.personalData}>(123) 456-7890</Text>
+      <Text style={styles.fullName}>
+        {getFullName(
+          objPersonalInfo.getFirstName(),
+          objPersonalInfo.getMiddelName(),
+          objPersonalInfo.getLastName()
+        )}
+      </Text>
+      <Text style={styles.heading}>{objPersonalInfo.getHeading()}</Text>
+      <Text style={styles.personalData}>
+        {objPersonalInfo.getPlaceOfResidence()}
+      </Text>
+      <Text style={styles.personalData}>{objPersonalInfo.getPhone()}</Text>
       <Link
         style={styles.personalData_Link}
-        src={"mailto:" + "piero.guerrero@gmail.com"}
+        src={"mailto:" + objPersonalInfo.getEmail()}
       >
-        piero.guerrero@gmail.com
+        {objPersonalInfo.getEmail()}
       </Link>
-      <Link
-        style={styles.personalData_Link}
-        src={"https://www." + "linkedin.com/in/pieroguerrero"}
-      >
-        linkedin.com/in/pieroguerrero
-      </Link>
-      <Link
-        style={styles.personalData_Link}
-        src={"https://www." + "github.com/pieroguerrero"}
-      >
-        github.com/pieroguerrero
-      </Link>
-      <Link
-        style={styles.personalData_Link}
-        src={"https://www." + "pieroguerrero.com"}
-      >
-        pieroguerrero.com
-      </Link>
+      {getLinksBlock(
+        objPersonalInfo.getLinkedURL(),
+        objPersonalInfo.getOtherProfileURL(),
+        objPersonalInfo.getPersonalWebPage()
+      )}
     </View>
   );
 };

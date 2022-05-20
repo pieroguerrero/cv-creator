@@ -14,14 +14,15 @@ import { Text, View, StyleSheet } from "@react-pdf/renderer";
  * date:object,
  * companyName:object,
  * jobLocation:object,
- * jobPosition:object}
+ * jobPosition:object
+ * }
  * }} param0
  * @returns
  */
 const AboutMe = ({ strAboutMe, styles }) => {
   return (
     <View>
-      <Text style={styles.sectionTitle}>About Me</Text>
+      <Text style={[styles.sectionTitle, { marginBottom: 10 }]}>About Me</Text>
       <Text
         style={[
           styles.normal,

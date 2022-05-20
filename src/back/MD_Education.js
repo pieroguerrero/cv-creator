@@ -57,6 +57,13 @@ const MD_Education = (function () {
     setFieldOfStudy(value) {
       this.strFieldOfStudy = value;
     },
+
+    setInstitutionURL(value) {
+      this.strInstitutionURL = value;
+    },
+    getInstitutionURL() {
+      return this.strInstitutionURL;
+    },
   };
 
   /**
@@ -68,9 +75,10 @@ const MD_Education = (function () {
    * @param {Date} dtEndDate
    * @param {boolean} booCurrent
    * @param {string} strCountryName
-   * @param {string} strCityName,
-   * @param {string} strDescription,
+   * @param {string} strCityName
+   * @param {string} strDescription
    * @param {string} strFieldOfStudy
+   * @param {string} strInstitutionURL
    * @returns {{
    * getId: function(): string,
    * getDegree: function(): string,
@@ -91,6 +99,8 @@ const MD_Education = (function () {
    * setCountryName: function(string):void,
    * setCityName: function(string):void,
    * setFieldOfStudy: function(string):void
+   * setInstitutionURL: function(string):void
+   * getInstitutionURL: function(): string,
    * }}
    */
   const shapeEducation = function (
@@ -103,7 +113,8 @@ const MD_Education = (function () {
     strCountryName,
     strCityName,
     strDescription,
-    strFieldOfStudy
+    strFieldOfStudy,
+    strInstitutionURL
   ) {
     const objEducation = Object.create(educationActions);
     objEducation.strId = strId;
@@ -116,6 +127,7 @@ const MD_Education = (function () {
     objEducation.strCityName = strCityName;
     objEducation.strDescription = strDescription;
     objEducation.strFieldOfStudy = strFieldOfStudy;
+    objEducation.strInstitutionURL = strInstitutionURL;
 
     return {
       getId: objEducation.getId.bind(objEducation),
@@ -138,6 +150,8 @@ const MD_Education = (function () {
       setCountryName: objEducation.setCountryName.bind(objEducation),
       setCityName: objEducation.setCityName.bind(objEducation),
       setFieldOfStudy: objEducation.setFieldOfStudy.bind(objEducation),
+      getInstitutionURL: objEducation.getInstitutionURL.bind(objEducation),
+      setInstitutionURL: objEducation.setInstitutionURL.bind(objEducation),
     };
   };
 

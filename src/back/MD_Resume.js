@@ -12,7 +12,20 @@ const MD_Resume = (function () {
    * setLastName: function(string):void,
    * setEmail: function(string):void,
    * setPhone: function(string):void,
-   * setAbout: function(string):void,}} objPersonalInfo
+   * setAbout: function(string):void,
+   * getMiddelName: function(): string,
+   * setMiddelName: function(string):void,
+   * getPersonalWebPage: function(): string,
+   * setPersonalWebPage: function(string):void,
+   * getOtherProfileURL: function(): string,
+   * setOtherProfileURL: function(string):void,
+   * getLinkedURL: function(): string,
+   * setLinkedURL: function(string):void,
+   * getHeading: function(): string,
+   * setHeading: function(string):void,
+   * getPlaceOfResidence: function(): string,
+   * setPlaceOfResidence: function(string):void,
+   * }} objPersonalInfo
    * @param {{
    * getId: function(): string,
    * getPosition: function(): string,
@@ -31,6 +44,10 @@ const MD_Resume = (function () {
    * setCountryName: function(string):void,
    * setCityName: function(string):void,
    * setDescription: function(string):void,
+   * getCompanyURL: function(): string,
+   * setCompanyURL: function(string):void,
+   * getCompanyDescription: function(): string,
+   * setCompanyDescription: function(string):void,
    * }[]} arrExperience
    * @param {{
    * getId: function(): string,
@@ -52,6 +69,8 @@ const MD_Resume = (function () {
    * setCountryName: function(string):void,
    * setCityName: function(string):void,
    * setFieldOfStudy: function(string):void
+   * setInstitutionURL: function(string):void
+   * getInstitutionURL: function(): string,
    * }[]} arrEducation
    */
   const shapeResume = function (objPersonalInfo, arrExperience, arrEducation) {

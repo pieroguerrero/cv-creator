@@ -130,7 +130,8 @@ const EducationItem = ({
       "",
       "",
       strDescription,
-      objEducationPlain.strFieldOfStudy
+      objEducationPlain.strFieldOfStudy,
+      ""
     );
 
     sendEditedEducation(objEducation);

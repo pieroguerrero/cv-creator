@@ -253,7 +253,9 @@ const Experience = ({
       objExperienceItem.booCurrentJob ? true : false, //TODO: to change when a new Checkbox field is created
       objExperienceItem.strCountryName,
       "",
-      objExperienceItem.strDescription
+      objExperienceItem.strDescription,
+      "",
+      ""
     );
 
     editExperienceOnState(objExperience);
@@ -288,7 +290,9 @@ const Experience = ({
       objPopUpExperience.booCurrentJob ? true : false, //TODO: to change when a new Checkbox field is created
       objPopUpExperience.strCountryName,
       "",
-      objPopUpExperience.strDescription
+      objPopUpExperience.strDescription,
+      "",
+      ""
     );
 
     addNewExperienceToState(objExperience);

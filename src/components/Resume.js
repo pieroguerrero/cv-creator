@@ -59,7 +59,20 @@ import uniqid from "uniqid";
  * setLastName: function(string):void,
  * setEmail: function(string):void,
  * setPhone: function(string):void,
- * setAbout: function(string):void},
+ * setAbout: function(string):void,
+ * getMiddelName: function(): string,
+ * setMiddelName: function(string):void,
+ * getPersonalWebPage: function(): string,
+ * setPersonalWebPage: function(string):void,
+ * getOtherProfileURL: function(): string,
+ * setOtherProfileURL: function(string):void,
+ * getLinkedURL: function(): string,
+ * setLinkedURL: function(string):void,
+ * getHeading: function(): string,
+ * setHeading: function(string):void,
+ * getPlaceOfResidence: function(): string,
+ * setPlaceOfResidence: function(string):void,
+ * },
  * onGenerateCV:function(object):void}} param0
  * @returns
  */
@@ -83,6 +96,12 @@ const Resume = ({
     strEmail: objPersonalInfoValues.getEmail(),
     strAbout: objPersonalInfoValues.getAbout(),
     strPhone: objPersonalInfoValues.getPhone(),
+    strMiddelName: objPersonalInfoValues.getMiddelName(),
+    strOtherProfileURL: objPersonalInfoValues.getOtherProfileURL(),
+    strPersonalWebPage: objPersonalInfoValues.getPersonalWebPage(),
+    strLinkedURL: objPersonalInfoValues.getLinkedURL(),
+    strHeading: objPersonalInfoValues.getHeading(),
+    strPlaceOfResidence: objPersonalInfoValues.getPlaceOfResidence(),
   };
   const arrExperience = [...arrExperienceValues];
   const arrEducation = [...arrEducationValues];
@@ -105,7 +124,13 @@ const Resume = ({
         objPersonalInfoPlain.strLastName,
         objPersonalInfoPlain.strEmail,
         objPersonalInfoPlain.strPhone,
-        objPersonalInfoPlain.strAbout
+        objPersonalInfoPlain.strAbout,
+        objPersonalInfoPlain.strMiddelName,
+        objPersonalInfoPlain.strOtherProfileURL,
+        objPersonalInfoPlain.strPersonalWebPage,
+        objPersonalInfoPlain.strLinkedURL,
+        objPersonalInfoPlain.strHeading,
+        objPersonalInfoPlain.strPlaceOfResidence
       ),
       arrExperience,
       arrEducation

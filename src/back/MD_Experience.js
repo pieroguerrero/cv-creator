@@ -52,6 +52,19 @@ const MD_Experience = (function () {
     setDescription(value) {
       this.strDescription = value;
     },
+
+    getCompanyURL() {
+      return this.strCompanyURL;
+    },
+    setCompanyURL(value) {
+      this.strCompanyURL = value;
+    },
+    getCompanyDescription() {
+      return this.strCompanyDescription;
+    },
+    setCompanyDescription(value) {
+      this.strCompanyDescription = value;
+    },
   };
 
   /**
@@ -65,6 +78,8 @@ const MD_Experience = (function () {
    * @param {string} strCountryName
    * @param {string} strCityName
    * @param {string} strDescription
+   * @param {string} strCompanyURL
+   * @param {string} strCompanyDescription
    * @returns {{
    * getId: function(): string,
    * getPosition: function(): string,
@@ -83,6 +98,10 @@ const MD_Experience = (function () {
    * setCountryName: function(string):void,
    * setCityName: function(string):void,
    * setDescription: function(string):void,
+   * getCompanyURL: function(): string,
+   * setCompanyURL: function(string):void,
+   * getCompanyDescription: function(): string,
+   * setCompanyDescription: function(string):void,
    * }}
    */
   const shapeExperience = function (
@@ -94,7 +113,9 @@ const MD_Experience = (function () {
     booCurrentJob,
     strCountryName,
     strCityName,
-    strDescription
+    strDescription,
+    strCompanyURL,
+    strCompanyDescription
   ) {
     const objExperience = Object.create(experienceActions);
     objExperience.strId = strId;
@@ -106,6 +127,9 @@ const MD_Experience = (function () {
     objExperience.strCountryName = strCountryName;
     objExperience.strCityName = strCityName;
     objExperience.strDescription = strDescription;
+
+    objExperience.strCompanyURL = strCompanyURL;
+    objExperience.strCompanyDescription = strCompanyDescription;
 
     return {
       getId: objExperience.getId.bind(objExperience),
@@ -126,6 +150,13 @@ const MD_Experience = (function () {
       setCountryName: objExperience.setCountryName.bind(objExperience),
       setCityName: objExperience.setCityName.bind(objExperience),
       setDescription: objExperience.setDescription.bind(objExperience),
+
+      getCompanyURL: objExperience.getCompanyURL.bind(objExperience),
+      setCompanyURL: objExperience.setCompanyURL.bind(objExperience),
+      getCompanyDescription:
+        objExperience.getCompanyDescription.bind(objExperience),
+      setCompanyDescription:
+        objExperience.setCompanyDescription.bind(objExperience),
     };
   };
 
