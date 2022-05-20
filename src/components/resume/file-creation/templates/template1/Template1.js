@@ -77,10 +77,10 @@ const Template1 = ({ objResumen }) => {
 
   const documentStyles = StyleSheet.create({
     page: {
-      paddingLeft: "1in",
-      paddingTop: "0.5in",
-      paddingRight: "2.25in",
-      paddingBottom: "0.5in",
+      paddingLeft: "0.7in",
+      paddingTop: "0.4in",
+      paddingRight: "0.7in",
+      paddingBottom: "0.4in",
     },
   });
 

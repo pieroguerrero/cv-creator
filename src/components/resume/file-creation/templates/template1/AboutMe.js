@@ -22,7 +22,7 @@ import { Text, View, StyleSheet } from "@react-pdf/renderer";
 const AboutMe = ({ strAboutMe, styles }) => {
   return (
     <View>
-      <Text style={[styles.sectionTitle, { marginBottom: 10 }]}>About Me</Text>
+      <Text style={[styles.sectionTitle, { marginBottom: 10 }]}>Summary</Text>
       <Text
         style={[
           styles.normal,

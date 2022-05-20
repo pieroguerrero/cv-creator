@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "@react-pdf/renderer";
+import { Link, Text, View } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import uniqid from "uniqid";
 import { TextItem } from "./TextItem";
@@ -52,9 +52,9 @@ const Experience = ({ arrExperience, styles }) => {
    */
   const getDatesText = (dtStartDate, dtEndDate, booCurrentJob) => {
     return (
-      format(dtStartDate, "MMM yyy") +
+      format(dtStartDate, "MM/yyyy") +
       " - " +
-      (booCurrentJob ? "Present" : format(dtEndDate, "MMM yyy"))
+      (booCurrentJob ? "Present" : format(dtEndDate, "MM/yyyy"))
     );
   };
 
@@ -79,6 +79,21 @@ const Experience = ({ arrExperience, styles }) => {
     );
 
     return jsxResult;
+  };
+
+  const getCompanyName = (strCompanyName, strCompanyURL, styles) => {
+    if (strCompanyURL.length === 0) {
+      return <Text style={styles.companyName}>{strCompanyName + ", "}</Text>;
+    } else {
+      return (
+        <Link
+          style={[styles.companyName, { textDecoration: "none" }]}
+          src={"https://www." + strCompanyURL}
+        >
+          {strCompanyName + ", "}
+        </Link>
+      );
+    }
   };
 
   /**
@@ -111,9 +126,11 @@ const Experience = ({ arrExperience, styles }) => {
     return arrExperience.map((objExperience) => (
       <View key={objExperience.getId()} style={{ marginTop: 10 }}>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.companyName}>
-            {objExperience.getCompanyName() + ", "}
-          </Text>
+          {getCompanyName(
+            objExperience.getCompanyName(),
+            objExperience.getCompanyURL(),
+            styles
+          )}
           <Text style={styles.jobLocation}>
             {objExperience.getCountryName() + " "}
           </Text>

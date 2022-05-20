@@ -48,9 +48,9 @@ import { TextItem } from "./TextItem";
 const Education = ({ arrEducation, styles }) => {
   const getDatesText = (dtStartDate, dtEndDate, booCurrentJob) => {
     return (
-      format(dtStartDate, "MMM yyy") +
+      format(dtStartDate, "MM/yyyy") +
       " - " +
-      (booCurrentJob ? "Present" : format(dtEndDate, "MMM yyy"))
+      (booCurrentJob ? "Present" : format(dtEndDate, "MM/yyyy"))
     );
   };
 
@@ -114,7 +114,7 @@ const Education = ({ arrEducation, styles }) => {
             {objEducation.getCountryName() + " "}
           </Text>
           <Text style={styles.jobPosition}>
-            {"- " + objEducation.getDegree() + ", "}
+            {"- " + objEducation.getDegree() + " in "}
           </Text>
           <Text style={styles.jobPosition}>
             {objEducation.getFieldOfStudy()}

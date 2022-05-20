@@ -44,7 +44,7 @@ function App() {
           "Lima, Peru",
           "",
           "+Id neque aliquam vestibulum morbi blandit cursus risus at ultrices +Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. +Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-          "poderosa.com.pe",
+          "",
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
         ),
         MD_Experience.shapeExperience(
@@ -56,7 +56,7 @@ function App() {
           false,
           "Lima, Peru",
           "",
-          "+Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. +Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Ultrices neque ornare aenean euismod.",
           "verizon.com",
           "Ultrices neque ornare aenean euismod."
         ),
@@ -77,14 +77,14 @@ function App() {
         ),
         MD_Education.shapeEducation(
           uniqid(),
-          "Bachellor",
+          "Bachelor",
           "PUCP",
           new Date(),
           new Date(),
           false,
           "Lima, Peru",
           "",
-          "",
+          "+Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Ultrices neque ornare aenean euismod.",
           "Computer Science",
           "pucp.edu.pe"
         ),
@@ -95,6 +95,10 @@ function App() {
   const generateCV = (objResume) => {
     setResume(objResume);
     setShowPopUpViewer(true);
+  };
+
+  const closePopUp = () => {
+    setShowPopUpViewer(false);
   };
 
   return (
@@ -112,7 +116,9 @@ function App() {
           />
           {(() => {
             if (showPopUpViewer) {
-              return <PopUpViwer objResume={resumeState} />;
+              return (
+                <PopUpViwer objResume={resumeState} onClose={closePopUp} />
+              );
             }
           })()}
         </div>
