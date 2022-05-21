@@ -3,6 +3,7 @@ import { Text, View } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import uniqid from "uniqid";
 import { TextItem } from "./TextItem";
+import { Helper } from "./helpers/Helper";
 
 /**
  *
@@ -56,29 +57,6 @@ const Education = ({ arrEducation, styles }) => {
 
   /**
    *
-   * @param {string} strText
-   */
-  const getTextList = (strText) => {
-    const arrText = strText.trim().split("+");
-    const jsxResult = (
-      <>
-        {arrText
-          .filter((strBullet) => strBullet.length > 0)
-          .map((strBullet) => (
-            <TextItem
-              key={uniqid()}
-              strTextContent={strBullet}
-              styles={styles}
-            />
-          ))}
-      </>
-    );
-
-    return jsxResult;
-  };
-
-  /**
-   *
    * @param {{
    * getId: function(): string,
    * getDegree: function(): string,
@@ -128,7 +106,7 @@ const Education = ({ arrEducation, styles }) => {
           )}
         </Text>
         <View style={{ paddingLeft: "0.1in" }}>
-          {getTextList(objEducation.getDescription())}
+          {Helper.getTextList(objEducation.getDescription(), styles.normal)}
         </View>
       </View>
     ));

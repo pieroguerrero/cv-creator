@@ -5,20 +5,9 @@ import { DotIcon } from "./DotIcon";
  *
  * @param {{
  * strTextContent:string,
- * styles:{
- * fullName:object,
- * heading:object,
- * sectionTitle:object,
- * normal:object,
- * personalData:object,
- * personalData_Link:object,
- * date:object,
- * companyName:object,
- * jobLocation:object,
- * jobPosition:object
- * }}} param0
+ * objStyle:object}} param0
  */
-const TextItem = ({ strTextContent, styles }) => {
+const TextItem = ({ strTextContent, objStyle }) => {
   const localStyle = StyleSheet.create({
     text: {
       flex: 1,
@@ -31,7 +20,7 @@ const TextItem = ({ strTextContent, styles }) => {
   return (
     <View style={{ flexDirection: "row", marginBottom: 2 }}>
       <DotIcon strDotColor="black" strMarginRight="0.15in" />
-      <Text style={[styles.normal, localStyle.text]}>{strTextContent}</Text>
+      <Text style={[objStyle, localStyle.text]}>{strTextContent}</Text>
     </View>
   );
 };

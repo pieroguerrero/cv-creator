@@ -1,28 +1,32 @@
 import React from "react";
-import { Popup } from "./Popup";
+import { Popup } from "./FormPopUp/Popup";
 import { format } from "date-fns";
 
 /**
  *
  * @param {{experienceInfo: {
- *   getId: () => string;
- *  getPosition: () => string;
- *   getCompanyName: () => string;
- *   getStartDate: () => Date;
- *   getEndDate: () => Date;
- *   getCurrentJob: () => boolean;
- *   getCountryName: () => string;
- *   getCityName: () => string;
- *   getDescription: () => string;
- *   setPosition: (arg0: string) => void;
- *   setCompanyName: (arg0: string) => void;
- *   setStartDate: (arg0: Date) => void;
- *   setEndDate: (arg0: Date) => void;
- *   setCurrentJob: (arg0: boolean) => void;
- *   setCountryName: (arg0: string) => void;
- *   setCityName: (arg0: string) => void;
- *   setDescription: (arg0: string) => void;
- *  },
+ * getId: function(): string,
+ * getPosition: function(): string,
+ * getCompanyName: function(): string,
+ * getStartDate: function(): Date,
+ * getEndDate: function(): Date,
+ * getCurrentJob: function(): boolean,
+ * getCountryName: function(): string,
+ * getCityName: function(): string,
+ * getDescription: function(): string,
+ * setPosition: function(string):void,
+ * setCompanyName: function(string):void,
+ * setStartDate: function(Date):void,
+ * setEndDate: function(Date):void,
+ * setCurrentJob: function(boolean):void,
+ * setCountryName: function(string):void,
+ * setCityName: function(string):void,
+ * setDescription: function(string):void,
+ * getCompanyURL: function(): string,
+ * setCompanyURL: function(string):void,
+ * getCompanyDescription: function(): string,
+ * setCompanyDescription: function(string):void,
+ * },
  * sendEditedExperience:(objExperienceData: {
  * strPosition:string,
  * strCompanyName:string,
@@ -66,24 +70,28 @@ const ExperienceItem = ({
    *
    * @param {[]} arrPopupInputFields
    * @param {{
-   *   getId: () => string;
-   *  getPosition: () => string;
-   *   getCompanyName: () => string;
-   *   getStartDate: () => Date;
-   *   getEndDate: () => Date;
-   *   getCurrentJob: () => boolean;
-   *   getCountryName: () => string;
-   *   getCityName: () => string;
-   *   getDescription: () => string;
-   *   setPosition: (arg0: string) => void;
-   *   setCompanyName: (arg0: string) => void;
-   *   setStartDate: (arg0: Date) => void;
-   *   setEndDate: (arg0: Date) => void;
-   *   setCurrentJob: (arg0: boolean) => void;
-   *   setCountryName: (arg0: string) => void;
-   *   setCityName: (arg0: string) => void;
-   *   setDescription: (arg0: string) => void;
-   *  }} experienceInfo
+   * getId: function(): string,
+   * getPosition: function(): string,
+   * getCompanyName: function(): string,
+   * getStartDate: function(): Date,
+   * getEndDate: function(): Date,
+   * getCurrentJob: function(): boolean,
+   * getCountryName: function(): string,
+   * getCityName: function(): string,
+   * getDescription: function(): string,
+   * setPosition: function(string):void,
+   * setCompanyName: function(string):void,
+   * setStartDate: function(Date):void,
+   * setEndDate: function(Date):void,
+   * setCurrentJob: function(boolean):void,
+   * setCountryName: function(string):void,
+   * setCityName: function(string):void,
+   * setDescription: function(string):void,
+   * getCompanyURL: function(): string,
+   * setCompanyURL: function(string):void,
+   * getCompanyDescription: function(): string,
+   * setCompanyDescription: function(string):void,
+   * }} experienceInfo
    */
   const getFieldsWithValues = (arrPopupInputFields, experienceInfo) => {
     const newArray = [];
@@ -102,6 +110,11 @@ const ExperienceItem = ({
     objFieldCountryName.objFieldType.objData.strInitialValue =
       experienceInfo.getCountryName();
     newArray.push(objFieldCountryName);
+
+    const objFieldCompanyURL = getField(arrPopupInputFields, "strCompanyURL");
+    objFieldCompanyURL.objFieldType.objData.strInitialURL =
+      experienceInfo.getCompanyURL();
+    newArray.push(objFieldCompanyURL);
 
     const objFieldCurrentJob = getField(arrPopupInputFields, "booCurrentJob");
     objFieldCurrentJob.objFieldType.objData.booChecked =
@@ -149,15 +162,43 @@ const ExperienceItem = ({
     sendDeletedExperienceId(strExperienceId);
   };
 
+  /**
+   *
+   * @param {string} strName
+   * @param {string} strURL
+   * @param {string} strStyle
+   * @returns
+   */
+  const getCompanyName = (strName, strURL, strStyle) => {
+    if (!strURL || (strURL && strURL.length === 0)) {
+      return <p className={strStyle}>{strName}</p>;
+    } else {
+      return (
+        <a
+          href={
+            "https://www." + strURL.replace("https://", "").replace("www.", "")
+          }
+          className={strStyle}
+          target={"_blank"}
+          rel="noreferrer"
+        >
+          {strName}
+        </a>
+      );
+    }
+  };
+
   return (
     <div className="flex justify-between px-4 py-5 bg-white sm:p-6 shadow-xl sm:rounded-md">
       <div className=" flex flex-col">
         <p className="text-base leading-6 font-medium text-gray-900">
           {experienceInfo.getPosition()}
         </p>
-        <p className=" text-base leading-6 text-gray-900">
-          {experienceInfo.getCompanyName()}
-        </p>
+        {getCompanyName(
+          experienceInfo.getCompanyName(),
+          experienceInfo.getCompanyURL(),
+          "text-base leading-6 text-gray-900"
+        )}
         <p className=" text-sm text-gray-900 sm:mt-0 sm:col-span-2">
           {getDatesText(
             experienceInfo.getStartDate(),

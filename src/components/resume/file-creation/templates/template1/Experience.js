@@ -3,6 +3,7 @@ import { Link, Text, View } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import uniqid from "uniqid";
 import { TextItem } from "./TextItem";
+import { Helper } from "./helpers/Helper";
 
 /**
  *
@@ -60,44 +61,6 @@ const Experience = ({ arrExperience, styles }) => {
 
   /**
    *
-   * @param {string} strText
-   */
-  const getTextList = (strText) => {
-    const arrText = strText.trim().split("+");
-    const jsxResult = (
-      <>
-        {arrText
-          .filter((strBullet) => strBullet.length > 0)
-          .map((strBullet) => (
-            <TextItem
-              key={uniqid()}
-              strTextContent={strBullet}
-              styles={styles}
-            />
-          ))}
-      </>
-    );
-
-    return jsxResult;
-  };
-
-  const getCompanyName = (strCompanyName, strCompanyURL, styles) => {
-    if (strCompanyURL.length === 0) {
-      return <Text style={styles.companyName}>{strCompanyName + ", "}</Text>;
-    } else {
-      return (
-        <Link
-          style={[styles.companyName, { textDecoration: "none" }]}
-          src={"https://www." + strCompanyURL}
-        >
-          {strCompanyName + ", "}
-        </Link>
-      );
-    }
-  };
-
-  /**
-   *
    * @param {{
    * getId: function(): string,
    * getPosition: function(): string,
@@ -126,10 +89,10 @@ const Experience = ({ arrExperience, styles }) => {
     return arrExperience.map((objExperience) => (
       <View key={objExperience.getId()} style={{ marginTop: 10 }}>
         <View style={{ flexDirection: "row" }}>
-          {getCompanyName(
-            objExperience.getCompanyName(),
+          {Helper.getURLName(
+            objExperience.getCompanyName() + ", ",
             objExperience.getCompanyURL(),
-            styles
+            styles.companyName
           )}
           <Text style={styles.jobLocation}>
             {objExperience.getCountryName() + " "}
@@ -146,7 +109,7 @@ const Experience = ({ arrExperience, styles }) => {
           )}
         </Text>
         <View style={{ paddingLeft: "0.1in" }}>
-          {getTextList(objExperience.getDescription())}
+          {Helper.getTextList(objExperience.getDescription(), styles.normal)}
         </View>
       </View>
     ));

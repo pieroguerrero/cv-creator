@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { CheckBoxField } from "./CheckBoxField";
-import { DataField } from "./DataField";
-import { DateTimeField } from "./DateTimeField";
+import { CheckBoxField } from "../CheckBoxField";
+import { DataField } from "../DataField";
+import { DateTimeField } from "../DateTimeField";
+import { UrlField } from "../UrlField";
+import { Helpers } from "./Helpers";
 
 //Options: 'create' or 'edit'
 
@@ -60,7 +62,8 @@ objFieldType: {
  * strValidationMessage: string,
  * objFieldType:{
  * strType:string,
- * objData:Object}}[],
+ * objData:Object}
+ * }[],
  * onDataSave:(objData: object)=>void,
  * strSaveButtonTitle:string,
  * }} param0
@@ -80,39 +83,15 @@ const Popup = ({
     frmForm.current.reset();
   });
 
-  const MODE = {
-    EDIT: "edit",
-    CREATE: "create",
-  };
-
-  const onButtonClick = (strPopUpMode) => {
+  const onButtonClick = () => {
+    frmForm.current.reset();
     frmForm.current.classList.remove("hidden");
   };
 
-  const objPopUpValues = {};
-  if (strMode === MODE.EDIT) {
-    arrFields.forEach((objField) => {
-      if (
-        objField.objFieldType.strType === "text" ||
-        objField.objFieldType.strType === "textarea"
-      ) {
-        if (objField.objFieldType.objData.strInitialValue.length > 0) {
-          objPopUpValues[objField.strPropertyName] =
-            objField.objFieldType.objData.strInitialValue;
-        }
-      } else if (objField.objFieldType.strType === "checkbox") {
-        if (objField.objFieldType.objData.booChecked !== null) {
-          objPopUpValues[objField.strPropertyName] =
-            objField.objFieldType.objData.booChecked;
-        }
-      } else if (objField.objFieldType.strType === "date") {
-        if (objField.objFieldType.objData.strInitialDate.length > 0) {
-          objPopUpValues[objField.strPropertyName] =
-            objField.objFieldType.objData.strInitialDate;
-        }
-      }
-    });
-  }
+  const objPopUpValues =
+    strMode === Helpers.MODE.EDIT
+      ? Helpers.initializeDataObject(arrFields)
+      : {};
 
   const onBlurField = function (strPropertyName, strValue) {
     objPopUpValues[strPropertyName] = strValue;
@@ -124,7 +103,6 @@ const Popup = ({
    * @param {Date} dtValue
    */
   const onDateChange = function (strPropertyName, dtValue) {
-    console.log("PopUp.onDateChange:", dtValue);
     objPopUpValues[strPropertyName] = dtValue;
   };
 
@@ -155,46 +133,76 @@ const Popup = ({
     const arrHtmlElements = arrElements.map((objField, index) => (
       <div key={index}>
         {(() => {
-          if (objField.objFieldType.strType === "checkbox") {
-            return (
-              <CheckBoxField
-                strFieldName={objField.strFieldTitle}
-                booChecked={objField.objFieldType.objData.booChecked}
-                strHelpText={objField.strHelpText} //{objField.objFieldType.objData.booChecked.toString()}
-                sendCheckChange={onCheckChange.bind(
-                  null,
-                  objField.strPropertyName
-                )}
-              />
-            );
-          } else if (objField.objFieldType.strType === "date") {
-            return (
-              <DateTimeField
-                strFieldName={objField.strFieldTitle}
-                booIsRequired={objField.objFieldType.objData.booIsRequired}
-                strInitialValue={objField.objFieldType.objData.strInitialDate}
-                strHelpText={objField.strHelpText}
-                strMinDate={objField.objFieldType.objData.dtMinDate}
-                strMaxDate={objField.objFieldType.objData.dtMaxDate}
-                strFieldType={objField.objFieldType.objData.strFieldType}
-                onValueChange={onDateChange.bind(
-                  null,
-                  objField.strPropertyName
-                )}
-              />
-            );
-          } else {
-            return (
-              <DataField
-                strFieldName={objField.strFieldTitle}
-                strHelpText={objField.strHelpText}
-                strInitialValue={objField.objFieldType.objData.strInitialValue}
-                strInputType={objField.objFieldType.strType}
-                booIsRequired={objField.objFieldType.objData.booIsRequired}
-                onValueChange={onBlurField.bind(null, objField.strPropertyName)}
-              />
-            );
+          let jsxElement;
+
+          switch (true) {
+            case objField.objFieldType.strType === "checkbox":
+              jsxElement = (
+                <CheckBoxField
+                  strFieldName={objField.strFieldTitle}
+                  booChecked={objField.objFieldType.objData.booChecked}
+                  strHelpText={objField.strHelpText} //{objField.objFieldType.objData.booChecked.toString()}
+                  sendCheckChange={onCheckChange.bind(
+                    null,
+                    objField.strPropertyName
+                  )}
+                />
+              );
+              break;
+            case objField.objFieldType.strType === "date":
+              jsxElement = (
+                <DateTimeField
+                  strFieldName={objField.strFieldTitle}
+                  booIsRequired={objField.objFieldType.objData.booIsRequired}
+                  strInitialValue={objField.objFieldType.objData.strInitialDate}
+                  strHelpText={objField.strHelpText}
+                  strMinDate={objField.objFieldType.objData.dtMinDate}
+                  strMaxDate={objField.objFieldType.objData.dtMaxDate}
+                  strFieldType={objField.objFieldType.objData.strFieldType}
+                  onValueChange={onDateChange.bind(
+                    null,
+                    objField.strPropertyName
+                  )}
+                />
+              );
+              break;
+            case objField.objFieldType.strType === "url":
+              jsxElement = (
+                <UrlField
+                  strFieldName={objField.strFieldTitle}
+                  strHelpText={objField.strHelpText}
+                  strInitialValue={objField.objFieldType.objData.strInitialURL}
+                  strPattern={objField.objFieldType.objData.regexPattern}
+                  strPlaceHolder={objField.objFieldType.objData.strPlaceHolder}
+                  strPrefix={objField.objFieldType.objData.strPrefix}
+                  onValueChange={onBlurField.bind(
+                    null,
+                    objField.strPropertyName
+                  )}
+                  booIsRequired={objField.objFieldType.objData.booIsRequired}
+                />
+              );
+              break;
+            default:
+              jsxElement = (
+                <DataField
+                  strFieldName={objField.strFieldTitle}
+                  strHelpText={objField.strHelpText}
+                  strInitialValue={
+                    objField.objFieldType.objData.strInitialValue
+                  }
+                  strInputType={objField.objFieldType.strType}
+                  booIsRequired={objField.objFieldType.objData.booIsRequired}
+                  onValueChange={onBlurField.bind(
+                    null,
+                    objField.strPropertyName
+                  )}
+                />
+              );
+              break;
           }
+
+          return jsxElement;
         })()}
       </div>
     ));
@@ -202,97 +210,13 @@ const Popup = ({
     return <>{arrHtmlElements}</>;
   };
 
-  /**
-   *
-   * @param {{
-   * strPropertyName: string,
-   * strFieldTitle: string,
-   * strHelpText: string,
-   * readOnly: boolean,
-   * intColSpan: number,
-   * strValidationMessage: string,
-   * objFieldType:{
-   * strType:string,
-   * objData:Object}}[]} arrFields
-   * @returns
-   */
-  const allRequiredExist = (arrFields) => {
-    return arrFields.reduce((result, objField) => {
-      if (
-        Object.prototype.hasOwnProperty.call(
-          objField.objFieldType.objData,
-          "booIsRequired"
-        ) &&
-        objField.objFieldType.objData.booIsRequired
-      ) {
-        return Object.prototype.hasOwnProperty.call(
-          objPopUpValues,
-          objField.strPropertyName
-        );
-      } else {
-        return true;
-      }
-    }, false);
-  };
-
-  /**
-   *
-   * @param {{
-   * strPropertyName: string,
-   * strFieldTitle: string,
-   * strHelpText: string,
-   * readOnly: boolean,
-   * intColSpan: number,
-   * strValidationMessage: string,
-   * objFieldType:{
-   * strType:string,
-   * objData:Object}}[]} arrFields
-   * @returns
-   */
-  const getValidationMessage = (arrFields) => {
-    const arrMasterCBFields = arrFields.filter(
-      (objField) =>
-        objField.objFieldType.strType === "checkbox" &&
-        Object.prototype.hasOwnProperty.call(
-          objField.objFieldType.objData,
-          "strMasterOf"
-        ) &&
-        objField.objFieldType.objData.strMasterOf.length > 0
-    );
-
-    for (let i = 0; i < arrMasterCBFields.length; i++) {
-      const booCheck = Object.prototype.hasOwnProperty.call(
-        objPopUpValues,
-        arrMasterCBFields[i].strPropertyName
-      )
-        ? objPopUpValues[arrMasterCBFields[i].strPropertyName]
-        : null;
-
-      const dtEndDate = Object.prototype.hasOwnProperty.call(
-        objPopUpValues,
-        arrMasterCBFields[i].objFieldType.objData.strMasterOf
-      )
-        ? objPopUpValues[arrMasterCBFields[i].objFieldType.objData.strMasterOf]
-        : null;
-
-      if (booCheck === null) {
-        if (isNaN(Date.parse(dtEndDate))) {
-          return arrMasterCBFields[i].objFieldType.objData.strValidationMessage;
-        }
-      } else {
-        if (!booCheck && isNaN(Date.parse(dtEndDate))) {
-          return arrMasterCBFields[i].objFieldType.objData.strValidationMessage;
-        }
-      }
-    }
-
-    return "";
-  };
-
   const onSave = (e) => {
     if (frmForm.current.checkValidity()) {
-      if (allRequiredExist(arrFields)) {
-        const strChainedValidationMsg = getValidationMessage(arrFields);
+      if (Helpers.allRequiredExist(arrFields, objPopUpValues)) {
+        const strChainedValidationMsg = Helpers.getValidationMessage(
+          arrFields,
+          objPopUpValues
+        );
 
         if (strChainedValidationMsg.length === 0) {
           onDataSave(objPopUpValues);
@@ -308,10 +232,10 @@ const Popup = ({
   };
 
   const getOpenerButton = (strMode) => {
-    if (strMode === MODE.CREATE) {
+    if (strMode === Helpers.MODE.CREATE) {
       return (
         <button
-          onClick={onButtonClick.bind(null, MODE.CREATE)}
+          onClick={onButtonClick}
           type="button"
           className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
@@ -320,7 +244,7 @@ const Popup = ({
       );
     } else {
       return (
-        <button onClick={onButtonClick.bind(null, MODE.EDIT)} type="button">
+        <button onClick={onButtonClick} type="button">
           <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
             <path d="M4.25 15.75H5.479L13.5 7.729L12.896 7.104L12.271 6.5L4.25 14.521ZM2.5 17.5V13.771L13.479 2.792Q14 2.271 14.719 2.271Q15.438 2.271 15.958 2.792L17.208 4.042Q17.708 4.542 17.708 5.281Q17.708 6.021 17.208 6.521L6.229 17.5ZM15.958 5.271 14.729 4.042ZM13.5 7.729 12.896 7.104 12.271 6.5V6.479L13.5 7.729Z" />
           </svg>

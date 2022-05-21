@@ -1,5 +1,5 @@
 import React from "react";
-import { Popup } from "./Popup";
+import { Popup } from "./FormPopUp/Popup";
 import { format } from "date-fns";
 import { MD_Education } from "../../back/MD_Education";
 
@@ -26,6 +26,8 @@ import { MD_Education } from "../../back/MD_Education";
  * setCountryName: function(string):void,
  * setCityName: function(string):void,
  * setFieldOfStudy: function(string):void
+ * setInstitutionURL: function(string):void
+ * getInstitutionURL: function(): string,
  * },
  * sendEditedEducation:(objEditedEdutacion:{
  * getId: function(): string,
@@ -47,6 +49,8 @@ import { MD_Education } from "../../back/MD_Education";
  * setCountryName: function(string):void,
  * setCityName: function(string):void,
  * setFieldOfStudy: function(string):void
+ * setInstitutionURL: function(string):void
+ * getInstitutionURL: function(): string,
  * })=>void,
  * sendDeletedEducationId:(strId:string)=>void,
  * arrPopupInputFields:object
@@ -87,6 +91,8 @@ const EducationItem = ({
    * @param {string} strEducationId
    * @param {Object} objEducationPlain
    * @param {string} objEducationPlain.strInstitutionName
+   * @param {string} objEducationPlain.strCountryName
+   * @param {string} [objEducationPlain.strInstitutionURL]
    * @param {string} objEducationPlain.strDegree
    * @param {string} objEducationPlain.strFieldOfStudy
    * @param {boolean} [objEducationPlain.booCurrent]
@@ -95,10 +101,6 @@ const EducationItem = ({
    * @param {string} [objEducationPlain.strDescription]
    */
   const editEducation = (strEducationId, objEducationPlain) => {
-    console.log(
-      "EducationItem.editEducation.dtEndDate:",
-      objEducationPlain.dtEndDate
-    );
     const dtEndDate = Object.prototype.hasOwnProperty.call(
       objEducationPlain,
       "dtEndDate"
@@ -111,6 +113,25 @@ const EducationItem = ({
       "strDescription"
     )
       ? objEducationPlain.strDescription
+      : "";
+
+    if (
+      Object.prototype.hasOwnProperty.call(
+        objEducationPlain,
+        "strInstitutionURL"
+      )
+    ) {
+      console.log(
+        "SI TIENE URL strInstitutionURL:",
+        objEducationPlain.strInstitutionURL
+      );
+    }
+
+    const strInstitutionURL = Object.prototype.hasOwnProperty.call(
+      objEducationPlain,
+      "strInstitutionURL"
+    )
+      ? objEducationPlain.strInstitutionURL
       : "";
 
     const booCurrent = Object.prototype.hasOwnProperty.call(
@@ -127,11 +148,11 @@ const EducationItem = ({
       new Date(objEducationPlain.dtStartDate),
       dtEndDate,
       booCurrent,
-      "",
+      objEducationPlain.strCountryName,
       "",
       strDescription,
       objEducationPlain.strFieldOfStudy,
-      ""
+      strInstitutionURL
     );
 
     sendEditedEducation(objEducation);
@@ -168,6 +189,8 @@ const EducationItem = ({
    * setCountryName: function(string):void,
    * setCityName: function(string):void,
    * setFieldOfStudy: function(string):void
+   * setInstitutionURL: function(string):void
+   * getInstitutionURL: function(): string,
    * }} educationInfo
    * @returns
    */
@@ -181,6 +204,19 @@ const EducationItem = ({
     objFieldInstName.objFieldType.objData.strInitialValue =
       educationInfo.getInstitutionName();
     newArray.push(objFieldInstName);
+
+    const objFieldCountryName = getField(arrPopupInputFields, "strCountryName");
+    objFieldCountryName.objFieldType.objData.strInitialValue =
+      educationInfo.getCountryName();
+    newArray.push(objFieldCountryName);
+
+    const objFieldInstitutionURL = getField(
+      arrPopupInputFields,
+      "strInstitutionURL"
+    );
+    objFieldInstitutionURL.objFieldType.objData.strInitialURL =
+      educationInfo.getInstitutionURL() ?? "";
+    newArray.push(objFieldInstitutionURL);
 
     const objFieldDegree = getField(arrPopupInputFields, "strDegree");
     objFieldDegree.objFieldType.objData.strInitialValue =
@@ -212,7 +248,7 @@ const EducationItem = ({
     newArray.push(objFieldStartDate);
 
     const objFieldEndDate = getField(arrPopupInputFields, "dtEndDate");
-    if (educationInfo.getEndDate() !== null) {
+    if (educationInfo.getEndDate() !== null && !educationInfo.getCurrent()) {
       objFieldEndDate.objFieldType.objData.strInitialDate =
         educationInfo.getEndDate().getFullYear() +
         "-" +
@@ -225,24 +261,40 @@ const EducationItem = ({
     newArray.push(objFieldEndDate);
 
     const objFieldDescription = getField(arrPopupInputFields, "strDescription");
-    if (
-      educationInfo.getDescription() &&
-      educationInfo.getDescription().length > 0
-    ) {
-      objFieldDescription.objFieldType.objData.strInitialValue =
-        educationInfo.getDescription();
-    } else objFieldDescription.objFieldType.objData.strInitialValue = "";
+    objFieldDescription.objFieldType.objData.strInitialValue =
+      educationInfo.getDescription() ?? "";
     newArray.push(objFieldDescription);
 
     return newArray;
   };
 
+  const getInstitutionName = (strName, strURL, strStyle) => {
+    if (!strURL || (strURL && strURL.length === 0)) {
+      return <p className={strStyle}>{strName}</p>;
+    } else {
+      return (
+        <a
+          href={
+            "https://www." + strURL.replace("https://", "").replace("www.", "")
+          }
+          className={strStyle}
+          target={"_blank"}
+          rel="noreferrer"
+        >
+          {strName}
+        </a>
+      );
+    }
+  };
+
   return (
     <div className="flex justify-between px-4 py-5 bg-white sm:p-6 shadow-xl sm:rounded-md">
       <div className=" flex flex-col">
-        <p className="text-base leading-6 font-medium text-gray-900">
-          {educationInfo.getInstitutionName()}
-        </p>
+        {getInstitutionName(
+          educationInfo.getInstitutionName(),
+          educationInfo.getInstitutionURL(),
+          "text-base leading-6 text-gray-900"
+        )}
         <p className=" text-base leading-6 text-gray-900">
           {getDegreeField(
             educationInfo.getDegree(),
@@ -255,6 +307,9 @@ const EducationItem = ({
             educationInfo.getEndDate(),
             educationInfo.getCurrent()
           )}
+        </p>
+        <p className=" mt-1 text-sm text-gray-500">
+          {educationInfo.getCountryName()}
         </p>
         <p className=" mt-3 text-base text-gray-500">
           {educationInfo.getDescription()}

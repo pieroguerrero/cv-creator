@@ -64,11 +64,12 @@ const PersonalInfo = ({ objPersonalInfo, styles }) => {
    * @returns
    */
   const getLink = (strURL) => {
-    console.log("PersonalInfoPDF.getLink", strURL);
-    if (strURL.length > 0) {
+    if (strURL && strURL.length > 0) {
+      const newUrl = strURL.replace("https://", "").replace("www.", "");
+
       return (
-        <Link style={styles.personalData_Link} src={"https://www." + strURL}>
-          {strURL}
+        <Link style={styles.personalData_Link} src={"https://www." + newUrl}>
+          {newUrl}
         </Link>
       );
     }

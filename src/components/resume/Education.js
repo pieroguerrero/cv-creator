@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MD_Education } from "../../back/MD_Education";
 import { EducationItem } from "./EducationItem";
-import { Popup } from "./Popup";
+import { Popup } from "./FormPopUp/Popup";
 import uniqid from "uniqid";
 
 /**
@@ -26,6 +26,8 @@ import uniqid from "uniqid";
  * setCountryName: function(string):void,
  * setCityName: function(string):void,
  * setFieldOfStudy: function(string):void
+ * setInstitutionURL: function(string):void
+ * getInstitutionURL: function(): string,
  * }[],
  * strHelpText: string,
  * strTitle: string,
@@ -60,6 +62,40 @@ const Education = ({
           strPlaceHolder: "",
           booIsRequired: true,
           strInitialValue: "",
+        },
+      },
+    },
+    {
+      strPropertyName: "strCountryName",
+      strFieldTitle: "Location",
+      strHelpText: "",
+      readOnly: false,
+      intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "text",
+        objData: {
+          strPlaceHolder: "City, Country",
+          booIsRequired: true,
+          strInitialValue: "",
+        },
+      },
+    },
+    {
+      strPropertyName: "strInstitutionURL",
+      strFieldTitle: "Institution Page",
+      strHelpText: "",
+      readOnly: false,
+      intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "url",
+        objData: {
+          strPlaceHolder: "www.myacademy.com",
+          booIsRequired: false,
+          strInitialURL: "",
+          regexPattern: /(.*?)/gm,
+          strPrefix: "https://",
         },
       },
     },
@@ -194,6 +230,8 @@ const Education = ({
    * setCountryName: function(string):void,
    * setCityName: function(string):void,
    * setFieldOfStudy: function(string):void
+   * setInstitutionURL: function(string):void
+   * getInstitutionURL: function(): string,
    * }} objEducation
    */
   const editEducationOnState = (objEducation) => {
@@ -232,6 +270,8 @@ const Education = ({
    * setCountryName: function(string):void,
    * setCityName: function(string):void,
    * setFieldOfStudy: function(string):void
+   * setInstitutionURL: function(string):void
+   * getInstitutionURL: function(): string,
    * }} objEducationEdited
    */
   const onEditEducation = (strId, objEducationEdited) => {
@@ -289,6 +329,8 @@ const Education = ({
    * @param {boolean} [objEducationPlain.booCurrent]
    * @param {string} objEducationPlain.strFieldOfStudy
    * @param {string} objEducationPlain.strDegree
+   * @param {string} [objEducationPlain.strInstitutionURL]
+   * @param {string} objEducationPlain.strCountryName
    */
   const onCreateEducation = (objEducationPlain) => {
     const objEducation = MD_Education.shapeEducation(
@@ -298,11 +340,11 @@ const Education = ({
       objEducationPlain.dtStartDate,
       objEducationPlain.dtEndDate ?? null,
       objEducationPlain.booCurrent ?? null,
-      "",
+      objEducationPlain.strCountryName,
       "",
       objEducationPlain.strDescription ?? "",
       objEducationPlain.strFieldOfStudy,
-      ""
+      objEducationPlain.strInstitutionURL
     );
 
     addNewEducationToState(objEducation);

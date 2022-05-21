@@ -114,7 +114,6 @@ const Resume = ({
   const arrEducation = [...arrEducationValues];
 
   const onPersonalInfoChange = (strPropertyName, strValue) => {
-    console.log("Resumen.onPersonalInfoChange:", strPropertyName, strValue);
     objPersonalInfoPlain[strPropertyName] = strValue;
   };
 

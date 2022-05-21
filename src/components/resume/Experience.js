@@ -1,6 +1,6 @@
 import { ExperienceItem } from "./ExperienceItem";
 import React, { useState } from "react";
-import { Popup } from "./Popup";
+import { Popup } from "./FormPopUp/Popup";
 import { MD_Experience } from "../../back/MD_Experience";
 import uniqid from "uniqid";
 
@@ -89,6 +89,24 @@ const Experience = ({
           strPlaceHolder: "",
           booIsRequired: true,
           strInitialValue: "",
+        },
+      },
+    },
+    {
+      strPropertyName: "strCompanyURL",
+      strFieldTitle: "Company Page",
+      strHelpText: "",
+      readOnly: false,
+      intColSpan: 2,
+      strValidationMessage: "",
+      objFieldType: {
+        strType: "url",
+        objData: {
+          strPlaceHolder: "www.company.com",
+          booIsRequired: false,
+          strInitialURL: "",
+          regexPattern: /(.*?)/gm,
+          strPrefix: "https://",
         },
       },
     },
@@ -232,6 +250,7 @@ const Experience = ({
    * strPosition:string,
    * strCompanyName:string,
    * strCountryName:string,
+   * strCompanyURL:string,
    * booCurrentJob:string,
    * dtStartDate:string,
    * strDescription:string }} objExperienceItem
@@ -254,7 +273,7 @@ const Experience = ({
       objExperienceItem.strCountryName,
       "",
       objExperienceItem.strDescription,
-      "",
+      objExperienceItem.strCompanyURL,
       ""
     );
 
@@ -269,6 +288,7 @@ const Experience = ({
    * strPosition:string,
    * strCompanyName:string,
    * strCountryName:string,
+   * strCompanyURL:string,
    * booCurrentJob:string,
    * dtStartDate:string,
    * strDescription:string }} objPopUpExperience
@@ -291,7 +311,7 @@ const Experience = ({
       objPopUpExperience.strCountryName,
       "",
       objPopUpExperience.strDescription,
-      "",
+      objPopUpExperience.strCompanyURL,
       ""
     );
 
