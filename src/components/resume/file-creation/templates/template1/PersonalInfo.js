@@ -64,6 +64,7 @@ const PersonalInfo = ({ objPersonalInfo, styles }) => {
    * @returns
    */
   const getLink = (strURL) => {
+    console.log("PersonalInfoPDF.getLink", strURL);
     if (strURL.length > 0) {
       return (
         <Link style={styles.personalData_Link} src={"https://www." + strURL}>

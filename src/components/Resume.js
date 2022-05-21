@@ -26,7 +26,12 @@ import uniqid from "uniqid";
  * setCurrentJob: function(boolean):void,
  * setCountryName: function(string):void,
  * setCityName: function(string):void,
- * setDescription: function(string):void}[],
+ * setDescription: function(string):void,
+ * getCompanyURL: function(): string,
+ * setCompanyURL: function(string):void,
+ * getCompanyDescription: function(): string,
+ * setCompanyDescription: function(string):void,
+ * }[],
  * arrEducationValues:{
  * getId: function(): string,
  * getDegree: function(): string,
@@ -47,6 +52,8 @@ import uniqid from "uniqid";
  * setCountryName: function(string):void,
  * setCityName: function(string):void,
  * setFieldOfStudy: function(string):void
+ * setInstitutionURL: function(string):void
+ * getInstitutionURL: function(): string,
  * }[],
  * objPersonalInfoValues:{
  * getId: function(): string,
@@ -96,7 +103,7 @@ const Resume = ({
     strEmail: objPersonalInfoValues.getEmail(),
     strAbout: objPersonalInfoValues.getAbout(),
     strPhone: objPersonalInfoValues.getPhone(),
-    strMiddelName: objPersonalInfoValues.getMiddelName(),
+    strMiddleName: objPersonalInfoValues.getMiddelName(),
     strOtherProfileURL: objPersonalInfoValues.getOtherProfileURL(),
     strPersonalWebPage: objPersonalInfoValues.getPersonalWebPage(),
     strLinkedURL: objPersonalInfoValues.getLinkedURL(),
@@ -107,16 +114,12 @@ const Resume = ({
   const arrEducation = [...arrEducationValues];
 
   const onPersonalInfoChange = (strPropertyName, strValue) => {
+    console.log("Resumen.onPersonalInfoChange:", strPropertyName, strValue);
     objPersonalInfoPlain[strPropertyName] = strValue;
-
-    console.log(objPersonalInfoPlain.strFirsName);
-    console.log(objPersonalInfoPlain.strPhone);
-    console.log(objPersonalInfoPlain.strEmail);
-    console.log(objPersonalInfoPlain.strLastName);
-    console.log(objPersonalInfoPlain.strAbout);
   };
 
   const generateCV = () => {
+    console.log(objPersonalInfoPlain);
     const objResume = MD_Resume.shapeResume(
       MD_PersonalInfo.shapePersonalInfo(
         uniqid(),
@@ -125,7 +128,7 @@ const Resume = ({
         objPersonalInfoPlain.strEmail,
         objPersonalInfoPlain.strPhone,
         objPersonalInfoPlain.strAbout,
-        objPersonalInfoPlain.strMiddelName,
+        objPersonalInfoPlain.strMiddleName,
         objPersonalInfoPlain.strOtherProfileURL,
         objPersonalInfoPlain.strPersonalWebPage,
         objPersonalInfoPlain.strLinkedURL,
@@ -198,11 +201,32 @@ const Resume = ({
           onPhoneChange={onPersonalInfoChange.bind(null, "strPhone")}
           onAboutChange={onPersonalInfoChange.bind(null, "strAbout")}
           onEmailChange={onPersonalInfoChange.bind(null, "strEmail")}
+          onHeadingChange={onPersonalInfoChange.bind(null, "strHeading")}
+          onLinkedURLChange={onPersonalInfoChange.bind(null, "strLinkedURL")}
+          onMiddleNameChange={onPersonalInfoChange.bind(null, "strMiddleName")}
+          onOtherProfileURLChange={onPersonalInfoChange.bind(
+            null,
+            "strOtherProfileURL"
+          )}
+          onPersonalWebPageChange={onPersonalInfoChange.bind(
+            null,
+            "strPersonalWebPage"
+          )}
+          onPlaceOfResidenceChange={onPersonalInfoChange.bind(
+            null,
+            "strPlaceOfResidence"
+          )}
           strFirstNameValue={objPersonalInfoValues.getFirstName()}
           strLastNameValue={objPersonalInfoValues.getLastName()}
           strEmailValue={objPersonalInfoValues.getEmail()}
           strAboutValue={objPersonalInfoValues.getAbout()}
           strPhoneValue={objPersonalInfoValues.getPhone()}
+          strHeadingValue={objPersonalInfoValues.getHeading()}
+          strLinkedURLValue={objPersonalInfoValues.getLinkedURL()}
+          strMiddleNameValue={objPersonalInfoValues.getMiddelName()}
+          strOtherProfileURLValue={objPersonalInfoValues.getOtherProfileURL()}
+          strPersonalWebPageValue={objPersonalInfoValues.getPersonalWebPage()}
+          strPlaceOfResidenceValue={objPersonalInfoValues.getPlaceOfResidence()}
         />
         <Experience
           experienceList={arrExperienceValues}

@@ -9,7 +9,8 @@ import uniqid from "uniqid";
  * onValueChange:(strNewValue:string)=>void,
  * strInitialValue:string,
  * strInputType:string,
- * strHelpText:string}} param0
+ * strHelpText:string,
+ * strPlaceHolder?:string}} param0
  * @returns
  */
 const DataField = ({
@@ -19,6 +20,7 @@ const DataField = ({
   strInitialValue = "",
   strInputType = "text",
   strHelpText = "",
+  strPlaceHolder = " ",
 }) => {
   const inputField = useRef(null);
   useEffect(() => {
@@ -59,7 +61,7 @@ const DataField = ({
           className="peer rounded-md border-[1px] border-solid shadow-inner text-[100%] p-1 pl-2 w-full invalid:border-red-500 invalid:placeholder-shown:border-[#e5e7eb]"
           type={strInputType}
           autoComplete="none"
-          placeholder=" "
+          placeholder={strPlaceHolder.length > 0 ? strPlaceHolder : " "}
           onBlur={onFocusLost}
           defaultValue={strInitialValue}
         />

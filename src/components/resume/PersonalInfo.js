@@ -1,4 +1,5 @@
 import { DataField } from "./DataField";
+import { UrlField } from "./UrlField";
 // import uniqid from "uniqid";
 import React, { useRef } from "react";
 
@@ -10,11 +11,24 @@ import React, { useRef } from "react";
  * onEmailChange:(newValue: string)=>void,
  * onAboutChange:(newValue: string)=>void,
  * onPhoneChange:(newValue: string)=>void,
+ * onMiddleNameChange:(newValue: string)=>void,
+ * onHeadingChange:(newValue: string)=>void,
+ * onPlaceOfResidenceChange:(newValue: string)=>void,
+ * onPersonalWebPageChange:(newValue: string)=>void,
+ * onLinkedURLChange:(newValue: string)=>void,
+ * onOtherProfileURLChange:(newValue: string)=>void,
  * strFirstNameValue:string,
  * strLastNameValue:string,
  * strEmailValue:string,
  * strPhoneValue:string,
- * strAboutValue:string}} param0
+ * strAboutValue:string,
+ * strMiddleNameValue:string,
+ * strHeadingValue:string,
+ * strPlaceOfResidenceValue:string,
+ * strLinkedURLValue:string,
+ * strPersonalWebPageValue:string,
+ * strOtherProfileURLValue:string,
+ * }} param0
  * @returns
  */
 const PersonalInfo = ({
@@ -23,11 +37,23 @@ const PersonalInfo = ({
   onEmailChange,
   onPhoneChange,
   onAboutChange,
+  onMiddleNameChange,
+  onHeadingChange,
+  onPlaceOfResidenceChange,
+  onPersonalWebPageChange,
+  onLinkedURLChange,
+  onOtherProfileURLChange,
   strFirstNameValue,
   strLastNameValue,
   strEmailValue,
   strPhoneValue,
   strAboutValue,
+  strMiddleNameValue,
+  strHeadingValue,
+  strPlaceOfResidenceValue,
+  strLinkedURLValue,
+  strPersonalWebPageValue,
+  strOtherProfileURLValue,
 }) => {
   const frmForm = useRef(null);
 
@@ -35,7 +61,7 @@ const PersonalInfo = ({
 
   const onBlurField = function (fnOnChangeValue, strValue) {
     // objTest.first = "+" + objTest.first;
-    // console.log("objTest.first:", objTest.first);
+    console.log("PersonalInfo.onBlurField.strValue:", strValue);
     fnOnChangeValue(strValue);
   };
 
@@ -54,7 +80,7 @@ const PersonalInfo = ({
         </div>
         <div className="shadow sm:rounded-md sm:overflow-hidden">
           <div className="flex flex-col gap-5 px-4 py-5 bg-white sm:p-6">
-            <div className="flex flex-col gap-4 gap-y-5 md:grid md:grid-cols-2 md:grid-rows-2">
+            <div className="flex flex-col gap-4 gap-y-5 md:grid md:grid-cols-2">
               <DataField
                 strFieldName={"First Name"}
                 booIsRequired={true}
@@ -63,6 +89,17 @@ const PersonalInfo = ({
                 strInputType={"text"}
                 strHelpText={""}
               />
+
+              <DataField
+                strFieldName={"Middle Name"}
+                booIsRequired={true}
+                onValueChange={onBlurField.bind(null, onMiddleNameChange)}
+                strInitialValue={strMiddleNameValue}
+                strInputType={"text"}
+                strHelpText={""}
+                strPlaceHolder={"Name or Initials"}
+              />
+
               <DataField
                 strFieldName={"Last Name"}
                 booIsRequired={true}
@@ -71,6 +108,17 @@ const PersonalInfo = ({
                 strInputType={"text"}
                 strHelpText={""}
               />
+
+              <DataField
+                strFieldName={"Heading"}
+                booIsRequired={true}
+                onValueChange={onBlurField.bind(null, onHeadingChange)}
+                strInitialValue={strHeadingValue}
+                strInputType={"text"}
+                strHelpText={""}
+                strPlaceHolder={"e.g. Lawyer, Product Manager, PhD Candidate"}
+              />
+
               <DataField
                 strFieldName={"Email"}
                 booIsRequired={true}
@@ -79,6 +127,17 @@ const PersonalInfo = ({
                 strInputType={"email"}
                 strHelpText={""}
               />
+
+              <DataField
+                strFieldName={"Place or Residence"}
+                booIsRequired={true}
+                onValueChange={onBlurField.bind(null, onPlaceOfResidenceChange)}
+                strInitialValue={strPlaceOfResidenceValue}
+                strInputType={"text"}
+                strHelpText={""}
+                strPlaceHolder={"e.g. City, Country"}
+              />
+
               <DataField
                 strFieldName={"Phone"}
                 booIsRequired={true}
@@ -86,6 +145,39 @@ const PersonalInfo = ({
                 strInitialValue={strPhoneValue}
                 strInputType={"tel"}
                 strHelpText={""}
+              />
+
+              <UrlField
+                strFieldName="Linkedin Profile"
+                strHelpText={""}
+                strInitialValue={strLinkedURLValue}
+                strPattern={/.*\.?linkedin\.com.*/gm}
+                strPlaceHolder={"www.linkedin.com/in/johndoe"}
+                strPrefix={"https://"}
+                onValueChange={onBlurField.bind(null, onLinkedURLChange)}
+                booIsRequired={true}
+              />
+
+              <UrlField
+                strFieldName="Other Online Profile"
+                strHelpText={""}
+                strInitialValue={strOtherProfileURLValue}
+                strPattern={/(.*?)/gm}
+                strPlaceHolder={"www.example.com/johndoe"}
+                strPrefix={"https://"}
+                onValueChange={onBlurField.bind(null, onOtherProfileURLChange)}
+                booIsRequired={false}
+              />
+
+              <UrlField
+                strFieldName="Personal Page"
+                strHelpText={""}
+                strInitialValue={strPersonalWebPageValue}
+                strPattern={/(.*?)/gm}
+                strPlaceHolder={"www.johndoe.com"}
+                strPrefix={"https://"}
+                onValueChange={onBlurField.bind(null, onPersonalWebPageChange)}
+                booIsRequired={false}
               />
             </div>
 
