@@ -2,15 +2,15 @@ import React from "react";
 
 const Credits = () => {
   return (
-    <div className="w-full pt-5 sm:pb-4 flex items-center justify-center gap-2 text-white p-1 text-sm">
-      <span className="text-black dark:text-white">
+    <div className="flex w-full pt-5 sm:pb-4 items-center justify-center gap-2 p-1 text-sm">
+      <span className=" dark:text-white">
         {"Created by "}
         <strong>
           <a
             id="link-footer"
             target="_blank"
             href="https://github.com/pieroguerrero"
-            className="text-black dark:text-white"
+            className="dark:text-white"
             rel="noreferrer"
           >
             {"pieroguerrero"}
@@ -20,7 +20,7 @@ const Credits = () => {
       <a
         href="https://github.com/pieroguerrero"
         target="_blank"
-        className="text-black dark:text-white"
+        className=" dark:text-white"
         rel="noreferrer"
       >
         <svg

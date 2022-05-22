@@ -67,7 +67,7 @@ const PersonalInfo = ({
 
   return (
     <form ref={frmForm} autoComplete="none" className="bg-gray-100">
-      <div className="flex flex-col gap-6 md:gap-0 md:grid md:grid-cols-[30%_70%] max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div className="flex flex-col gap-6 md:gap-0 md:grid md:grid-cols-[30%_70%] max-w-7xl mx-auto py-6 pt-11 sm:pt-12 sm:px-6 lg:px-8">
         <div className="px-4 sm:pr-8 sm:px-0">
           <h2 className="text-lg font-medium leading-6 text-gray-900">
             Personal Info

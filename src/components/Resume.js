@@ -286,7 +286,7 @@ const Resume = ({
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col">
       <div>
         <PersonalInfo
           onFirstNameChange={onPersonalInfoChange.bind(null, "strFirsName")}
@@ -327,6 +327,7 @@ const Resume = ({
           sendEditedExperienceToResume={getEditedExperience}
           sendDeletedExperienceIdToResume={getDeletedExperienceId}
         />
+
         <Education
           strTitle={"Education"}
           educationList={arrEducationValues}
@@ -338,11 +339,18 @@ const Resume = ({
           sendNewEducationToResume={getNewEducation}
         />
       </div>
-      <div className="flex justify-center py-6 bg-gray-50 text-right ">
+      <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-7 px-4  py-6 sm:pt-8 bg-gray-50 text-right ">
+        <button
+          type="button"
+          className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm py-4 px-8 bg-white text-sm sm:text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto "
+        >
+          Save Locally
+        </button>
+
         <button
           onClick={onSelectFormat}
           type="button"
-          className="inline-flex justify-center py-4 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="inline-flex justify-center py-4 px-8 border border-transparent shadow-sm font-medium text-sm sm:text-base rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Select Resume Format
         </button>
