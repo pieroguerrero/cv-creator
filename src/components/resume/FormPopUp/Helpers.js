@@ -41,7 +41,10 @@ const Helpers = (() => {
             objField.objFieldType.objData.strInitialDate;
         }
       } else if (objField.objFieldType.strType === "url") {
-        if (objField.objFieldType.objData.strInitialURL.length > 0) {
+        if (
+          objField.objFieldType.objData.strInitialURL &&
+          objField.objFieldType.objData.strInitialURL.length > 0
+        ) {
           objPopUpValues[objField.strPropertyName] =
             objField.objFieldType.objData.strInitialURL;
         }

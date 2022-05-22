@@ -63,7 +63,6 @@ const EducationItem = ({
   sendDeletedEducationId,
   arrPopupInputFields,
 }) => {
-  console.log("EducationItem.MAIN.getEndDate():", educationInfo.getEndDate());
   const getDatesText = (dtStartDate, dtEndDate, booCurrentJob) => {
     return (
       format(dtStartDate, "MMM yyy") +

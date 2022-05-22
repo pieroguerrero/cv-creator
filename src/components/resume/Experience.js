@@ -56,7 +56,9 @@ const Experience = ({
   };
 
   const getExperienceList = (arrExperienceObjs) => {
-    return arrExperienceObjs.map((expItem) => getExperienceJSXItem(expItem));
+    return sortExperienceArray(arrExperienceObjs).map((expItem) =>
+      getExperienceJSXItem(expItem)
+    );
   };
 
   const arrPopupInputFields = [
@@ -200,14 +202,57 @@ const Experience = ({
   ];
 
   //TODO:Sort the array
+  /**
+   *
+   * @param {{
+   * getId: function(): string,
+   * getPosition: function(): string,
+   * getCompanyName: function(): string,
+   * getStartDate: function(): Date,
+   * getEndDate: function(): Date,
+   * getCurrentJob: function(): boolean,
+   * getCountryName: function(): string,
+   * getCityName: function(): string,
+   * getDescription: function(): string,
+   * setPosition: function(string):void,
+   * setCompanyName: function(string):void,
+   * setStartDate: function(Date):void,
+   * setEndDate: function(Date):void,
+   * setCurrentJob: function(boolean):void,
+   * setCountryName: function(string):void,
+   * setCityName: function(string):void,
+   * setDescription: function(string):void,
+   * getCompanyURL: function(): string,
+   * setCompanyURL: function(string):void,
+   * getCompanyDescription: function(): string,
+   * setCompanyDescription: function(string):void,
+   * }[]} arrExpItems
+   * @returns
+   */
   const sortExperienceArray = (arrExpItems) => {
-    return arrExpItems;
+    const arrExpItemsTemp = [...arrExpItems];
+
+    return arrExpItemsTemp.sort((a, b) => {
+      if (a.getCurrentJob()) {
+        if (b.getCurrentJob()) {
+          return a.getStartDate() <= b.getStartDate() ? -1 : 1;
+        } else {
+          return -1;
+        }
+      } else {
+        if (b.getCurrentJob()) {
+          return 1;
+        } else {
+          return a.getEndDate() >= b.getEndDate() ? -1 : 1;
+        }
+      }
+    });
   };
 
   const addNewExperienceToState = (objExperience) => {
     const arrTempExperienceObjs = [...stateArrExperienceObjs];
     arrTempExperienceObjs.push(objExperience);
-    setStateArrExperienceObjs(sortExperienceArray(arrTempExperienceObjs));
+    setStateArrExperienceObjs(arrTempExperienceObjs);
   };
 
   /**
@@ -240,7 +285,7 @@ const Experience = ({
 
     if (intIndex >= 0) {
       arrTempExperienceObjs[intIndex] = objExperience;
-      setStateArrExperienceObjs(sortExperienceArray(arrTempExperienceObjs));
+      setStateArrExperienceObjs(arrTempExperienceObjs);
     }
   };
 

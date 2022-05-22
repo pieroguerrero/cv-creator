@@ -1,6 +1,9 @@
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import React, { useEffect, useRef, useState } from "react";
 import imgFormat1 from "./templates/img/format1.png";
+import imgFormat3 from "./templates/img/format3.png";
+import imgFormat2 from "./templates/img/format2.png";
+import imgFormat4 from "./templates/img/format4.png";
 
 import { Template1 } from "./templates/template1/Template1";
 
@@ -21,10 +24,26 @@ const PopUpViwer = ({ objResume, onClose }) => {
   });
 
   const objFormatsInfo = {
-    format1: { strName: "Modern", strPreviewImageURL: imgFormat1 },
-    format2: { strName: "Classic", strPreviewImageURL: imgFormat1 },
-    format3: { strName: "Design", strPreviewImageURL: imgFormat1 },
-    format4: { strName: "Structural", strPreviewImageURL: imgFormat1 },
+    format1: {
+      strName: "Modern",
+      strPreviewImageURL: imgFormat1,
+      isActive: true,
+    },
+    format2: {
+      strName: "Classic",
+      strPreviewImageURL: imgFormat2,
+      isActive: false,
+    },
+    format3: {
+      strName: "Design",
+      strPreviewImageURL: imgFormat3,
+      isActive: false,
+    },
+    format4: {
+      strName: "Structural",
+      strPreviewImageURL: imgFormat4,
+      isActive: false,
+    },
   };
 
   const isResumeValid = ((objResume) => {
@@ -33,14 +52,22 @@ const PopUpViwer = ({ objResume, onClose }) => {
 
   const getDownloadButton = (strFormatId, isResumeValid) => {
     if (isResumeValid) {
-      return (
-        <button
-          // onClick={generateFormat.bind(null, strFormatId)}
-          className=" bottom-0 left-0 mt-2 w-40 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  sm:text-sm"
-        >
-          {downloadPDF(strFormatId, objResume)}
-        </button>
-      );
+      if (objFormatsInfo["format" + strFormatId].isActive) {
+        return (
+          <button className=" bottom-0 left-0 mt-2 w-40 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500  sm:text-sm">
+            {downloadPDF(strFormatId, objResume)}
+          </button>
+        );
+      } else {
+        return (
+          <button
+            disabled
+            className=" bottom-0 left-0 mt-2 w-40 inline-flex justify-center rounded-md border border-[#999999] shadow-sm px-4 py-2 bg-[#cccccc] text-base font-medium text-[#a5a5a5]     sm:text-sm"
+          >
+            Coming soon
+          </button>
+        );
+      }
     } else {
       return (
         <button
@@ -53,18 +80,34 @@ const PopUpViwer = ({ objResume, onClose }) => {
     }
   };
 
+  const getTemplateImage = (objFormat) => {
+    if (objFormat.isActive) {
+      return (
+        <img
+          src={objFormat.strPreviewImageURL}
+          alt={objFormat.strName}
+          className=" w-40 h-auto shadow-lg transition-transform hover:scale-[1.2] img-scaleup border border-gray-600"
+        />
+      );
+    } else {
+      return (
+        <img
+          src={objFormat.strPreviewImageURL}
+          alt={objFormat.strName}
+          className=" w-40 h-auto border border-gray-600"
+        />
+      );
+    }
+  };
+
   const getFormatDisplay = (strFormatId) => {
     const objFormat = objFormatsInfo["format" + strFormatId];
 
     return (
       <div className="flex flex-col gap-2 justify-center">
         <p className="text-gray-500">{objFormat.strName}</p>
-        <div>
-          <img
-            src={objFormat.strPreviewImageURL}
-            alt={objFormat.strName}
-            className=" w-40 h-auto"
-          />
+        <div className="flex flex-col gap-2">
+          {getTemplateImage(objFormat)}
           {getDownloadButton(strFormatId, isResumeValid)}
         </div>
       </div>
@@ -75,7 +118,7 @@ const PopUpViwer = ({ objResume, onClose }) => {
     return (
       <div
         ref={refDivSelector}
-        className=" inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full h-fit"
+        className=" inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full h-fit"
       >
         {/* Main */}
         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -94,11 +137,10 @@ const PopUpViwer = ({ objResume, onClose }) => {
             </div>
           </div>
           {/* Content */}
-          <div className="grid grid-cols-2 grid-rows-2 place-items-center sm:flex sm:flex-row gap-6 mt-5 sm:mx-4 items-center sm:justify-center pb-4">
+          <div className="grid grid-cols-1 place-items-center sm:flex sm:flex-row gap-6 mt-7 sm:mx-4 items-center sm:justify-around pb-4 sm:gap-0">
             {getFormatDisplay("1")}
             {getFormatDisplay("2")}
             {getFormatDisplay("3")}
-            {getFormatDisplay("4")}
           </div>
         </div>
         {/* Buttons */}
@@ -128,7 +170,7 @@ const PopUpViwer = ({ objResume, onClose }) => {
 
   const getViwer = (strFormatId, objResume) => {
     return (
-      <div className="flex flex-col align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:h-[600px] sm:max-w-2xl sm:w-full">
+      <div className="flex flex-col align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:h-[600px] sm:max-w-2xl ">
         {/* Main */}
         <div className="flex flex-col bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 flex-1">
           <div className="sm:flex sm:items-start">

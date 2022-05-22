@@ -35,7 +35,6 @@ const DateTimeField = ({
     if (strFieldType === "date") {
       if (e.currentTarget.checkValidity()) {
         const arrPlittedValue = e.currentTarget.value.split("-");
-        console.log("DateField YYYY-MM-DD:", arrPlittedValue);
 
         if (arrPlittedValue.length === 3) {
           const dtDateValue = new Date(
@@ -43,7 +42,6 @@ const DateTimeField = ({
             Number(arrPlittedValue[1]) - 1,
             Number(arrPlittedValue[2])
           );
-          console.log("DateField Date obj:", dtDateValue);
           onValueChange(dtDateValue);
         } else onValueChange(null);
       } else {

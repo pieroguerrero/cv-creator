@@ -164,7 +164,7 @@ const Template1 = ({ objResumen }) => {
 
   return (
     <Document author="Piero Guerrero" title={"Resume"}>
-      <Page style={documentStyles.page}>
+      <Page size={"A4"} style={documentStyles.page}>
         {/* <View style={textStyles.line}></View> */}
         <PersonalInfo
           objPersonalInfo={objResumen.getPersonalInfo()}

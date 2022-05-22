@@ -39,8 +39,8 @@ function App() {
           "Software Engineer Manager",
           "Cia Minera Poderosa SA",
           new Date(),
-          null,
-          true,
+          new Date(),
+          false,
           "Lima, Peru",
           "",
           "+Id neque aliquam vestibulum morbi blandit cursus risus at ultrices +Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. +Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -52,8 +52,8 @@ function App() {
           "Scrum Master",
           "Verizon",
           new Date(),
-          new Date(),
-          false,
+          null,
+          true,
           "Lima, Peru",
           "",
           "Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Ultrices neque ornare aenean euismod.",
@@ -124,7 +124,7 @@ function App() {
         </div>
       </main>
 
-      <footer>
+      <footer className="bg-gray-50">
         <Credits />
       </footer>
     </div>

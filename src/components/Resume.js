@@ -1,7 +1,7 @@
 import { PersonalInfo } from "./resume/PersonalInfo";
 import { Experience } from "./resume/Experience";
 import { Education } from "./resume/Education";
-import React, { useState } from "react";
+import React from "react";
 import { MD_Resume } from "../back/MD_Resume";
 import { MD_PersonalInfo } from "../back/MD_PersonalInfo";
 import uniqid from "uniqid";
@@ -117,7 +117,101 @@ const Resume = ({
     objPersonalInfoPlain[strPropertyName] = strValue;
   };
 
-  const generateCV = () => {
+  /**
+   *
+   * @param {{
+   * getId: function(): string,
+   * getDegree: function(): string,
+   * getDescription: function(): string,
+   * getInstitutionName: function(): string,
+   * getStartDate: function(): Date,
+   * getEndDate: function(): Date,
+   * getCurrent: function(): boolean,
+   * getCountryName: function(): string,
+   * getCityName: function(): string,
+   * getFieldOfStudy: function(): string,
+   * setDegree: function(string):void,
+   * setDescription: function(string):void,
+   * setInstitutionName: function(string):void,
+   * setStartDate: function(Date):void,
+   * setEndDate: function(Date):void,
+   * setCurrent: function(boolean):void,
+   * setCountryName: function(string):void,
+   * setCityName: function(string):void,
+   * setFieldOfStudy: function(string):void
+   * setInstitutionURL: function(string):void
+   * getInstitutionURL: function(): string,
+   * }[]} arrEduItems
+   * @returns
+   */
+  const sortEducationArray = (arrEduItems) => {
+    const arrEdutemsTemp = [...arrEduItems];
+
+    return arrEdutemsTemp.sort((a, b) => {
+      if (a.getCurrent()) {
+        if (b.getCurrent()) {
+          return a.getStartDate() <= b.getStartDate() ? -1 : 1;
+        } else {
+          return -1;
+        }
+      } else {
+        if (b.getCurrent()) {
+          return 1;
+        } else {
+          return a.getEndDate() >= b.getEndDate() ? -1 : 1;
+        }
+      }
+    });
+  };
+
+  /**
+   *
+   * @param {{
+   * getId: function(): string,
+   * getPosition: function(): string,
+   * getCompanyName: function(): string,
+   * getStartDate: function(): Date,
+   * getEndDate: function(): Date,
+   * getCurrentJob: function(): boolean,
+   * getCountryName: function(): string,
+   * getCityName: function(): string,
+   * getDescription: function(): string,
+   * setPosition: function(string):void,
+   * setCompanyName: function(string):void,
+   * setStartDate: function(Date):void,
+   * setEndDate: function(Date):void,
+   * setCurrentJob: function(boolean):void,
+   * setCountryName: function(string):void,
+   * setCityName: function(string):void,
+   * setDescription: function(string):void,
+   * getCompanyURL: function(): string,
+   * setCompanyURL: function(string):void,
+   * getCompanyDescription: function(): string,
+   * setCompanyDescription: function(string):void,
+   * }[]} arrExpItems
+   * @returns
+   */
+  const sortExperienceArray = (arrExpItems) => {
+    const arrExpItemsTemp = [...arrExpItems];
+
+    return arrExpItemsTemp.sort((a, b) => {
+      if (a.getCurrentJob()) {
+        if (b.getCurrentJob()) {
+          return a.getStartDate() <= b.getStartDate() ? -1 : 1;
+        } else {
+          return -1;
+        }
+      } else {
+        if (b.getCurrentJob()) {
+          return 1;
+        } else {
+          return a.getEndDate() >= b.getEndDate() ? -1 : 1;
+        }
+      }
+    });
+  };
+
+  const onSelectFormat = () => {
     console.log(objPersonalInfoPlain);
     const objResume = MD_Resume.shapeResume(
       MD_PersonalInfo.shapePersonalInfo(
@@ -134,8 +228,8 @@ const Resume = ({
         objPersonalInfoPlain.strHeading,
         objPersonalInfoPlain.strPlaceOfResidence
       ),
-      arrExperience,
-      arrEducation
+      sortExperienceArray(arrExperience),
+      sortEducationArray(arrEducation)
     );
 
     onGenerateCV(objResume);
@@ -244,11 +338,11 @@ const Resume = ({
           sendNewEducationToResume={getNewEducation}
         />
       </div>
-      <div className="flex justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">
+      <div className="flex justify-center py-6 bg-gray-50 text-right ">
         <button
-          onClick={generateCV}
+          onClick={onSelectFormat}
           type="button"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="inline-flex justify-center py-4 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Select Resume Format
         </button>

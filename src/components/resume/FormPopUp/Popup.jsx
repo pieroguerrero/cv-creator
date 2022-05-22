@@ -78,6 +78,7 @@ const Popup = ({
   strSaveButtonTitle,
 }) => {
   const frmForm = useRef(null);
+  const refDivSelector = useRef(null);
   const pErrorMessage = useRef(null);
   useEffect(() => {
     frmForm.current.reset();
@@ -86,6 +87,9 @@ const Popup = ({
   const onButtonClick = () => {
     frmForm.current.reset();
     frmForm.current.classList.remove("hidden");
+    refDivSelector.current.scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   const objPopUpValues =
@@ -259,9 +263,12 @@ const Popup = ({
       <form
         autoComplete="none"
         ref={frmForm}
-        className="absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 hidden"
+        className="absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 flex justify-center z-50 hidden"
       >
-        <div className="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div
+          ref={refDivSelector}
+          className="relative h-fit inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        >
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start">
               <div className="mt-3 text-center sm:mt-0 sm:mx-4 sm:text-left">

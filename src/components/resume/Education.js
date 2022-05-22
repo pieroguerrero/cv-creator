@@ -204,8 +204,51 @@ const Education = ({
     },
   ];
 
+  /**
+   *
+   * @param {{
+   * getId: function(): string,
+   * getDegree: function(): string,
+   * getDescription: function(): string,
+   * getInstitutionName: function(): string,
+   * getStartDate: function(): Date,
+   * getEndDate: function(): Date,
+   * getCurrent: function(): boolean,
+   * getCountryName: function(): string,
+   * getCityName: function(): string,
+   * getFieldOfStudy: function(): string,
+   * setDegree: function(string):void,
+   * setDescription: function(string):void,
+   * setInstitutionName: function(string):void,
+   * setStartDate: function(Date):void,
+   * setEndDate: function(Date):void,
+   * setCurrent: function(boolean):void,
+   * setCountryName: function(string):void,
+   * setCityName: function(string):void,
+   * setFieldOfStudy: function(string):void
+   * setInstitutionURL: function(string):void
+   * getInstitutionURL: function(): string,
+   * }[]} arrEduItems
+   * @returns
+   */
   const sortEducationArray = (arrEduItems) => {
-    return arrEduItems;
+    const arrEdutemsTemp = [...arrEduItems];
+
+    return arrEdutemsTemp.sort((a, b) => {
+      if (a.getCurrent()) {
+        if (b.getCurrent()) {
+          return a.getStartDate() <= b.getStartDate() ? -1 : 1;
+        } else {
+          return -1;
+        }
+      } else {
+        if (b.getCurrent()) {
+          return 1;
+        } else {
+          return a.getEndDate() >= b.getEndDate() ? -1 : 1;
+        }
+      }
+    });
   };
 
   /**
@@ -243,7 +286,7 @@ const Education = ({
 
     if (intIndex >= 0) {
       arrTempEducationObjs[intIndex] = objEducation;
-      setStateArrEducationObjs(sortEducationArray(arrTempEducationObjs));
+      setStateArrEducationObjs(arrTempEducationObjs);
     }
   };
 
@@ -311,13 +354,15 @@ const Education = ({
   };
 
   const getEducationList = (arrEducationObjs) => {
-    return arrEducationObjs.map((eduItem) => getEducationJSXItem(eduItem));
+    return sortEducationArray(arrEducationObjs).map((eduItem) =>
+      getEducationJSXItem(eduItem)
+    );
   };
 
   const addNewEducationToState = (objEducation) => {
     const arrTempEducationObjs = [...stateArrEducationObjs];
     arrTempEducationObjs.push(objEducation);
-    setStateArrEducationObjs(sortEducationArray(arrTempEducationObjs));
+    setStateArrEducationObjs(arrTempEducationObjs);
   };
 
   /**
