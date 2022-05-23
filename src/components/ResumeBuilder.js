@@ -123,7 +123,7 @@ const ResumeBuilder = () => {
           </h1>
           <p className=" text-gray-600">
             {
-              "You need to know that employers scan your resume for six seconds in average to decide if you’re a match for the position, so every section is important to be well written. You can save the progress at any time, it will be save locally in your machine to secure your information."
+              "You need to know that employers scan your resume for six seconds in average to decide if you’re a match for the position, so every section is important to be well written. You can save the progress at any time, it will be saved locally in your machine to secure your information. At the end you will be able to export your information in a beautiful PDF document."
             }
           </p>
         </div>
