@@ -1,5 +1,5 @@
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import imgFormat1 from "./templates/img/format1.png";
 import imgFormat3 from "./templates/img/format3.png";
 import imgFormat2 from "./templates/img/format2.png";
@@ -46,9 +46,15 @@ const PopUpViwer = ({ objResume, onClose }) => {
     },
   };
 
-  const isResumeValid = ((objResume) => {
-    return true;
-  })(objResume);
+  const isResumeValid =
+    /**
+     *
+     * @param {Object} objResume
+     * @returns
+     */
+    ((objResume) => {
+      return objResume.getExperienceList().length > 1 ? true : false;
+    })(objResume);
 
   const getDownloadButton = (strFormatId, isResumeValid) => {
     if (isResumeValid) {
@@ -114,6 +120,14 @@ const PopUpViwer = ({ objResume, onClose }) => {
     );
   };
 
+  const getHelpText = (isResumeValid) => {
+    if (isResumeValid) {
+      return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua";
+    } else {
+      return "Invalid";
+    }
+  };
+
   const getSelector = () => {
     return (
       <div
@@ -130,8 +144,7 @@ const PopUpViwer = ({ objResume, onClose }) => {
               </h3>
               <div className="mt-2">
                 <p className="text-sm text-gray-500">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                  {getHelpText(isResumeValid)}
                 </p>
               </div>
             </div>
@@ -239,7 +252,7 @@ const PopUpViwer = ({ objResume, onClose }) => {
   };
 
   return (
-    <div className="absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 flex justify-center z-50">
+    <div className="absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 flex justify-center z-[90]">
       {getSelector()}
     </div>
   );

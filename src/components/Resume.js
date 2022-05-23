@@ -212,7 +212,6 @@ const Resume = ({
   };
 
   const onSelectFormat = () => {
-    console.log(objPersonalInfoPlain);
     const objResume = MD_Resume.shapeResume(
       MD_PersonalInfo.shapePersonalInfo(
         uniqid(),
