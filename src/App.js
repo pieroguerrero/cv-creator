@@ -1,6 +1,6 @@
 //import logo from "./logo.svg";
 import React, { useState } from "react";
-import { LandingPage } from "./components/LandingPage";
+import { LandingPage } from "./components/LandingPage/LandingPage";
 import { ResumeBuilder } from "./components/ResumeBuilder";
 
 function App() {

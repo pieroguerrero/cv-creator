@@ -12,83 +12,97 @@ const ResumeBuilder = () => {
   const [showPopUpViewer, setShowPopUpViewer] = useState(false);
 
   const [resumeState, setResume] = useState(
-    // MD_Resume.shapeResume(
-    //   MD_PersonalInfo.shapePersonalInfo(uniqid(), "", "", "", "", ""),
-    //   [],
-    //   []
-    // )
     MD_Resume.shapeResume(
       MD_PersonalInfo.shapePersonalInfo(
         uniqid(),
-        "Piero",
-        "Guerrero",
-        "piero.guerrero@outlook.com",
-        "+51 961 3941",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id neque aliquam vestibulum morbi blandit cursus risus at ultrices. Dolor sit amet consectetur adipiscing elit ut. Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim.",
-        "A.",
-        "github.com/pieroguerrero",
-        "pieroguerrero.com",
-        "linkedin.com/in/pieroguerrero",
-        "Senior Software Engineer",
-        "Lima, Peru"
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
       ),
-      [
-        MD_Experience.shapeExperience(
-          uniqid(),
-          "Software Engineer Manager",
-          "Cia Minera Poderosa SA",
-          new Date(),
-          new Date(),
-          false,
-          "Lima, Peru",
-          "",
-          "+Id neque aliquam vestibulum morbi blandit cursus risus at ultrices +Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. +Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-          "",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-        ),
-        MD_Experience.shapeExperience(
-          uniqid(),
-          "Scrum Master",
-          "Verizon",
-          new Date(),
-          null,
-          true,
-          "Lima, Peru",
-          "",
-          "Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Ultrices neque ornare aenean euismod.",
-          "verizon.com",
-          "Ultrices neque ornare aenean euismod."
-        ),
-      ],
-      [
-        MD_Education.shapeEducation(
-          uniqid(),
-          "Master",
-          "ESAN University",
-          new Date(),
-          new Date(),
-          false,
-          "Lima, Peru",
-          "",
-          "",
-          "Project Management",
-          "esan.edu.pe"
-        ),
-        MD_Education.shapeEducation(
-          uniqid(),
-          "Bachelor",
-          "PUCP",
-          new Date(),
-          new Date(),
-          false,
-          "Lima, Peru",
-          "",
-          "+Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Ultrices neque ornare aenean euismod.",
-          "Computer Science",
-          "pucp.edu.pe"
-        ),
-      ]
+      [],
+      []
     )
+
+    // MD_Resume.shapeResume(
+    //   MD_PersonalInfo.shapePersonalInfo(
+    //     uniqid(),
+    //     "Piero",
+    //     "Guerrero",
+    //     "piero.guerrero@outlook.com",
+    //     "+51 961 3941",
+    //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id neque aliquam vestibulum morbi blandit cursus risus at ultrices. Dolor sit amet consectetur adipiscing elit ut. Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim.",
+    //     "A.",
+    //     "github.com/pieroguerrero",
+    //     "pieroguerrero.com",
+    //     "linkedin.com/in/pieroguerrero",
+    //     "Senior Software Engineer",
+    //     "Lima, Peru"
+    //   ),
+    //   [
+    //     MD_Experience.shapeExperience(
+    //       uniqid(),
+    //       "Software Engineer Manager",
+    //       "Cia Minera Poderosa SA",
+    //       new Date(),
+    //       new Date(),
+    //       false,
+    //       "Lima, Peru",
+    //       "",
+    //       "+Id neque aliquam vestibulum morbi blandit cursus risus at ultrices +Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. Facilisi etiam dignissim diam quis enim. +Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    //       "",
+    //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    //     ),
+    //     MD_Experience.shapeExperience(
+    //       uniqid(),
+    //       "Scrum Master",
+    //       "Verizon",
+    //       new Date(),
+    //       null,
+    //       true,
+    //       "Lima, Peru",
+    //       "",
+    //       "Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Ultrices neque ornare aenean euismod.",
+    //       "verizon.com",
+    //       "Ultrices neque ornare aenean euismod."
+    //     ),
+    //   ],
+    //   [
+    //     MD_Education.shapeEducation(
+    //       uniqid(),
+    //       "Master",
+    //       "ESAN University",
+    //       new Date(),
+    //       new Date(),
+    //       false,
+    //       "Lima, Peru",
+    //       "",
+    //       "",
+    //       "Project Management",
+    //       "esan.edu.pe"
+    //     ),
+    //     MD_Education.shapeEducation(
+    //       uniqid(),
+    //       "Bachelor",
+    //       "PUCP",
+    //       new Date(),
+    //       new Date(),
+    //       false,
+    //       "Lima, Peru",
+    //       "",
+    //       "+Ultrices neque ornare aenean euismod. Facilisi etiam dignissim diam quis enim. Ultrices neque ornare aenean euismod.",
+    //       "Computer Science",
+    //       "pucp.edu.pe"
+    //     ),
+    //   ]
+    // )
   );
 
   const generateCV = (objResume) => {
@@ -108,9 +122,9 @@ const ResumeBuilder = () => {
             Resume Builder
           </h1>
           <p className=" text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida
-            cum sociis natoque penatibus.
+            {
+              "You need to know that employers scan your resume for six seconds in average to decide if you’re a match for the position, so every section is important to be well written. You can save the progress at any time, it will be save locally in your machine to secure your information."
+            }
           </p>
         </div>
       </header>

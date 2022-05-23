@@ -73,9 +73,9 @@ const PersonalInfo = ({
             Personal Info
           </h2>
           <p className="mt-1 text-sm text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida
-            cum sociis natoque penatibus.
+            {
+              "Provide the best way for Recruiters to contact you. Remember that pertinent info should be on the first page as the recruiter may not read beyond that."
+            }
           </p>
         </div>
         <div className="shadow sm:rounded-md sm:overflow-hidden">
@@ -125,7 +125,9 @@ const PersonalInfo = ({
                 onValueChange={onBlurField.bind(null, onEmailChange)}
                 strInitialValue={strEmailValue}
                 strInputType={"email"}
-                strHelpText={""}
+                strHelpText={
+                  "Do not provide an Email that includes jokes. Recruiters may not find it funny."
+                }
               />
 
               <DataField
@@ -134,7 +136,9 @@ const PersonalInfo = ({
                 onValueChange={onBlurField.bind(null, onPlaceOfResidenceChange)}
                 strInitialValue={strPlaceOfResidenceValue}
                 strInputType={"text"}
-                strHelpText={""}
+                strHelpText={
+                  "Employers usually want to know the city and country you currently live in."
+                }
                 strPlaceHolder={"e.g. City, Country"}
               />
 
@@ -182,12 +186,14 @@ const PersonalInfo = ({
             </div>
 
             <DataField
-              strFieldName={"About"}
+              strFieldName={"Summary"}
               booIsRequired={false}
               onValueChange={onBlurField.bind(null, onAboutChange)}
               strInitialValue={strAboutValue}
               strInputType={"textarea"}
-              strHelpText={"Brief description of your profile."}
+              strHelpText={
+                "Make your summary sound stronger by writing it in the present tense. Focus on what you can do for a company, rather than what you did in the past."
+              }
             />
           </div>
         </div>

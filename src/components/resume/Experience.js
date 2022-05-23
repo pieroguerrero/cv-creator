@@ -65,7 +65,8 @@ const Experience = ({
     {
       strPropertyName: "strPosition",
       strFieldTitle: "Position",
-      strHelpText: "",
+      strHelpText:
+        "Don't abbreviate job titles, so it looks more professional and is easier for managers to understand.",
       readOnly: false,
       intColSpan: 2,
       strValidationMessage: "",
@@ -97,7 +98,7 @@ const Experience = ({
     {
       strPropertyName: "strCompanyURL",
       strFieldTitle: "Company Page",
-      strHelpText: "",
+      strHelpText: "Recruiters like to know where you've worked in.",
       readOnly: false,
       intColSpan: 2,
       strValidationMessage: "",
@@ -184,7 +185,8 @@ const Experience = ({
     {
       strPropertyName: "strDescription",
       strFieldTitle: "Description",
-      strHelpText: "",
+      strHelpText:
+        "List in bullets the accomplishes for this experience, to add a new bullet just type the '+' symbol before each sentence. It is important that the accomplish you write is not vague or too general.Try to begin every sentence with an action verb.",
       readOnly: false,
       intColSpan: 2,
       strValidationMessage: "",
@@ -386,8 +388,9 @@ const Experience = ({
             Experience
           </h2>
           <p className="mt-1 text-sm text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            {
+              "Hiring managers will scan this information looking for career progression, i.e.- how long you've stayed in each job, your growth and promotions, whether you've worked for similar companies and whether you have gaps in employment."
+            }
           </p>
         </div>
         <div className="shadow sm:rounded-md sm:overflow-hidden">
@@ -399,6 +402,9 @@ const Experience = ({
               onDataSave={onCreateExperience}
               arrFields={arrPopupInputFields}
               strSaveButtonTitle={"Add"}
+              strHelpText={
+                "Write how your current work experience makes you the ideal candidate for the position you are applying for."
+              }
             />
           </div>
           <div className="flex flex-col gap-6 px-4 py-5 bg-gray-100 sm:p-6">

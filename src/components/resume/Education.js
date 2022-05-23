@@ -84,7 +84,7 @@ const Education = ({
     {
       strPropertyName: "strInstitutionURL",
       strFieldTitle: "Institution Page",
-      strHelpText: "",
+      strHelpText: "Recruiters like to know where you've studied in.",
       readOnly: false,
       intColSpan: 2,
       strValidationMessage: "",
@@ -187,7 +187,8 @@ const Education = ({
     {
       strPropertyName: "strDescription",
       strFieldTitle: "Description",
-      strHelpText: "",
+      strHelpText:
+        "Complete this field only if you achieved something important othen than your Degree. To add a new bullet just type the '+' symbol before each sentence.",
       readOnly: false,
       intColSpan: 2,
       strValidationMessage: "",
@@ -415,6 +416,9 @@ const Education = ({
               onDataSave={onCreateEducation}
               arrFields={arrPopupInputFields}
               strSaveButtonTitle={"Add"}
+              strHelpText={
+                "Enter the Education only if it's relevant to the position you are applying for."
+              }
             />
           </div>
           <div className="flex flex-col gap-6 px-4 py-5 bg-gray-100 sm:p-6">

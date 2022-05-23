@@ -331,7 +331,7 @@ const Resume = ({
           strTitle={"Education"}
           educationList={arrEducationValues}
           strHelpText={
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            "Listing your education shows that you meet any necessary prerequisites to employment and allows you to showcase your book smarts if you’re a little short on actual experience. Coursework is optional. List relevant courses if you don't have much work experience. Certifications and training programs should be included in a separate section."
           }
           sendDeletedEducationIdToResume={getDeletedEducationId}
           sendEditedEducationToResume={getEditedEducation}

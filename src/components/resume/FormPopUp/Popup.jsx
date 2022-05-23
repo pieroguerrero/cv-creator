@@ -66,6 +66,7 @@ objFieldType: {
  * }[],
  * onDataSave:(objData: object)=>void,
  * strSaveButtonTitle:string,
+ * strHelpText:string
  * }} param0
  * @returns
  */
@@ -76,6 +77,7 @@ const Popup = ({
   arrFields,
   onDataSave,
   strSaveButtonTitle,
+  strHelpText,
 }) => {
   const frmForm = useRef(null);
   const refDivSelector = useRef(null);
@@ -276,11 +278,7 @@ const Popup = ({
                   {strPopupTitle}
                 </h3>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua
-                  </p>
+                  <p className="text-sm text-gray-500">{strHelpText}</p>
                 </div>
               </div>
             </div>

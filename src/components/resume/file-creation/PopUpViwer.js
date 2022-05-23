@@ -122,9 +122,9 @@ const PopUpViwer = ({ objResume, onClose }) => {
 
   const getHelpText = (isResumeValid) => {
     if (isResumeValid) {
-      return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua";
+      return "Soon we are going to have more templates. All our templates are ATS-proof.";
     } else {
-      return "Invalid";
+      return "You need to have at least one experience to create a proper Resume.";
     }
   };
 

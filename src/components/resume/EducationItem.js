@@ -336,6 +336,7 @@ const EducationItem = ({
           arrFields={getFieldsWithValues(arrPopupInputFields, educationInfo)}
           onDataSave={editEducation.bind(null, educationInfo.getId())}
           strSaveButtonTitle={"Accept"}
+          strHelpText={""}
         />
       </div>
     </div>
