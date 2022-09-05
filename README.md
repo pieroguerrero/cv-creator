@@ -1,70 +1,88 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# CV Creator
+> Create a professional CV that comply with the Application Tracking Systems (ATS) requirements. 
+> Live demo [_here_](https://pieroguerrero.github.io/cv-creator/).
 
-## Available Scripts
+## Table of Contents
+* [General Info](#general-information)
+* [Technologies and Techniques used](#technologies-and-techniques-used)
+* [Features](#features)
+* [Screenshots](#screenshots)
+* [Setup](#setup)
+* [Project Status](#project-status)
+* [Room for Improvement](#room-for-improvement)
 
-In the project directory, you can run:
 
-### `npm start`
+## General Information
+- The objective of this Web app is to facilitate the creation of ATS-proof and appealing CVs. So the user doesn't have to worry about the Application Tracking Systems (ATS) requirements nor to obtain a good looking CV.
+- In this Web app, Users are able to fill out their information regarding Education and Work Experience and the tool will provide with predefined CV templates that comply with the common ATS' requirements so the users can select the one they like more. At the same time, the tool provides with advise by every section and field the User have to fill out.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technologies and Techniques used
+### Planning and Design:
+- Since there is only one resource in the project, it was developmet partially with [Scrum](https://www.scrum.org/resources/what-is-scrum). The duration was 1.5 months splited in 2-week sprints.
+- The planning was done with the [User Story Mapping](https://www.visual-paradigm.com/guide/agile-software-development/what-is-user-story-mapping/) technique.
+- The Color palette for the entire Web app and the Landing page's UI design were implemented by following [this TawildUI template](https://tailwindui.com/components/marketing/sections/heroes) built from scratch:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<p align="center"><BR> <img src="https://user-images.githubusercontent.com/26049605/188484354-840ec2aa-8c22-41be-b15e-602496f66139.png" width="600px" height="auto" alt="TailwindUI template" title="Click to enlarge"> </p>
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Front-end:
+- ReactJS.
+- Internal application state managed with the [React Context API](https://reactjs.org/docs/context.html).
+- CSS design with [Tailwind CSS](https://tailwindcss.com/). 
+- PDF generation was made using [react-pdf](https://react-pdf.org/).
+- The web app is 100% responsive.
 
-### `npm run build`
+### Back-end:
+- This web app has no backend for now. 
+- Due to the type of information is handled, all the information is stored in the [Local Storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Testing:
+- Unit testing was done.
+- Test coverage is 20% and is increasing using Jest and [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/) is being used.
+- While testing, the project was run using the Chrome's Development Tools "Fast 3G" and "No Caching" options. So the app is ready for slow internet connections.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- View Landing Page ✔
+- Enter general personal information ✔
+- Enter education information ✔
+- Enter work experience information ✔
+- Receive advice during the information input process ✔
+- Select CV format ✔
+- Export CV to PDF format ✔
+- Save information locally ✔
+- Enter certifications 🔜
+- Create a custom section 🔜
+- Select more PDF formats 🔜
+- Save information on the cloud 🔜
+- Sign-up 🔜
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Screenshots
+Click an image to enlarge.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Landing Page | Landing Page responsive | CV Form |
+| ------------ | -------------- | ------------- |
+| <img src="https://user-images.githubusercontent.com/26049605/188495857-bd82e7c6-0628-4317-a8d0-a69ed2fd2636.png" width="370px" height="auto" alt="Landing Page" title="Click to enlarge">   | <img src="https://user-images.githubusercontent.com/26049605/188495936-881787db-c1d9-4fe0-a0b0-79576bdd65b5.png" width="200px" height="auto" alt="Landing Page" title="Click to enlarge">     | <img src="https://user-images.githubusercontent.com/26049605/188495786-17ba09ef-6b7d-4bea-850a-b1dd16ef3ff2.png" width="370px" height="auto" alt="CV Form" title="Click to enlarge">    |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Setup
+Clone this project by doing:
+```
+$ git clone https://github.com/pieroguerrero/cv-creator.git
+```
+Then go to the folder you cloned the code and execure:
+```
+$ npm install
+```
+**WARNING:** If you are going to use other libraries to achieve other purposes be carefull and remove the caret (^) prefix that the dependency versions have.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Status
+Project is: _in progress_
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Room for Improvement
+There are always room for improvement, in this project so far the thinkgs that can be improved are:
+- Enabla back-end APIs so the user can store information in the Cloud.
+- More Unit testing coverage.
+- Increase the efficiency of the updates by using a Form handler for react.
+- Use Redux instead of the React Context API.
