@@ -1,6 +1,6 @@
 
 # CV Creator
-> Create a professional CV that comply with the Application Tracking Systems (ATS) requirements. 
+> Create a professional CV that comply with the Application Tracking Systems ([ATS](https://www.techtarget.com/searchhrsoftware/definition/applicant-tracking-system-ATS)) requirements. 
 > Live demo [_here_](https://pieroguerrero.github.io/cv-creator/).
 
 ## Table of Contents
@@ -14,11 +14,12 @@
 
 
 ## General Information
-- The objective of this Web app is to facilitate the creation of ATS-proof and appealing CVs. So the user doesn't have to worry about the Application Tracking Systems (ATS) requirements nor to obtain a good looking CV.
+- The objective of this Web app is to facilitate the creation of ATS-proof and appealing CVs. So the user doesn't have to worry about the [Application Tracking Systems (ATS)](https://www.techtarget.com/searchhrsoftware/definition/applicant-tracking-system-ATS) requirements nor to obtain a good looking CV.
 - In this Web app, Users are able to fill out their information regarding Education and Work Experience and the tool will provide with predefined CV templates that comply with the common ATS' requirements so the users can select the one they like more. At the same time, the tool provides with advise by every section and field the User have to fill out.
 
 ## Technologies and Techniques used
 ### Planning and Design:
+- The main purpose of this web is to provide CV's that beat Application Tracking Systems (ATS). This is done by following several guidelines, specially [this arcticle](https://www.topresume.com/career-advice/officehours-does-your-resume-beat-the-bots) from topresume.com.
 - Since there is only one resource in the project, it was developmet partially with [Scrum](https://www.scrum.org/resources/what-is-scrum). The duration was 1.5 months splited in 2-week sprints.
 - The planning was done with the [User Story Mapping](https://www.visual-paradigm.com/guide/agile-software-development/what-is-user-story-mapping/) technique.
 - The Color palette for the entire Web app and the Landing page's UI design were implemented by following [this TawildUI template](https://tailwindui.com/components/marketing/sections/heroes) built from scratch:
