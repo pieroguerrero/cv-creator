@@ -53,7 +53,7 @@ const PopUpViwer = ({ objResume, onClose }) => {
      * @returns
      */
     ((objResume) => {
-      return objResume.getExperienceList().length > 1 ? true : false;
+      return objResume.getExperienceList().length > 0 ? true : false;
     })(objResume);
 
   const getDownloadButton = (strFormatId, isResumeValid) => {

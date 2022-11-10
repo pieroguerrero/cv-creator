@@ -235,10 +235,6 @@ const Resume = ({
   };
 
   const getNewExperience = (objExperience) => {
-    console.log(
-      "Resume.getNewExperience.getCurrentJob=",
-      objExperience.getCurrentJob()
-    );
     arrExperience.push(objExperience);
   };
   const getEditedExperience = (objExperience) => {
